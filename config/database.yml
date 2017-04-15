@@ -2,7 +2,7 @@ default: &default
   database: <%= "co_lab_#{Rails.env}" %>
   adapter: postgresql
   pool: 5
-  timeout: 5000
+  timeout: 5000 
 
 development:
   <<: *default
@@ -12,3 +12,5 @@ test:
 
 production:
   <<: *default
+  database: <%= ENV["DATABASE_NAME"] %>
+  url: <%= ENV["DATABASE_URL"] %>
