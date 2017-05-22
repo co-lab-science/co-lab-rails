@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
 
   resources :labs
+  resources :users
 
   resources :questions
 
