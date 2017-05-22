@@ -1,0 +1,32 @@
+<%= form_for(hypothesis) do |f| %>
+  <% if hypothesis.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(hypothesis.errors.count, "error") %> prohibited this hypothesis from being saved:</h2>
+
+      <ul>
+      <% hypothesis.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_field :content %>
+  </div>
+
+  <div class="field">
+    <%= f.label :text %>
+    <%= f.text_field :text %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
