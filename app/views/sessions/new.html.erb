@@ -1,4 +1,11 @@
-<h1>Login</h1>
+<section class="intro-graphic">
+      <%= image_tag 'co-lab.png', class:"intro-graphic-logo" %>
+</section>
+<section class="text intro-search">
+  <p><strong>Innovation Co-Lab</strong> is a <strong>crowd-sourced</strong>, <strong>open-source</strong> hub for scientific <strong>research</strong>.</p>
+</section>
+<section class="text centered">
+<h1>Back to the Lab Again.</h1>
 
 <%= form_tag '/login' do %>
 
@@ -7,3 +14,12 @@
   <%= submit_tag "Submit" %>
 
 <% end %>
+
+</section>
+<%= javascript_include_tag "science-map" %>
+
+<style type="text/css">
+  form{
+    margin: 5em 0 15em;
+  }
+</style>

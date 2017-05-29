@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :labs
   resources :users
-
+  resources :hypotheses
   resources :questions
 
   get '/login', to: 'sessions#new', as: 'login'

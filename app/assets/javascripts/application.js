@@ -12,5 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require d3
+//= require medium-editor
 //= require turbolinks
 //= require_tree .

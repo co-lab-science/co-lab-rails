@@ -9,25 +9,61 @@
   </head>
 
   <body>
-    <div class="login">
-      <ul>
-        <% if current_user %>
-          <li>
-            <%= "Signed in as, #{current_user.email}" %>
-          </li>
-          <li>
-            <%= link_to "Log Out", '/logout' %>
-          </li>
-        <% else %>
-          <li>
-            <%= link_to "Sign Up", '/signup' %>
-          </li>
-          <li>
-            <%= link_to "Log in", 'login' %>
-          </li>
-        <% end %>
-      </ul>
-    <div>
+    <nav>
+      <%= image_tag 'co-lab.png', class:"logo" %>
+      <div class="login">
+        <ul>
+          <% if current_user %>
+            <li>
+              <%= link_to "#{current_user.name}", '/users' %>
+            </li>
+            <li>
+              <%= image_tag 'user1.jpg', class:"nav-profile" %>
+            </li>
+            <li>
+              <%= link_to "Log Out", '/logout' %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to "Guide", '/signup' %>
+            </li>
+            <li>
+              <%= link_to "Sign Up", '/signup' %>
+            </li>
+            <li>
+              <%= link_to "Log in", 'login' %>
+            </li>
+          <% end %>
+        </ul>
+      <div>
+    </nav>
     <%= yield %>
+    <footer>
+      <div class="terms">
+          <ul>
+            <% if current_user %>
+            <li>
+              <%= link_to "Log Out", '/logout' %>
+            </li>
+            <% end %>
+            <li>
+              <%= link_to "About", 'about' %>
+            </li>
+            <li>
+              <%= link_to "Help", 'help' %>
+            </li>
+            <li>
+              <%= link_to "User Agreement", 'user-agreement' %>
+            </li>
+            <li>
+              <%= link_to "Privacy Policy", 'privacy-policy' %>
+            </li>            
+            <li>
+              <%= link_to "Contact Us", 'contact-us' %>
+            </li>            
+        </ul>
+      </div>
+      <%= image_tag 'co-lab.png', class:"logo" %>
+    </footer>
   </body>
 </html>
