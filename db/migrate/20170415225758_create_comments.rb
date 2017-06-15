@@ -7,6 +7,7 @@ class CreateComments < ActiveRecord::Migration[5.0]
       t.integer :lab_id
       t.integer :hypothesis_id
       t.integer :question_id
+      t.integer :user_id
 
       t.timestamps
     end

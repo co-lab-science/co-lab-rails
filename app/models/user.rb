@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  has_many :labs
+  has_many :comments
+  has_many :hypotheses
+  has_many :questions
+
   include BCrypt
   has_secure_password
   validates_uniqueness_of :email
