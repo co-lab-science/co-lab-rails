@@ -1,10 +1,11 @@
 class LabsController < ApplicationController
   before_action :set_lab, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate
 
   def search
     page = params[:page] || 1
-    results = Lab.search(params[:search], page)
-    render json: {count: results[:count], results: results[:results], page: page}
+    lab_collection = Lab.search(params[:search_term], page)
+    render json: {count: lab_collection.count, labs: lab_collection, page: page}
   end
 
   def index
