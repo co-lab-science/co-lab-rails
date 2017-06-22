@@ -1,0 +1,27 @@
+    <footer>
+      <div class="terms">
+          <ul>
+            <% if current_user %>
+            <li>
+              <%= link_to "Log Out", '/logout' %>
+            </li>
+            <% end %>
+            <li>
+              <%= link_to "About", 'about' %>
+            </li>
+            <li>
+              <%= link_to "Help", 'help' %>
+            </li>
+            <li>
+              <%= link_to "User Agreement", 'user-agreement' %>
+            </li>
+            <li>
+              <%= link_to "Privacy Policy", 'privacy-policy' %>
+            </li>
+            <li>
+              <%= link_to "Contact Us", 'contact-us' %>
+            </li>
+        </ul>
+      </div>
+      <%= link_to image_tag('co-lab.png'), '/', :class => 'logo' %>
+    </footer>
