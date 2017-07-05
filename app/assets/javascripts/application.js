@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require d3
-//= require medium-editor
 //= require turbolinks
+//= require bootstrap
+//= require summernote
 //= require_tree .

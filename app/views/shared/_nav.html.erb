@@ -1,0 +1,22 @@
+    <nav>
+        <%= link_to image_tag('co-lab.png'), '/', :class => 'logo' %>
+      <div class="login">
+        <ul>
+          <% if current_user %>
+            <li>
+              <%= link_to "#{current_user.name}", '/users' %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to "Guide", '/signup' %>
+            </li>
+            <li>
+              <%= link_to "Sign Up", '/signup' %>
+            </li>
+            <li>
+              <%= link_to "Log in", 'login' %>
+            </li>
+          <% end %>
+        </ul>
+      <div>
+    </nav>
