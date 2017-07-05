@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   resources :labs
   resources :users
+  resources :likes
+  resources :votes
   resources :hypotheses
   resources :questions
 

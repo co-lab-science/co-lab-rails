@@ -3,6 +3,8 @@ class User < ApplicationRecord
   has_many :comments
   has_many :hypotheses
   has_many :questions
+  has_many :specialities
+  has_many :votes
 
   include BCrypt
   has_secure_password
