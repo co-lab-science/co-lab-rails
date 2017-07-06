@@ -1,0 +1,37 @@
+<%= form_for(user) do |f| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <h2>Speciality: </h2>
+  <%= f.fields_for :specialities do |ff| %>
+  <div>
+    <%= ff.label :category %>
+    <%= ff.text_field :category %>
+  </div>
+  <div>
+    <%= ff.label :rank %>
+    <%= ff.select :rank, (1..10) %>
+  </div>
+<% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

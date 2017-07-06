@@ -1,0 +1,25 @@
+<%= form_for @speciality, url: user_specialities_path do |f| %>
+  <% if @speciality.errors.any? %>
+    <div id="error_explanation">
+      <% @speciality.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :category %>
+    <%= f.text_field :category %>
+  </div>
+
+  <div>
+    <%= f.label :rank %>
+    <%= f.select :rank, (1..10) %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

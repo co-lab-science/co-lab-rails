@@ -5,6 +5,13 @@ Rails.application.routes.draw do
     get '/search', to: 'labs#search'
   end
 
+  scope '/admin' do
+    resources :tags
+    resources :users do
+      resources :specialities
+    end
+  end
+
   resources :labs
   resources :users
   resources :likes

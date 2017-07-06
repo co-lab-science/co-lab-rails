@@ -1,0 +1,6 @@
+<h1>Editing User</h1>
+
+<%= render '/admin/users/form', user: @user %>
+<%= link_to 'new Speciality', new_user_speciality_path(@user.id) %>
+<br>
+<%= link_to 'Back', users_path %>

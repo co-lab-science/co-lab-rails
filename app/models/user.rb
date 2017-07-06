@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :questions
   has_many :specialities
   has_many :votes
+  accepts_nested_attributes_for :specialities
 
   include BCrypt
   has_secure_password
