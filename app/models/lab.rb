@@ -3,6 +3,8 @@ class Lab < ApplicationRecord
   has_many :comments
   has_many :hypotheses
   has_many :tags
+  has_many :downvotes
+  has_many :upvotes
 
   def self.search(search_term, page)
     where("title LIKE ? OR body LIKE ?", "%#{search_term}%", "%#{search_term}%")
