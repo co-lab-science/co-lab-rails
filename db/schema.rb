@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170719153032) do
+ActiveRecord::Schema.define(version: 20170728154850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,10 +25,11 @@ ActiveRecord::Schema.define(version: 20170719153032) do
     t.integer  "user_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "comment_id"
+    t.string   "references"
   end
 
   create_table "dislikes", force: :cascade do |t|
-    t.integer  "count"
     t.integer  "user_id"
     t.integer  "hypothesis_id"
     t.datetime "created_at",    null: false
@@ -36,7 +37,6 @@ ActiveRecord::Schema.define(version: 20170719153032) do
   end
 
   create_table "downvotes", force: :cascade do |t|
-    t.integer  "count"
     t.integer  "user_id"
     t.integer  "comment_id"
     t.integer  "question_id"
@@ -51,8 +51,10 @@ ActiveRecord::Schema.define(version: 20170719153032) do
     t.string   "body"
     t.integer  "lab_id"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "question_id"
+    t.index ["question_id"], name: "index_hypotheses_on_question_id", using: :btree
   end
 
   create_table "labs", force: :cascade do |t|
@@ -64,7 +66,6 @@ ActiveRecord::Schema.define(version: 20170719153032) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer  "count"
     t.integer  "hypothesis_id"
     t.integer  "user_id"
     t.datetime "created_at",    null: false
@@ -76,8 +77,10 @@ ActiveRecord::Schema.define(version: 20170719153032) do
     t.string   "body"
     t.integer  "lab_id"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "question_id"
+    t.index ["question_id"], name: "index_questions_on_question_id", using: :btree
   end
 
   create_table "specialities", force: :cascade do |t|
@@ -97,7 +100,6 @@ ActiveRecord::Schema.define(version: 20170719153032) do
   end
 
   create_table "upvotes", force: :cascade do |t|
-    t.integer  "count"
     t.integer  "user_id"
     t.integer  "comment_id"
     t.integer  "question_id"
@@ -116,4 +118,6 @@ ActiveRecord::Schema.define(version: 20170719153032) do
     t.boolean  "admin"
   end
 
+  add_foreign_key "hypotheses", "questions"
+  add_foreign_key "questions", "questions"
 end

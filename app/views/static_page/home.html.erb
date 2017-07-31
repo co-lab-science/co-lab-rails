@@ -2,12 +2,15 @@
       <%= image_tag 'co-lab.png', class:"intro-graphic-logo" %>
 </section>
 <section class="text intro-search">
-<!--    <h1>Innovation Co-Lab</h1> -->
-<!--	<h2>a <strong>crowd-sourced</strong> hub for <strong>scientific research</strong></h2> -->
-	<p><%= link_to 'Search for... observations, questions, hypothesis', 'labs', class:"intro-searchbar" %></p>
-
-<h2>The <strong>crowd-sourced</strong> hub for <strong>scientific research</strong></h2> 
-	<div>	
-	</div>
+	<h2>The <strong>crowd-sourced</strong> hub for<br><strong class="searchbar">scientific</strong> <strong>research</strong>.</h2> 
+	<div class="js-to-labs white rounded blue-border">explore</div>
+	<!-- 
+	<%= form_tag("labs/search", method: "get") do %>
+	  <%= label_tag(:q, "Search for ...") %>
+	  <%= text_field_tag(:q)%>
+	  <br>
+	  <%= submit_tag("Search") %>
+	<% end %>
+	 -->
 </section>
 <%= javascript_include_tag "science-map" %>

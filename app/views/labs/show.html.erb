@@ -1,14 +1,294 @@
-<p id="notice"><%= notice %></p>
+<main>	
+	<section class="general-info">
+	    <div class="general-overview">
+	        <h2 class="general-info-title"><%= link_to 'All Labs', labs_path %></h2>
+	        <h2 class="general-info-more">Lab Network Visualization</h2>
+	    </div>
+	    <div class="general-comments">
+	        <div class="observation-tags">
+	        	<div>
+	        		<p class="node-text" aid="0"><strong style="color: #1b79be">Lab</strong><br><strong><%= @lab.title %></strong><br><br><%= @lab.body %></p>
+	    			<% @questions.where(lab_id: @lab.id).each_with_index do |question, index| %>
+		          	<p class="node-text hidden" aid="<%= index + 1 %>"><strong style="color: #1b79be">Question</strong><br><strong><%= question.title%></strong><br><br><%= question.body %></p>
+		          	<% end %>
+		          	<% @hypotheses.where(lab_id: @lab.id).each_with_index do |hypothesis, index| %>
+		          	<p class="node-text hidden" aid="<%= @questions.where(lab_id: @lab.id).length + index + 1 %>"><strong style="color:#1b79be;">Hypothesis</strong><br><strong><%= hypothesis.title%></strong><br><br><%= hypothesis.body %></p>
+		          	<% end %>
+	        	</div>
+                <div class="comment">
+                    <div class="comment-type selected"> + comment</div>
+                    <div class="comment-type"> + question</div>
+                    <div class="comment-type"> + hypothesis</div>
+					<p><strong>Want to comment on this lab?</strong> <span class="js-tips comments">Tips</span></p>
+					<div class="tips comments show">
+						Clear comments, clear community.<br>
+						Order your thoughts into a succinct comment.<br>
+						Identify a <strong>section</strong> as a focal point for your succinct comment.<br>
+						Write your succint comment below. <strong>lather, rinse, repeat.</strong>
+						
+					</div>
+					<div class="tips comments show">| <%= @time %></div>
+                    <div class="js-submit-comment white rounded blue-border">submit</div>
+                </div>
+                <h2>Comments</h2>
+				<div class="comments">
+                <div class="comments">
+                    <div class="comment-type selected">all</div>
+                    <div class="comment-type">abstract</div>
+                    <div class="comment-type">introduction</div>
+                    <div class="comment-type">experiment</div>
+                    <div class="comment-type">discussion</div>
+                    <div class="comment-type">references</div>
+                </div>
+    				<% @lab.comments.each do |comment| %>
+    					<div class="comment">
+    						<p>
+    							<span class="user"><span class="lighten">submitted by </span><%= User.find(Comment.find(1).user_id).name %></span><br>
+    							<span><%= comment.body %></span><br>
+    							<span class="commenting">comment</span>
+    							<span class="commenting">subcomments</span>
+    						</p>
+    						
+    					</div>
+    				<% end %>
+                </div>
+            </div>
+	    </div>
+	</section>
+	<section class="hypothesis-editor detail-text-view">
+		<div class="general-lab-modifier">
+	        <div>
+		        <h2 class="general-lab-upvote">Upvote Lab <span><%= @lab.upvotes.count %></span></h2>
+		        <h2 class="general-lab-downvote">Downvote Lab <span><%= @lab.downvotes.count %></span></h2>
+	        </div>
+	    </div>
+		<div class="lab-tags">
+    	<% @lab.tags.each_with_index do |tag, index| %>
+            <div class="lab-tag applied"><%= tag.name %></div>
+        <% end %>
+        </div>
+		<h2><%= @lab.title %></h2>
+		<span class="comment">
+            <span class="user">
+                <span class="lighten">submitted by </span>
+                <%= User.find(@lab.user_id).name %><br>
+                <span class="lighten"><%= @lab.created_at %></span>
+            </span>
+        </span><br>
+        <p id="notice"><%= notice %></p>
+		<br>
+		<p>
+		  <%= @lab.body %>
+		</p>
+	</section>
+	<section class="hypothesis-editor visualization-view hidden">
+		<div class="lab-graphic"></div>
+	</section>
+</main>
+<script type="text/javascript">
+//Original data
+      var dataset = {
+        nodes: [
+			{ name: "<%= @lab.title%>", type: "lab"},
+          	<% @questions.where(lab_id: @lab.id).each_with_index do |question, index| %>
+          	{ name: "<%= question.title%>", type: "question"},
+          	<% end %>
+          	<% @hypotheses.where(lab_id: @lab.id).each_with_index do |hypothesis, index| %>
+          	{ name: "<%= hypothesis.title%>", type: "hypothesis"},
+          	<% end %>
+        ],
+        edges: []
+      };
 
-<p>
-  <strong>Title:</strong>
-  <%= @lab.title %>
-</p>
+    var links = [
+		<% @questions.where(lab_id: @lab.id).each_with_index do |question, index| %>
+      	{ source: "<%= question.title %>", target: "<%= question.question_id != nil ? @questions.where(id: question.question_id)[0].title : @lab.title %>", value: '0'},
+      	<% end %>
+      	<% @hypotheses.where(lab_id: @lab.id).each_with_index do |hypothesis, index| %>
+      	{ source: "<%= hypothesis.title %>", target: "<%= hypothesis.question_id != nil ? @questions.where(id: hypothesis.question_id)[0].title : @lab.title %>", value: '0'},
+      	<% end %>
+    ];
 
-<p>
-  <strong>Body:</strong>
-  <%= @lab.body %>
-</p>
+    // TODO: change from name comparison to a hash comparison. Name comparison can cause issues if two links have the same name
+    links.forEach(function(e) {
+	    var sourceNode = dataset.nodes.filter(function(n) { return n.name === e.source; })[0],
+	    targetNode = dataset.nodes.filter(function(n) { return n.name === e.target; })[0];
+	    	
+	    dataset.edges.push({source: sourceNode, target: targetNode, value: e.value});
+	})
 
-<%= link_to 'Edit', edit_lab_path(@lab) %> |
-<%= link_to 'Back', labs_path %>
+       //Width and height
+      var w = window.innerWidth;
+      var h = 1500;
+
+      //Initialize a default force layout, using the nodes and edges in dataset
+      var force = d3.layout.force()
+        .nodes(dataset.nodes)
+        .links(dataset.edges)
+        .gravity(0.4)
+        .friction(0.9)
+        .size([w/2, h/3])
+        .linkDistance([250])
+        .charge([-40000])
+        .start();
+
+      //Create SVG element
+      var svg = d3.select(".lab-graphic")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h)
+        .call(d3.behavior.zoom().on("zoom", function () {
+          svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+        }))
+        .append('g');
+      
+      //Create edges as lines
+      var edges = svg.selectAll("line")
+        .data(dataset.edges)
+        .enter()
+        .append("line")
+        .attr('target', function(d){return JSON.stringify(d.target.index)})
+        .attr('source', function(d){return JSON.stringify(d.source.index)})
+        .style({"stroke": function(d,i){
+          return "#ccc";
+        }})
+        .style("stroke-width", 1);
+
+      // Create nodes as circles
+      var nodes = svg.selectAll("circle")
+        .data(dataset.nodes)
+        .enter()
+        .append("circle")
+        .attr("aid", function(d,i){return i;})
+        .attr("type",function(d,i){return dataset.nodes[i].type;})
+        .style("fill","white")
+        .style("stroke-width", function(d,i){
+        	if(dataset.nodes[i].type == "lab"){
+        		return 9
+        	}else{
+        		return 1
+        	}
+        })
+        .style("stroke", function(d,i){
+        	if(dataset.nodes[i].type == "lab"){
+        		return '#1b79be'
+        	}else{
+        		return '#ccc'
+        	}
+        })
+        .attr("r", function(d,i){
+        	if(dataset.nodes[i].type == "lab"){
+        		return 60;
+        	} else if (dataset.nodes[i].type == "question"){
+        		return 40;
+        	} else {
+        		return 20;
+        	}
+        })
+        .call(force.drag);
+    
+      var titles = svg.selectAll("text")
+        .data(dataset.nodes)
+        .enter()
+        .append("text")
+        .html(function(d,i) {
+        	return "<tspan font-weight='bold'>" + dataset.nodes[i].type + "</tspan> " + " <tspan>" + dataset.nodes[i].name + "</tspan>";
+        })
+        .attr("aid",function(d,i){return i;})
+        .attr("type",function(d,i){return dataset.nodes[i].type})
+        .attr("font-family", "helvetica")
+        .attr("font-size", "20px")
+        .attr("fill", "gray") 
+        .call(force.drag);
+
+
+      //Every time the simulation "ticks", this will be called
+      force.on("tick", function() {
+
+        edges.attr("x1", function(d) { return d.source.x; })
+           .attr("y1", function(d) { return d.source.y; })
+           .attr("x2", function(d) { return d.target.x; })
+           .attr("y2", function(d) { return d.target.y; });
+      
+        nodes.attr("cx", function(d) { return d.x; })
+           .attr("cy", function(d) { return d.y; });
+        
+        titles.attr("x", function(d,i) { 
+        		if(dataset.nodes[i].type == "lab"){
+        			return d.x + 70;
+		    	} else if (dataset.nodes[i].type == "question"){
+        			return d.x + 50;
+		    	} else {
+        			return d.x + 30;
+		    	}
+        	})
+           .attr("y", function(d,i) { 
+        		if(dataset.nodes[i].type == "lab"){
+        			return d.y + 5 ;
+		    	} else if (dataset.nodes[i].type == "question"){
+        			return d.y + 2;
+		    	} else {
+        			return d.y + 5;
+		    	}
+           });
+
+      });
+      
+      // tag selection
+      $('li,circle,text').on('click',function(){
+
+        var parents = [];
+        var aid = this.getAttribute('aid');
+        var current_node = aid;
+
+	    while(current_node != 0){
+	        parents.push(current_node)
+        	current_node = $('line[source='+ current_node +']').attr('target');
+	    }
+        
+	    // lines + circles + text
+        $('line').css({'stroke':'#ccc','stroke-width':'1'})
+        $('circle').css({'fill':'white',"stroke":'#ccc',"stroke-width": 1})
+        $("circle[aid='0']").css({'stroke':'#1b79be',"stroke-width": 9})
+        $('text').css({'font-size':'20px'});
+
+	    for(var i = 0; i < parents.length; i++){
+        	$('line[source='+ parents[i] +']').css({'stroke':'rgba(27, 121, 190, .2)','stroke-width':'7'})
+        	$('circle[aid='+ parents[i] +']').css({'stroke':'#1b79be',"stroke-width": 3})
+	    }
+
+        $("circle[aid='"+ aid +"']").css({'stroke':'#1b79be',"stroke-width": 7})
+	    $('.node-text').addClass('hidden');
+	    $('.node-text[aid='+ aid +']').removeClass('hidden')
+      })
+
+
+</script>
+
+<script>
+
+
+    $(document).ready(function(){
+
+        // toggle lab's details and visualization
+        $('.general-info-more').click(function toggleDetailsAndVisualization(){
+        	$('.hypothesis-editor').toggleClass('hidden');
+        })
+
+        // select comment tag or filter comments based on tag
+        function commentFilter(commentType){
+	        $(commentType).click(function(){
+	            $(commentType).removeClass('selected');
+	            $(this).addClass('selected');
+	        })        	
+        }
+
+        commentFilter('.comment .comment-type');
+        commentFilter('.comments .comment-type');
+
+
+        $('.general-lab-upvote').click(function(){labVote('upvote')});
+        $('.general-lab-downvote').click(function(){labVote('downvote')});
+        
+    })
+</script>

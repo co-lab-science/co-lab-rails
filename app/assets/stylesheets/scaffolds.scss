@@ -17,14 +17,6 @@ pre {
 
 a {
   color: #000;
-
-  &:visited {
-    color: #676767;
-  }
-
-  &:hover {
-    color: #676767;
-  }
 }
 
 th {
@@ -122,9 +114,6 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    color:#1b79be;
-}
 
 pre {
     font-family: 'Menlo', monospace;

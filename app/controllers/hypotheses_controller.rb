@@ -15,6 +15,7 @@ class HypothesesController < ApplicationController
   # GET /hypotheses/new
   def new
     @hypothesis = Hypothesis.new
+    @time = Time.now
   end
 
   # GET /hypotheses/1/edit

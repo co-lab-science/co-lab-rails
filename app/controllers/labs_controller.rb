@@ -10,21 +10,25 @@ class LabsController < ApplicationController
 
   def index
     @labs = Lab.all
+    @tags = Tag.all
   end
 
   def show
+    @questions = Question.all
+    @hypotheses = Hypothesis.all
+    @labs = Lab.all
   end
 
   def new
     @lab = Lab.new
+    @tags = Tag.all
   end
 
   def edit
   end
 
   def create
-    @lab = Lab.new(lab_params)
-
+    @lab = current_user.labs.new(lab_params)
     respond_to do |format|
       if @lab.save
         format.html { redirect_to @lab, notice: 'Lab was successfully created.' }
@@ -62,6 +66,6 @@ class LabsController < ApplicationController
     end
 
     def lab_params
-      params.require(:lab).permit(:title, :body)
+      params.require(:lab).permit(:title, :body, comments_attributes: [:id, :title, :body]) 
     end
 end

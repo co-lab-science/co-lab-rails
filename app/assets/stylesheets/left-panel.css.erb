@@ -9,40 +9,84 @@
     width: 63%;
 }
 .general-overview {
-    background-color: #1b79be;
     padding: 45px 15px 25px;
-    background-color: #c6c6c6;
+    background-color: rgba(237,237,237, 0.65);
 }
 .general-overview h1, .general-overview h2 a, .general-overview h2, .general-overview h1 a, .general-overview h3, .general-overview h3 a{
     color: #1b79be;
     margin: 0;
     padding-bottom: 25px
-
+}
+.general-comments{
+    padding: 30px 15px;
 }
 
-.general-comments{
-    padding: 15px;
-    /*border-top: #1b79be solid 7px;*/
+.general-info-title, .general-info-create, .general-info-search, .general-info-more {
+    padding-left: 45px;
 }
 
 .general-info-title{
     background: url(<%= asset_data_uri 'mbri/mbri-left.svg' %>) no-repeat;
-    background-position: 5px 12px;
-    padding-left: 45px;
+    background-position: 10px 5px;
 }
 .general-info-create{
     background: url(<%= asset_data_uri 'mbri/mbri-edit.svg' %>) no-repeat;
-    background-position: 10px 8px;
-    padding-left: 50px;
+    background-position: 12px 5px;
 }
 .general-info-search{
     background: url(<%= asset_data_uri 'mbri/mbri-search.svg' %>) no-repeat;
-    background-position: 9px 8px;
-    padding-left: 50px;
+    background-position: 8px 2px;
+    height: 55px;
 }
-
 .general-info-more{
     background: url(<%= asset_data_uri 'mbri/mbri-right.svg' %>) no-repeat;
-    background-position: 5px 12px;
-    padding-left: 45px;
+    background-position: 10px 5px;;
+    transition: background-position 0.25s;
+}
+.general-info-title a:hover{
+    text-decoration: none;
+}
+.visualization-visable{
+    background: url(<%= asset_data_uri 'mbri/mbri-left.svg' %>) no-repeat;
+    background-position: 10px 5px;
+}
+.general-lab-modifier {
+    padding: 45px 0 25px;
+    background-color: rgba(237,237,237, 0.65);
+}
+/* lab voting */
+.general-lab-upvote, .general-lab-downvote{
+    background-position: 0 5px;
+    padding-left: 35px;
+}
+.general-lab-upvote{
+    background: url(<%= asset_data_uri 'mbri/mbri-up.svg' %>) no-repeat;
+    margin-top: 0;
+}
+.general-lab-downvote{
+    background: url(<%= asset_data_uri 'mbri/mbri-down.svg' %>) no-repeat;
+    margin-top: 25px;
+    margin-bottom: 40px;
+}
+.general-lab-upvote:hover, .general-lab-downvote:hover{
+    background-position: 0;
+    cursor: pointer;
+}
+/* lab add question or hypothesis */
+.general-lab-add-question, .general-lab-add-hypothesis{
+    background-position: 0 5px;
+    padding-left: 35px;
+}
+.general-lab-add-question{
+    background: url(<%= asset_data_uri 'mbri/mbri-plus.svg' %>) no-repeat;
+    margin-top: 0;
+}
+.general-lab-add-hypothesis{
+    background: url(<%= asset_data_uri 'mbri/mbri-plus.svg' %>) no-repeat;
+    margin-top: 25px;
+    margin-bottom: 40px;
+}
+.general-info-more:hover{
+    background-position: 15px 5px;
+    cursor: pointer;
 }

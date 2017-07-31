@@ -1,18 +1,64 @@
 <main>	
 	<section class="general-info">
 	    <div class="general-overview">
-	      <h1 class="general-info-title"><%= link_to 'Hypotheses Home', new_lab_path %></h1>
-	      <h2 class="general-info-more"><%= link_to 'Hypothesis Title', new_lab_path %></h2>
-	      <h2 class="general-info-search"><%= link_to 'Search', new_lab_path %></h2>
-	      
+	        <h2 class="general-info-title"><%= link_to 'All Labs', labs_path %></h2>
+	        <h2 class="general-info-more">Hypothesis Network Visualization</h2>
 	    </div>
 	    <div class="general-comments">
-	          <div class="observation-tags">
-	            <h2>Comments</h2>
-	          </div>
+	        <div class="observation-tags">
+                <div class="comment">
+                    <div class="comment-type selected">all</div>
+                    <div class="comment-type">abstract</div>
+                    <div class="comment-type">introduction</div>
+                    <div class="comment-type">experiment</div>
+                    <div class="comment-type">discussion</div>
+                    <div class="comment-type">references</div>
+					<p><strong>Want to comment on this hypothesis?</strong> <span class="js-tips comments">Tips</span></p>
+					<div class="tips comments show">
+						Clear comments, clear community.<br>
+						Order your thoughts into a succinct comment.<br>
+						Identify a <strong>section</strong> as a focal point for your succinct comment.<br>
+						Write your succint comment below. <strong>lather, rinse, repeat.</strong>
+					</div>
+					<div class="tips comments show">| <%= @time %></div>
+                    <div class="white rounded blue-border">submit</div>
+                </div>
+                <h2>Comments</h2>
+				<div class="comments">
+                    <div class="comment-type selected">all</div>
+                    <div class="comment-type">abstract</div>
+                    <div class="comment-type">introduction</div>
+                    <div class="comment-type">experiment</div>
+                    <div class="comment-type">discussion</div>
+                    <div class="comment-type">references</div>
+                </div>
+            </div>
 	    </div>
-	  </section>
-		<section id="hypothesis-editor" class="listings">
-		</section>
-	</main>
+	</section>
+	<section id="hypothesis-editor" class="listings">
+        <%= render 'form', hypothesis: @hypothesis %>
+	</section>
 </main>
+<script>
+    $(document).ready(function(){
+        
+        function commentFilter(commentType){
+	        $(commentType).click(function(){
+	            $(commentType).removeClass('selected');
+	            $(this).addClass('selected');
+	        })        	
+        }
+
+        commentFilter('.comment .comment-type');
+        commentFilter('.comments .comment-type');
+
+        $('.general-info-more').click(function(){
+            $(this).toggleClass('visualization-visable');
+        })
+
+        $('.js-tips.comments').click(function(){
+        	$('.tips.comments').toggleClass('show')
+        })
+        
+    })
+</script>

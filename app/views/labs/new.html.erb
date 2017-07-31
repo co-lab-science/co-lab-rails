@@ -1,5 +1,51 @@
-<h1>New Lab</h1>
+<main>	
+	<section class="general-info">
+	    <div class="general-overview">
+	        <h2 class="general-info-title"><%= link_to 'All Labs', labs_path %></h2>
+	        <h2 class="general-info-more">Research Database</h2>
+	    </div>
+	    <div class="general-comments">
+	        <div class="observation-tags">
+                <div class="comment">
+					<p><strong>Tagging your lab with appropriate categories?</strong> <span class="js-tips comments">Tips</span></p>
+					<div class="tips comments show">
+						Clear labs, clear community.<br>
+						Select <strong>tags</strong> below that relate to the focal point for your lab.<br>
+						Write your succint lab by <strong>using the editor on the right.</strong>
+					</div>
+                    <% @tags.each do |tag| %>
+                      <div class="comment-type"><%= tag.name %></div>
+                    <% end %>
+                </div>
+                <div class="comments">
+                	<h2>Trending Tags Reference</h2>
+                        <% @tags.first(10).each do |tag| %>
+                            <div class="comment-type trending static"><%= tag.name %></div>
+                        <% end %>
+                </div>
+            </div>
+	    </div>
+	</section>
+	<section id="hypothesis-editor" class="listings">
+        <%= render 'form', lab: @lab %>
+	</section>
+</main>
+<script>
+    $(document).ready(function(){
+        
+        function commentFilter(commentType){
+	        $(commentType).click(function(){
+	            $(this).toggleClass('selected');
+	        })        	
+        }
 
-<%= render 'form', lab: @lab %>
+        commentFilter('.comment .comment-type');
 
-<%= link_to 'Back', labs_path %>
+        $('.general-info-more').click(function(){
+            $(this).toggleClass('visualization-visable');
+        })
+
+        // incorporate tags form functionality
+        
+    })
+</script>

@@ -1,9 +1,29 @@
+.hypothesis-editor{
+    background-color: #ededed;
+    color: #676767;
+    vertical-align:top;
+    width: 63%;
+    padding: 0 85px 75px;
+    font-size: 16px;
+    line-height: 1.9;
+    min-height: 1500px;
 
-
+}
+input[name=commit]{
+    margin-top: 50px;
+}
+a:visited{
+    text-decoration: none;
+    color: #1b79be;
+}
+/* listing */
 .listings{
     background-color: #ededed;
     width: 63%;
-    padding-bottom: 15px;
+    padding: 0 60px 15px 60px;
+}
+.listing-title{
+    padding: 25px;
 }
 
 .listing{
@@ -11,176 +31,166 @@
     margin-bottom: 8px;
     padding-left: 3px;
 }
-
-
+/* lab */
 .lab {
-    height: 80px;
-    margin: 0px 30px 8px;
+    margin: 0px 0px 40px;
     padding: 0px 0px 0px 3px;
 }
-
 .lab-rank {
     color: rgb(198, 198, 198);
     float: left;
     font: normal normal normal normal 16px / 30px Helvetica, Arial, sans-serif;
-    margin: 15px 0px 0px;
+    margin: -3px 0px 0px;
 }
-
 .lab-votes {
     float: left;
-    margin: 0px 15px;
+    margin: 0px 35px;
 }
-
 .lab-vote-up-button {
     background-position: -84px -1618px;
     color: rgb(103, 103, 103);
     cursor: pointer;
     height: 14px;
     background: rgba(0, 0, 0, 0) url(<%= asset_data_uri 'sprites.png' %>) no-repeat scroll -84px -1618px / auto padding-box border-box;
-    margin: 2px 6.96875px 0px 6.95312px;
+    margin: 2px 7px 0px;
 }
-
+.lab-vote-up-total, .lab-vote.value, .lab-vote.down-total{
+    font: normal normal bold normal 13px / 30px Helvetica, Arial, sans-serif;
+}
 .lab-vote-up-total {
     color: rgb(148, 148, 255);
     display: none;
-    font: normal normal bold normal 13px / 30px Helvetica, Arial, sans-serif;
 }
-
 .lab-vote-value {
     color: rgb(198, 198, 198);
-    font: normal normal bold normal 13px / 30px Helvetica, Arial, sans-serif;
+    padding: 10px 0;
+    width: 30px;
+    text-align: center;
 }
-
 .lab-vote-down-total{
     color: rgb(255, 139, 96);
     display: none;
-    font: normal normal bold normal 13px / 30px Helvetica, Arial, sans-serif;
 }
-
 .lab-vote-down-button {
     background-position: -42px -1618px;
     color: rgb(103, 103, 103);
     cursor: pointer;
     height: 14px;
     background: rgba(0, 0, 0, 0) url(<%= asset_data_uri 'sprites.png' %>) no-repeat scroll -42px -1618px / auto padding-box border-box;
-    margin: 2px 6.96875px 0px 6.95312px;
+    margin: 2px 7px 0px;
 }
-
 .lab-info {
     overflow: hidden;
 }
-
 .lab-title {
     color: rgb(27, 121, 190);
     font: normal normal normal normal 16px / 20px Helvetica, Arial, sans-serif;
     margin: 0px 6.4px 1px 0px;
 }
-
 .lab-link {
-    color: rgb(27, 121, 190);
+    color: #1b79be;
+    font-size: 14px;
 }
-
 .lab-submitted {
     color: rgb(136, 136, 136);
     margin: 0px;
     font-size: 10px;
+    color: #c6c6c6;
+    margin-top: -3px;
 }
-
-.lab-since-submitted {
-    font: normal normal normal normal 10px / 30px Helvetica, Arial, sans-serif;
+.lab-since-submitted, .lab-creator, .lab-section{
+    font: normal normal normal normal 10px / 30px Helvetica, Arial, sans-serif; 
 }
-
-.lab-creator {
-    color: rgb(51, 102, 153);
-    font: normal normal normal normal 10px / 30px Helvetica, Arial, sans-serif;
-}
-
 .lab-section {
-    color: rgb(51, 102, 153);
-    font: normal normal normal normal 10px / 30px Helvetica, Arial, sans-serif;
-    margin: 0px 0px 10px;
+    margin: 0 0 10px;
 }
-
 .lab-details {
     font: normal normal normal normal 15px / 25px Helvetica, Arial, sans-serif;
     margin: 0;
-    padding: 1px 0px;
+    padding: 1px 0;
     display: flex;
 }
-
 .lab-comments {
     display: inline-block;
-    padding: 0px 4px 0px 0px;
 }
-
 .lab-questions-total, .lab-hypotheses-total, .lab-comments-total{
-    color: rgb(136, 136, 136);
+    color: #c6c6c6;
     text-align: left;
-    font: normal normal bold normal 15px / 24px Helvetica, Arial, sans-serif;
-    padding: 0px 1px;
+    padding: 2px 18px;
+    font-size: 10px;
+    border-width: 2px;
+    line-height: 16px;
+    border-color: #c6c6c6;
+    margin-left: 0;
+}
+.lab-questions-total:hover, .lab-hypotheses-total:hover, .lab-comments-total:hover{
+    text-decoration: none;
 }
 
-.lab-edit {
+.lab-edit, .lab-delete {
     display: inline-block;
     padding: 0px 4px;
 }
-
-.lab-delete {
+.lab-link:hover, .lab-creator:hover, .lab-section:hover,.lab-link:visited, .lab-creator:visited, .lab-section:visited{
+    text-decoration: none !important;
+    color: #337ab7 !important;
+    cursor: pointer !important;
+}
+.lab-tag{
+    border: #1b79be solid 4px;
+    border-radius: 3px;
+    padding: 7px 9px;
+    font-size: 12px;
     display: inline-block;
-    padding: 0px 4px;
+    margin: 5px 4px;
+    transition: background-color 0.25s;
 }
+.lab-tags .lab-tag:first-of-type{
+    margin-left: 0;
+}
+.title{
+    color:#1b79be;
+}
+.hidden{
+    display: none;
+}
+.general-info-more{
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 
-.observation-tags a{
-	background-color: #1b79be;
-    color: white;
-    text-decoration: none;
-    padding: 5px;
-    margin: 7px 5px;
-	display: inline-block;
 }
-.observation-tags{
-	background: white;
-	margin-left: -30px;
-	padding: 15px 30px;
+.visualization-view{
+    padding: 0;
 }
-.spectrum-tags h2{
-    /*opacity: 0.35;*/
+.visualization-view .general-lab-modifier{
+    padding-left: 85px;
 }
-.spectrum-tags a{
-	background-color: #1b79be;
-    color: white;
-    text-decoration: none;
-    padding: 5px;
-    opacity: 0.35;
-    margin: 7px 5px;
-	display: inline-block;
+.lab-graphic{
+    height: 1500px;
+    width: 100%;
+    background-color: #ededed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.spectrum-tags a:hover{
-	opacity:1;
+.comment:even {
+    background-color: rgba(27, 121, 190, .2);
 }
-.spectrum-tags{
-	background: white;
-	margin-left: -30px;
-	padding: 15px 30px;
-}	
-.user-tags a{
-	background-color: #1b79be;
-    color: white;
-    text-decoration: none;
-    padding: 5px;
-    opacity: 0.75;
-	margin: 7px 5px;
-	display: inline-block;					    
+.comment .user, .comment .commenting{
+    color:#1b79be;
+    font-weight: bold;
+    font-size: 10px;
 }
-.user-tags a:hover{
-	opacity:1;
+.comment .lighten{
+    opacity: 0.5;
 }
-.user-tags{
-	background: white;
-	margin-left: -30px;
-	padding: 15px 30px;
-}	
-
-.medium-editor-element{
-    padding: 0 40px;
+.lab-tags{
+    padding-top: 30px;
+}
+.node-text{
+    padding: 15px 4px;
 }
