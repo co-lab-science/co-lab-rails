@@ -1,12 +1,3 @@
-$(document).ready(function(){
-  $('.js-to-labs').click(function(){
-    window.location.pathname = "/labs";
-  })
-  // setTimeout(function(){$('.intro-graphic-logo').fadeOut('slow')},4000);
-})
-      
-
-
       //Width and height
       var w = window.innerWidth;
       var h = 400;

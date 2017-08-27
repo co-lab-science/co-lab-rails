@@ -2,14 +2,8 @@ class LabsController < ApplicationController
   before_action :set_lab, only: [:show, :edit, :update, :destroy]
   before_action :authenticate
 
-  def search
-    page = params[:page] || 1
-    lab_collection = Lab.search(params[:search_term], page)
-    render json: {count: lab_collection.count, labs: lab_collection, page: page}
-  end
-
   def index
-    @labs = Lab.all
+    @labs = Lab.all.paginate(per_page: 10, page: params["page"])
     @tags = Tag.all
   end
 
@@ -69,3 +63,4 @@ class LabsController < ApplicationController
       params.require(:lab).permit(:title, :body, comments_attributes: [:id, :title, :body]) 
     end
 end
+

@@ -5,9 +5,8 @@ class Lab < ApplicationRecord
   has_many :tags
   has_many :downvotes
   has_many :upvotes
+  has_many :likes
+  has_many :dislikes
 
-  def self.search(search_term, page)
-    where("title LIKE ? OR body LIKE ?", "%#{search_term}%", "%#{search_term}%")
-      .paginate(per_page: 50, page: page)
-  end
 end
+

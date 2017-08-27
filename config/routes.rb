@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   root to: "static_page#home"
 
-  scope '/labs' do
-    get '/search', to: 'labs#search'
-  end
+  get '/search', to: 'searches#search'
+
+  get '/explore', to: "labs#index"
 
   scope '/admin' do
     resources :tags

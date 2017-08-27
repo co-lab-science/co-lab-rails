@@ -7,12 +7,7 @@
 
 <p>
   <strong>Content:</strong>
-  <%= @question.content %>
-</p>
-
-<p>
-  <strong>Text:</strong>
-  <%= @question.text %>
+  <%= @question.body %>
 </p>
 
 <%= link_to 'Edit', edit_question_path(@question) %> |

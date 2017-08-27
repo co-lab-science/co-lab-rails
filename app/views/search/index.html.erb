@@ -25,30 +25,17 @@
         <% end %>
  -->
       </div>
-      <div class="comment">
-        <h2>Trending Tags</h2>
-        <% @tags.first(10).each do |tag| %>
-          <div class="comment-type trending"><%= tag.name %></div>
-        <% end %>
-      </div>
-      <div class=" comments">
-        <h2>All Tags</h2>
-        <% @tags.each do |tag| %>
-          <div class="comment-type"><%= tag.name %></div>
-        <% end %>
-      </div>
     </div>
   </section>
   <section class="listings">
-    <h2 class="listing-title">Observations</h2>
+    <h2 class="listing-title">Search Results</h2>
     <% @search_results.each_with_index do |lab, index| %>
     <div class="lab">
       <span class="lab-rank"><%= index + 1 %></span>
       <div class="lab-votes">
         <div class="lab-vote-up-button" data-lab="<%= lab.id %>"></div>
-        <div class="lab-vote-up-total"><%= lab.upvotes.count %></div>
-        <div class="lab-vote-value"><%= lab.upvotes.count - lab.downvotes.count %></div>
-        <div class="lab-vote-down-total"><%= lab.downvotes.count %></div>
+        <div class="lab-vote-up-total"><%= lab.likes.count %></div>
+        <div class="lab-vote-down-total"><%= lab.dislikes.count %></div>
         <div class="lab-vote-down-button" data-lab="<%= lab.id %>"></div>
       </div>
       <div class="lab-info">
@@ -60,16 +47,10 @@
         </ul>
         <p class="lab-submitted">created at
           <time class="lab-since-submitted">
-           <%= lab.created_at%>
           </time>
-            by <%= link_to User.find(Lab.find(1).user_id).name, lab, class:"lab-creator" %> with tags
-            <% lab.tags.each_with_index do |tag, index| %>
-            <a class="lab-section"><%= tag.name %></a>,
-            <% end %>
         </p>
       </div>
     </div>
     <% end %>
   </section>
 </main>
-
