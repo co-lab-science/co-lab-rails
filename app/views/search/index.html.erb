@@ -1,35 +1,31 @@
 <main>
-  <section class="general-info">
-    <%= will_paginate @search_results %>
-    <div class="general-overview">
-      <h2 class="general-info-title"><%= link_to 'Co-Lab Home', '/' %></h2>
-      <h2 class="general-info-more"><%= link_to 'New Lab', new_lab_path %></h2>
-    </div>
-    <div class="general-comments">
-      <div class="comment">
-        <div class="comment-type selected">Biochemistry</div>
-        <p><strong>These aren't the labs you're looking for?</strong> <span class="js-tips comments">Tips</span></p>
-        <div class="tips comments show">
-          Clear query, clear community.<br>
-          Order your thoughts into a succinct search query.<br>
-          Reference the <strong>related</strong> tag above and the <strong>general</strong> tags below.<br>
-          Rewrite your succint search below. <strong>lather, rinse, repeat.</strong>
-        </div>
-        <input type="textarea" class="tips comments show">
-        <div class="white rounded blue-border">search</div>
-<!-- search form -->
-<!--         <%= form_tag("labs/search", method: "get") do %>
-          <%= label_tag(:q, "") %>
-          <%= text_field_tag(:q)%>
-          <%= submit_tag("Search Again")%>
-        <% end %>
- -->
+<section class="general-info">
+  <%= will_paginate @search_results %>
+  <div class="general-overview">
+    <h2 class="general-info-more"><%= link_to 'New Lab', new_observation_path %></h2>
+  </div>
+  <div class="general-comments">
+    <div class="comment">
+      <div class="comment-type selected">Biochemistry</div>
+      <p><strong>These aren't the labs you're looking for?</strong> <span class="js-tips comments">Tips</span></p>
+      <div class="tips comments show">
+        Clear query, clear community.<br>
+        Order your thoughts into a succinct search query.<br>
+        Reference the <strong>related</strong> tag above and the <strong>general</strong> tags below.<br>
+        Rewrite your succint search below. <strong>lather, rinse, repeat.</strong>
       </div>
+      <%= form_tag("search", method: "get") do %>
+        <%= label_tag(:search_term, "Search for ...") %>
+        <%= text_field_tag(:search_term)%>
+        <br>
+        <%= submit_tag("Search") %>
+      <% end %>
     </div>
-  </section>
-  <section class="listings">
-    <h2 class="listing-title">Search Results</h2>
-    <% @search_results.each_with_index do |lab, index| %>
+  </div>
+</section>
+<section class="listings">
+  <h2 class="listing-title">Search Results</h2>
+  <% @search_results.each_with_index do |lab, index| %>
     <div class="lab">
       <span class="lab-rank"><%= index + 1 %></span>
       <div class="lab-votes">
@@ -39,18 +35,18 @@
         <div class="lab-vote-down-button" data-lab="<%= lab.id %>"></div>
       </div>
       <div class="lab-info">
-        <p class="lab-title"><%= link_to lab.title, lab, class:"lab-link"  %></p>
+        <p class="lab-title"><%= link_to lab.title, observation_path(lab.id), class:"lab-link"  %></p>
         <ul class="lab-details">
-          <li class="lab-comments"> <%= link_to Comment.where(lab_id: lab.id).length.to_s + ' comments', lab, class:"lab-comments-total white rounded blue-border" %></li>
-          <li class="lab-questions"> <%= link_to Question.where(lab_id: lab.id).length.to_s + ' questions', lab, class:"lab-questions-total white rounded blue-border" %></li>
-          <li class="lab-hypotheses"> <%= link_to Hypothesis.where(lab_id: lab.id).length.to_s + ' hypotheses', lab, class:"lab-hypotheses-total white rounded blue-border" %></li>
+          <li class="lab-comments"> <%= link_to lab.comments.count.to_s + ' comments', observations_path, class:"lab-comments-total white rounded blue-border" %></li>
+          <li class="lab-questions"> <%= link_to lab.questions.count.to_s + ' questions', observations_path, class:"lab-questions-total white rounded blue-border" %></li>
+          <li class="lab-hypotheses"> <%= link_to lab.hypotheses.count.to_s + ' hypotheses', observations_path, class:"lab-hypotheses-total white rounded blue-border" %></li>
         </ul>
         <p class="lab-submitted">created at
-          <time class="lab-since-submitted">
-          </time>
+        <time class="lab-since-submitted">
+        </time>
         </p>
       </div>
     </div>
-    <% end %>
-  </section>
+  <% end %>
+</section>
 </main>

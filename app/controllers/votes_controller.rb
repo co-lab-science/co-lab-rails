@@ -13,7 +13,9 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    @vote = vote_type.find_by(vote_params.to_h)
+    find_param = vote_params.to_h
+    find_param.delete :id
+    @vote = vote_type.find_by(find_param)
     @vote.destroy
     render json: { vote: @vote }, status: :ok
   end

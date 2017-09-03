@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require d3
-//= require turbolinks
+//= require jquery-comments.min.js
 //= require bootstrap
 //= require summernote
 //= require_tree .

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :labs
+  resources :labs, as: 'observations', path: 'observations'
   resources :users
   resources :likes
   resources :votes
