@@ -2,12 +2,10 @@ class LikesController < ApplicationController
   before_action :validate_liker
 
   def create
-    if !liked?
-      like_create_count.times do
-        like_type.create(hypothesis_id: like_params[:hypothesis_id], user_id: current_user.id)
-      end
-      render json: {}, status: :ok
+    like_create_count.times do
+      like_type.create(hypothesis_id: like_params[:hypothesis_id], user_id: current_user.id)
     end
+    render json: {}, status: :ok
   end
 
   def destroy
@@ -23,8 +21,9 @@ class LikesController < ApplicationController
     hypothesis = Hypothesis.find(like_params[:hypothesis_id])
     hypothesis.tags.each do |tag|
       current_user.specialities.each do |speciality|
-        if tag.name == speciality.category
-          return create_count = (speciality.rank || 1) * (ENV["RANK_MULTIPLIER"] || 5)
+        if tag.name == speciality.category && create_count 
+          new_create_count = (speciality.rank || 1) * (ENV["RANK_MULTIPLIER"] || 5)
+          create_count = new_create_count if new_create_count > create_count
         end
       end
     end
@@ -44,7 +43,7 @@ class LikesController < ApplicationController
   end
 
   def like_params
-    params.permit(:user_id, :hypothesis_id, :like_type)
+    params.permit(:question_id, :user_id, :comment_id, :id, :lab_id, :hypothesis_id)
   end
 end
 

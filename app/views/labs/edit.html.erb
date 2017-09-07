@@ -1,6 +1,5 @@
 <h1>Editing Lab</h1>
 
-<%= render 'form', lab: @lab %>
+<%= render 'edit_form', lab: @lab %>
 
-<%= link_to 'Show', @lab %> |
-<%= link_to 'Back', observations_path %>
+<%= link_to 'Show', observation_path(@lab) %> |

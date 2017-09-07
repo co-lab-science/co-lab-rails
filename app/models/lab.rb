@@ -12,5 +12,6 @@ class Lab < ApplicationRecord
   has_many :upvotes
   has_many :likes
   has_many :dislikes
+  has_many :lab_files
 end
 

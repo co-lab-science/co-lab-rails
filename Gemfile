@@ -10,6 +10,8 @@ end
 gem 'rails', '~> 5.0.2'
 
 gem 'pg'
+gem 'aws-sdk'
+gem 'figaro'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 gem 'will_paginate', '~> 3.1.0'

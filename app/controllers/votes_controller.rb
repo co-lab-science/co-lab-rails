@@ -2,13 +2,11 @@ class VotesController < ApplicationController
   before_action :validate_voter
 
   def create
-    if !voted?
-      @vote = vote_type.new(vote_params)
-      if @vote.save
-        render json: { vote: @vote }, status: :ok
-      else
-        render json: {}, status: :internal_server_error
-      end
+    @vote = vote_type.new(vote_params)
+    if @vote.save
+      render json: { vote: @vote }, status: :ok
+    else
+      render json: {}, status: :internal_server_error
     end
   end
 
@@ -35,7 +33,7 @@ class VotesController < ApplicationController
   end
 
   def vote_params
-    params.permit(:user_id, :comment_id, :id, :lab_id, :hypothesis_id)
+    params.permit(:question_id, :user_id, :comment_id, :id, :lab_id, :hypothesis_id)
   end
 end
 

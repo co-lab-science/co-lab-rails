@@ -1,5 +1,44 @@
-<h1>New Question</h1>
+<main>
+  <section class="general-info">
+      <div class="general-overview">
+          <h2 class="general-info-title"><%= link_to 'All questions', observations_path %></h2>
+          <h2 class="general-info-more">Research Database</h2>
+      </div>
+      <div class="general-comments">
+          <div class="observation-tags">
+                <div class="comment">
+          <p><strong>Tagging your question with appropriate categories?</strong> <span class="js-tips comments">Tips</span></p>
+          <div class="tips comments show">
+            Clear questions, clear community.<br>
+            Select <strong>tags</strong> below that relate to the focal point for your question.<br>
+            Write your succint question by <strong>using the editor on the right.</strong>
+          </div>
+                </div>
+                <div class="comments">
+            </div>
+      </div>
+  </section>
+  <section id="hypothesis-editor" class="listings">
+        <%= render 'form', question: @question %>
+  </section>
+</main>
+<script>
+    $(document).ready(function(){
 
-<%= render 'form', question: @question %>
+        function commentFilter(commentType){
+          $(commentType).click(function(){
+              $(this).toggleClass('selected');
+          })
+        }
 
-<%= link_to 'Back', questions_path %>
+        commentFilter('.comment .comment-type');
+
+        $('.general-info-more').click(function(){
+            $(this).toggleClass('visualization-visable');
+        })
+
+        // incorporate tags form functionality
+
+    })
+</script>
+

@@ -17,16 +17,14 @@
   </div>
 
   <div class="field">
-    <%= f.label :content %>
-    <%= f.text_field :content %>
-  </div>
-
-  <div class="field">
-    <%= f.label :text %>
-    <%= f.text_field :text %>
+    <%= f.label :body %>
+   <%= f.text_area :body, id: "summernote" %>
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.button :submit, class:'btn btn-default' %>
   </div>
 <% end %>
+<script>
+</script>
+

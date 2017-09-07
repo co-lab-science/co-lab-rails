@@ -8,22 +8,24 @@ class LabsController < ApplicationController
   end
 
   def show
-    @questions = []
-    @hypotheses =  []
-    @related_observations = Lab.where(parent: @lab.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
-
-    nested_ids = @related_observations.map.collect{|lab| lab.id}.compact
-
-    while(nested_ids.size != 0) do
-      nested_observations = Lab.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").to_a
-      nested_ids = nested_observations.collect{|lab| lab.id}
-      @related_observations += nested_observations
+    if @lab
+      @related_observations = Lab.where(parent: @lab.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
     end
 
-    @related_observations.each do |observation|
-      observation.user_has_upvoted = !Upvote.where(lab_id: observation.id, user_id: current_user.id).empty? ? true : false
-      observation.user_has_downvoted = !Downvote.where(lab_id: observation.id, user_id: current_user.id).empty? ? true : false
-    end
+      nested_ids = @related_observations.map.collect{|lab| lab.id}.compact
+
+      while(nested_ids.size != 0) do
+        nested_observations = Lab.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").to_a
+        nested_ids = nested_observations.collect{|lab| lab.id}
+        @related_observations += nested_observations
+      end
+
+      if (current_user)
+        @related_observations.each do |observation|
+          observation.user_has_upvoted = !Upvote.where(lab_id: observation.id, user_id: current_user.id).empty? ? true : false
+          observation.user_has_downvoted = !Downvote.where(lab_id: observation.id, user_id: current_user.id).empty? ? true : false
+        end
+      end
 
     respond_to do |format|
       format.html { render :show }
@@ -40,13 +42,19 @@ class LabsController < ApplicationController
   end
 
   def create
-    @lab = current_user.labs.new(lab_params)
+    if params[:lab][:create_from]
+      @lab = Object.const_get(params[:lab][:create_from]).find(params[:lab][:create_from_id]).labs.new(lab_params)
+    else 
+      @lab = current_user.labs.new(lab_params)
+    end
+
     respond_to do |format|
       if @lab.save
         @lab = Lab.where(id: @lab.id).left_outer_joins(:upvotes, :downvotes, :user).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").first
         @lab.user_has_upvoted = !Upvote.where(lab_id: @lab.id, user_id: current_user.id).empty? ? true : false
         @lab.user_has_downvoted = !Downvote.where(lab_id: @lab.id, user_id: current_user.id).empty? ? true : false
 
+        format.html { redirect_to observation_path(@lab) }
         format.json { render json: { status: :created, observation: @lab } }
       else
         format.html { render :new }
@@ -58,7 +66,7 @@ class LabsController < ApplicationController
   def update
     respond_to do |format|
       if @lab.update(lab_params)
-        format.html { redirect_to @lab, notice: 'Lab was successfully updated.' }
+        format.html { redirect_to edit_observation_path(@lab.id), notice: 'Lab was successfully updated.' }
         format.json { render :show, status: :ok, location: @lab }
       else
         format.html { render :edit }
@@ -76,12 +84,16 @@ class LabsController < ApplicationController
   end
 
   private
-    def set_lab
+  def set_lab
+    if params[:id] == 0 || params[:id] == "0"
+      @related_observations = Lab.where(lab_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
+    else
       @lab = Lab.find(params[:id])
     end
+  end
 
-    def lab_params
-      params.require(:lab).permit(:title, :body, :parent, comments_attributes: [:id, :title, :body])
-    end
+  def lab_params
+    params.require(:lab).permit(:hypothesis_id, :user_id, :lab_id, :question_id, :title, :body, :parent, comments_attributes: [:id, :title, :body])
+  end
 end
 

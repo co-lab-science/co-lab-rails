@@ -1,14 +1,63 @@
-<p id="notice"><%= notice %></p>
+<main>
+<section class="general-info" id="content-meta-info" data-content-id="<%= @question.id %>" data-userid="<%= current_user.try(:id) %>" data-content-type="<%= @question.class%>">
+  <div class="general-overview">
+    <h2 class="general-info-title"><%= link_to 'All questions', observations_path %></h2>
+  </div>
+  <div class="general-comments">
+    <div class="observation-tags">
+      <div class="comment">
+        <div class="comment-type type-observation"> + obesrvation</div>
+        <div class="comment-type type-question"> + question</div>
+        <div class="comment-type type-hypothesis"> + hypothesis</div>
+        <div class="comment-type type-citation"> + citation</div>
+      </div>
+      <div id="observation-container-jq" class="comments-container-jq">
+      </div>
+      <div id="questions-container-jq" class="comments-container-jq">
+      </div>
+      <div id="hypothesis-container-jq" class="comments-container-jq">
+      </div>
+      <div id="citations-container-jq" class="comments-container-jq">
+        <% if current_user.try(:id) == @question.user_id %>
+        <input id="fileupload" type="file" name="files[]" data-url="/upload-file?question_id=<%= @question.id %>" multiple>
+      <% end  %>
+        <ul>
+        <% @question.lab_files.each do |file| %>
+          <li> <%= link_to file.name, file.url%> </li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+</section>
+<section class="hypothesis-editor detail-text-view">
+  <div class="general-lab-modifier">
+    <div>
+      <h2 class="general-lab-upvote">Upvote<span><%= @question.upvotes.count %></span></h2>
+      <h2 class="general-lab-downvote">Downvote<span><%= @question.downvotes.count %></span></h2>
+    </div>
+  </div>
+  <h2><%= @question.title %></h2>
+  <span class="comment">
+    <span class="user">
+      <span class="lighten">submitted by </span>
+      <%= User.find(@question.user_id).name %><br>
+      <span class="lighten"><%= @question.created_at %></span>
+      <% if (current_user && current_user.id == @question.user_id) %>
+        <br>
+        <span class="lighten"> <%= link_to "Edit", edit_question_path(@question.id) %> </span>
+      <% end %>
+    </span>
+  </span><br>
+  <p id="notice"><%= notice %></p>
+  <br>
+  <p>
+  <%= sanitize @question.body %>
+  </p>
+</section>
+<section class="hypothesis-editor visualization-view hidden">
+  <div class="lab-graphic"></div>
+</section>
+</main>
 
-<p>
-  <strong>Title:</strong>
-  <%= @question.title %>
-</p>
 
-<p>
-  <strong>Content:</strong>
-  <%= @question.body %>
-</p>
 
-<%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_path %>

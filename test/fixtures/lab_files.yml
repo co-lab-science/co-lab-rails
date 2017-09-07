@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  url: MyString
+  lab_id: 1
+  hypothesis_id: MyString
+  integer: MyString
+  question_id: MyString
+  integer: MyString
+
+two:
+  name: MyString
+  url: MyString
+  lab_id: 1
+  hypothesis_id: MyString
+  integer: MyString
+  question_id: MyString
+  integer: MyString

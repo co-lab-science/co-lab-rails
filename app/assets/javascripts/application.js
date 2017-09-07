@@ -15,5 +15,9 @@
 //= require d3
 //= require jquery-comments.js
 //= require bootstrap
-//= require summernote
+//= require summernote.js
+//= require summernote-editor.js
+//= require jquery.ui.widget.js
+//= require jquery.iframe-transport.js
+//= require jquery.fileupload.js
 //= require_tree .
