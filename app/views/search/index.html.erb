@@ -7,7 +7,6 @@
   </div>
   <div class="general-comments">
     <div class="comment">
-      <div class="comment-type selected">Biochemistry</div>
       <p><strong>These aren't the labs you're looking for?</strong> <span class="js-tips comments">Tips</span></p>
       <div class="tips comments show">
         Clear query, clear community.<br>
@@ -62,7 +61,7 @@
         <div class="lab-info">
           <p class="lab-title"><%= link_to lab.title, question_path(lab.id), class:"lab-link"  %></p>
           <ul class="lab-details">
-            <li class="lab-comments"> <%= link_to Question.where(lab_id: lab.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
+            <li class="lab-comments"> <%= link_to Lab.where(question_id: lab.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
             <li class="lab-questions"> <%= link_to Question.where(parent: lab.id).count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
             <li class="lab-hypotheses"> <%= link_to lab.hypotheses.count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
           </ul>
@@ -85,7 +84,7 @@
         <div class="lab-info">
           <p class="lab-title"><%= link_to lab.title, hypothesis_path(lab.id), class:"lab-link"  %></p>
           <ul class="lab-details">
-            <li class="lab-comments"> <%= link_to Hypothesis.where(lab_id: lab.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
+            <li class="lab-comments"> <%= link_to Lab.where(hypothesis_id: lab.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
             <li class="lab-questions"> <%= link_to Question.where(hypothesis_id: lab.id).count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
             <li class="lab-hypotheses"> <%= link_to Hypothesis.where(parent: lab.id).count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
           </ul>

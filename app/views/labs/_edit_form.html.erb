@@ -13,12 +13,17 @@
 
   <div class="field">
     <%= f.label :title %>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, required: true %>
   </div>
 
   <div class="field">
     <%= f.label :body %>
    <%= f.text_area :body, id: "summernote" %>
+  </div>
+  <div class="field">
+    <label for="lab_tags">Tags</label>
+    <br>
+    <%= text_area_tag :tags, lab.tags.map{|tag| tag.name }.join(', ') ,placeholder: 'Insert tags seperated by commas, for example "Biochemistry, Cell Biology"' %>
   </div>
 
   <div class="actions">

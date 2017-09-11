@@ -1,0 +1,406 @@
+<div class="container">
+  <div class="innerwrap">
+    <section class="section1 clearfix">
+      <div>
+        <div class="row grid clearfix">
+          <div class="col2 first">
+            <img src="https://image.freepik.com/free-icon/profile-user-silhouette_318-40557.jpg" alt="">
+            <h1><%= @user.name%></h1>
+          </div>
+          <div class="col2 last">
+            <div class="grid clearfix">
+              <div class="col3 first">
+                <h1><%= Upvote.where(user_id: @user.id).count %></h1>
+                <span>Upvotes</span>
+              </div>
+              <div class="col3"><h1><%= Like.where(user_id:[@user.id]).count %></h1>
+                <span>Likes</span></div>
+              <div class="col3 last"><h1><%= Lab.where(user_id: [@user.id]).count %></h1>
+                <span>Observations</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <ul class="row2tab clearfix">
+            <li><i class="fa fa-list-alt"></i> <%= link_to 'Observations', "/users/#{@user.id}?content=lab" %> </li>
+            <li><i class="fa fa-list-alt"></i> <%= link_to 'Hypothesis', "/users/#{@user.id}?content=hypothesis" %>  </li>
+            <li><i class="fa fa-list-alt"></i> <%= link_to 'Questions', "/users/#{@user.id}?content=question" %>  </li>
+            <li><i class="fa fa-list-alt"></i> <%= link_to 'Reviews', "/users/#{@user.id}?content=review" %>  </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="section2 clearfix">
+      <div class="grid">
+        <div class="profileinfo">
+          <section class="general-info" style="width: 100%">
+            <section class="listings" style="width: 100%">
+              <h2 class="listing-title"></h2>
+              <% @content.each_with_index do |content, index| %>
+                <% if content.class.name == "Lab" %>
+                  <div class="lab">
+                    <span class="lab-rank"><%= index + 1 %></span>
+                    <div class="lab-votes">
+                      <div class="lab-vote-up-button" data-lab="<%= content.id %>"></div>
+                      <div class="lab-vote-up-total"><%= content.upvotes.count %></div>
+                      <div class="lab-vote-down-total"><%= content.downvotes.count %></div>
+                      <div class="lab-vote-down-button" data-lab="<%= content.id %>"></div>
+                    </div>
+                    <div class="lab-info">
+                      <p class="lab-title"><%= link_to content.title, observation_path(content.id), class:"lab-link"  %></p>
+                      <ul class="lab-details">
+                        <li class="lab-comments"> <%= link_to Lab.where(parent: content.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
+                        <li class="lab-questions"> <%= link_to content.questions.count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
+                        <li class="lab-hypotheses"> <%= link_to content.hypotheses.count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
+                      </ul>
+                      <p class="lab-submitted">created at <%= content.created_at %>
+                    <time class="lab-since-submitted">
+                    </time>
+                      </p>
+                    </div>
+                  </div>
+                <% end %>
+                <% if content.class.name == "Question" %>
+                  <div class="lab">
+                    <span class="lab-rank"><%= index + 1 %></span>
+                    <div class="lab-votes">
+                      <div class="lab-vote-up-button" data-lab="<%= content.id %>"></div>
+                      <div class="lab-vote-up-total"><%= content.upvotes.count %></div>
+                      <div class="lab-vote-down-total"><%= content.downvotes.count %></div>
+                      <div class="lab-vote-down-button" data-lab="<%= content.id %>"></div>
+                    </div>
+                    <div class="lab-info">
+                      <p class="lab-title"><%= link_to content.title, question_path(content.id), class:"lab-link"  %></p>
+                      <ul class="lab-details">
+                        <li class="lab-comments"> <%= link_to Lab.where(question_id: content.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
+                        <li class="lab-questions"> <%= link_to Question.where(parent: content.id).count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
+                        <li class="lab-hypotheses"> <%= link_to content.hypotheses.count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
+                      </ul>
+                      <p class="lab-submitted">created at <%= content.created_at %>
+                    <time class="lab-since-submitted">
+                    </time>
+                      </p>
+                    </div>
+                  </div>
+                <% end %>
+                <% if content.class.name == "Hypothesis" %>
+                  <div class="lab">
+                    <span class="lab-rank"><%= index + 1 %></span>
+                    <div class="lab-votes">
+                      <div class="lab-vote-up-button" data-lab="<%= content.id %>"></div>
+                      <div class="lab-vote-up-total"><%= content.upvotes.count %></div>
+                      <div class="lab-vote-down-total"><%= content.downvotes.count %></div>
+                      <div class="lab-vote-down-button" data-lab="<%= content.id %>"></div>
+                    </div>
+                    <div class="lab-info">
+                      <p class="lab-title"><%= link_to content.title, hypothesis_path(content.id), class:"lab-link"  %></p>
+                      <ul class="lab-details">
+                        <li class="lab-comments"> <%= link_to Lab.where(hypothesis_id: content.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
+                        <li class="lab-questions"> <%= link_to Question.where(hypothesis_id: content.id).count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
+                        <li class="lab-hypotheses"> <%= link_to Hypothesis.where(parent: content.id).count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
+                      </ul>
+                      <p class="lab-submitted">created at <%= content.created_at %>
+                    <time class="lab-since-submitted">
+                    </time>
+                      </p>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </section>
+        </div>
+      </div>
+          </section>
+  </div>
+</div>  
+<style>
+* {
+  margin:0px;
+  padding:0px;
+}
+*, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing:border-box; -o-box-sizing:border-box; box-sizing: border-box; }
+
+.clearfix:before, .clearfix:after { display: table; content: ''; }
+.clearfix:after { clear: both; }
+
+
+body {
+  background: #E2e2e2;
+}
+
+input:focus, textarea:focus, keygen:focus, select:focus {
+  outline: none;
+}
+::-moz-placeholder {
+  font-weight: 300;
+  opacity: 1;
+}
+
+::-webkit-input-placeholder {
+  font-weight: 300;
+}
+
+.grid .col2 {
+  width: 50%;
+  padding: 0 10px 0 0;
+}
+.grid .col2.first {
+  float: left;
+}
+.grid .col2.last {
+  float: right;
+}
+
+.grid .col3 {
+  width: 32%;
+  float: left;
+  margin-right: 11px;
+}
+.grid .col3.first {
+  margin-left: 0;
+  float: left;
+}
+.grid .col3.last {
+  margin-right: 0;
+  float: right;
+}
+
+/* profile page */
+.container {
+  padding: 60px 50px 70px;
+}
+
+.innerwrap {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.section1 {
+  background: #fff;
+  position: relative;
+  border-radius: 2px;
+}
+.section1 div .row:first-child {
+  padding: 25px;
+}
+
+
+.section1 .col2.first img {
+  border-radius: 50%;
+  margin: 0 20px;
+  width: 120px;
+  border:2px solid #f1f1f1;
+  padding: 2px;
+  float: left;
+}
+.section1 .col2.first {
+  line-height: 25px;
+  position: relative;
+  border-right:1px solid #a2a2a2;
+}
+.section1 .col2.first h1 {
+  font-weight: normal;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  text-transform: capitalize;
+}
+.section1 .col2.first p {
+  font-size: 14px;
+}
+.section1 .col2.first span {
+  position: absolute;
+  right: 15px;
+  top: 16px;
+  background: #6AAFEA;
+  padding: 5px 11px;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 2px;
+  color: #fff;
+  cursor:pointer;
+}
+
+.section1 .col2.last {
+  padding: 8px 0;
+}
+.section1 .col2.last .col3 span {
+  color: #a2a2a2;
+  font-size: 14px;
+}
+.section1 .col2.last .col3 h1 {
+}
+
+.section1 .col2.last .col3 {
+  text-align: center;
+  line-height: 30px;
+  border-right: 1px solid #ccc;
+}
+.section1 .col2.last .col3.last {
+  border-right: 0;
+}
+
+.row2tab li {
+  list-style: none;
+  float: left;
+  width: 25%;
+  padding: 15px;
+  font-size: 14px;
+  text-align: center;
+  cursor:pointer;
+  background: #f1f1f1;
+  color: #555;
+  border-bottom: 2px solid #f1f1f1;
+}
+.row2tab li:first-child {
+  border-radius: 0 0 2px 2px;
+}
+.row2tab li:first-child {
+}
+.row2tab li i {
+  margin-right: 3px;
+  font-size: 14px;
+}
+
+.smalltri {
+  border-right: 40px solid #6AAFEA;
+  height: 0;
+  width: 0;
+  border-left: 20px solid transparent;
+  border-top: 10px solid #6AAFEA;
+  border-bottom: 20px solid transparent;
+  padding: 0px;
+  top: 0;
+  right: 0;
+  position: absolute;
+}
+.smalltri i {
+  position: absolute;
+  top: -5px;
+  right: -33px;
+  color: #fff;
+  border: 0px;
+  font-size: 12px;
+}
+
+section.section2 {
+  margin: 50px 0;
+}
+
+.section2 .col3 {
+  width: 30%;
+  margin-right: 60px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.section2 .postcont img {
+
+  width: 100%;
+}
+.section2 .profileinfo {
+  text-align: center;
+  padding: 0 10px 30px;
+  color: #555;
+  font-size: 14px;
+  line-height: 25px;
+}
+.section2 .profileinfo img {
+  border-radius: 50%;
+  width: 80px;
+  padding: 2px;
+  border: 3px solid #6AAFEA;
+  margin-top: -48px;
+  margin-bottom: 18px;
+}
+.section2 .col3.center .profileinfo img {
+  border: 3px solid #FB4C22;
+
+}
+.section2 .profileinfo p {
+  text-align: justify;
+}
+.section2 .profileinfo span {
+  margin-top: 15px;
+  display: block;
+  text-align: left;
+  color: #6AAFEA;
+  cursor: pointer;
+}
+.section2 .profileinfo span i {
+  margin-left: 10px;
+}
+
+  @media only screen and (max-width: 1300px) {
+    .innerwrap {
+      width: 90%;
+    }
+    .section2 .col3 {
+      margin-right: 5%;
+    }
+    .section1 .grid .col3 {
+      margin-right: 2%;
+    }
+    .section1 .col2.last .col3.last {
+      margin-right: 0;
+    }
+  }
+
+  @media only screen and (max-width: 1060px) {
+    .section1 .col2 {
+      width: 100%;
+      border-right:0 !important;
+      padding: 0;
+    }
+  }
+
+  @media only screen and (max-width: 660px) {
+    .section2 .col3 {
+      width: 100%;
+      float: none !important;
+      margin-bottom: 10px;
+    }
+    .row2tab li {
+      width: 50%;
+      text-align: left;
+    }
+    .section1 .col2.first {
+      text-align: center;
+    }
+    .section1 .col2.first img {
+      display: inline-block;
+      float: none;
+    }
+    .section1 .col2.first span {
+      position: relative;
+      right: 0;
+    }
+    .section1 .col2.last {
+      margin-top:25px;
+    }
+  }
+  @media only screen and (max-width: 450px) {
+    .container {
+      padding: 60px 5px 70px;
+    }
+    .row2tab li {
+      width: 100%;
+      text-align: left;
+    }
+    .section1 .col2.last .col3 span {
+      font-size: 10px;
+    }
+    .section1 .col2.last .col3 h1 {
+      font-size: 18px;
+    }
+
+  }
+  @media (min-width: 1200px) {
+
+    .container {
+      width: 100% !important;
+    }
+
+
+  }
+
+</style>

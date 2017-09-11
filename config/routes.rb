@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
+  resources :reviews
   root to: "static_page#home"
 
   get '/search', to: 'searches#search'
 
-  get '/explore', to: "labs#index"
   post '/upload', to: "uploads#upload"
   post '/upload-file', to: "uploads#file_upload"
 
@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :labs, as: 'observations', path: 'observations'
   resources :users
+  resources :reviews
   resources :likes
   resources :votes
   resources :hypotheses

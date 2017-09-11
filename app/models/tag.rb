@@ -1,4 +1,5 @@
 class Tag < ApplicationRecord
-  belongs_to :lab, required: false
-  belongs_to :hypothesis, required: false
+  has_many :labs
+  has_many :hypothesis
+  has_many :questions
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908092441) do
+ActiveRecord::Schema.define(version: 20170911134408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20170908092441) do
     t.integer  "parent"
     t.integer  "question_id"
     t.integer  "review_id"
+    t.integer  "tag_id"
   end
 
   create_table "lab_files", force: :cascade do |t|
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(version: 20170908092441) do
     t.integer  "parent"
     t.integer  "question_id"
     t.integer  "hypothesis_id"
+    t.integer  "tag_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -103,6 +105,16 @@ ActiveRecord::Schema.define(version: 20170908092441) do
     t.datetime "updated_at",    null: false
     t.integer  "parent"
     t.integer  "hypothesis_id"
+    t.integer  "tag_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string   "title"
+    t.text     "body"
+    t.integer  "user_id"
+    t.integer  "hypothesis_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "specialities", force: :cascade do |t|
@@ -119,6 +131,7 @@ ActiveRecord::Schema.define(version: 20170908092441) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "hypothesis_id"
+    t.integer  "question_id"
   end
 
   create_table "upvotes", force: :cascade do |t|

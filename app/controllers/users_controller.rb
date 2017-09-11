@@ -16,6 +16,14 @@ class UsersController < ApplicationController
     render '/admin/users/edit'
   end
 
+  def show
+    @user = User.find(params[:id])
+    @content = []
+    if params[:content]
+      @content = Object.const_get(params[:content].capitalize).where(user_id: @user.id).paginate(per_page: 50, page: params[:page])
+    end
+  end
+
   def update
     @user = User.find(params[:id])
     @user.update(user_params)

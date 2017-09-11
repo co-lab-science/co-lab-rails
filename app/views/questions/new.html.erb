@@ -1,8 +1,7 @@
 <main>
   <section class="general-info">
       <div class="general-overview">
-          <h2 class="general-info-title"><%= link_to 'All questions', observations_path %></h2>
-          <h2 class="general-info-more">Research Database</h2>
+          <h2 class="general-info-title"><%= link_to 'Back to Search', '/search?utf8=✓&search_term=&commit=Search' %></h2>
       </div>
       <div class="general-comments">
           <div class="observation-tags">
@@ -15,6 +14,11 @@
           </div>
                 </div>
                 <div class="comments">
+                  <h2>Trending Tags Reference</h2>
+                        <% @tags.first(10).each do |tag| %>
+                            <div class="comment-type trending static"><%= tag.name %></div>
+                        <% end %>
+                </div>
             </div>
       </div>
   </section>
@@ -22,23 +26,4 @@
         <%= render 'form', question: @question %>
   </section>
 </main>
-<script>
-    $(document).ready(function(){
-
-        function commentFilter(commentType){
-          $(commentType).click(function(){
-              $(this).toggleClass('selected');
-          })
-        }
-
-        commentFilter('.comment .comment-type');
-
-        $('.general-info-more').click(function(){
-            $(this).toggleClass('visualization-visable');
-        })
-
-        // incorporate tags form functionality
-
-    })
-</script>
 

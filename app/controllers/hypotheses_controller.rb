@@ -1,6 +1,6 @@
 class HypothesesController < ApplicationController
   before_action :set_hypothesis, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate, only: [:update, :create]
+  before_action :authenticate, only: [:update, :create, :edit]
 
   def index
     @labs = Hypothesis.all.paginate(per_page: 10, page: params["page"])
@@ -9,13 +9,13 @@ class HypothesesController < ApplicationController
 
   def show
     if @hypothesis
-      @related_hypotheses = Hypothesis.where(parent: @hypothesis.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("hypotheses.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "COUNT(likes.id) as like_count","COUNT(dislikes.id) as dislike_count" ,"users.name as fullname").group(:id, "fullname")
+      @related_hypotheses = Hypothesis.where(parent: @hypothesis.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("hypotheses.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT (DISTINCT downvotes.id) as downvote_count", "COUNT(DISTINCT likes.id) as like_count","COUNT(DISTINCT dislikes.id) as dislike_count" ,"users.name as fullname").group(:id, "upvotes.id","fullname")
     end
 
     nested_ids = @related_hypotheses.map.collect{|hypothesis| hypothesis.id}.compact
 
     while(nested_ids.size != 0) do
-      nested_hypotheses = Hypothesis.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("hypotheses.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "COUNT(likes.id) as like_count","COUNT(dislikes.id) as dislike_count","users.name as fullname").group(:id, "fullname").to_a
+      nested_hypotheses = Hypothesis.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("hypotheses.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "COUNT(DISTINCT likes.id) as like_count","COUNT(DISTINCT dislikes.id) as dislike_count","users.name as fullname").group(:id, "fullname").to_a
       nested_ids = nested_hypotheses.collect{|hypothesis| hypothesis.id}
       @related_hypotheses += nested_hypotheses
     end
@@ -47,7 +47,12 @@ class HypothesesController < ApplicationController
 
     respond_to do |format|
       if @hypothesis.save
-        @hypothesis = Hypothesis.where(id: @hypothesis.id).left_outer_joins(:upvotes, :downvotes, :user).select("hypotheses.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").first
+        if params[:tags]
+          tag_names = params[:tags].split(/,/).collect{|tag| tag.strip}.uniq
+          Tag.where(hypothesis_id: @hypothesis.id).destroy_all
+          tag_names.each{ |tag_name| Tag.create(hyothesis_id: @hypothesis.id, name: tag_name) }
+        end
+        @hypothesis = Hypothesis.where(id: @hypothesis.id).left_outer_joins(:upvotes, :downvotes, :user).select("hypotheses.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT( DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").first
         @hypothesis.user_has_upvoted = !Upvote.where(hypothesis_id: @hypothesis.id, user_id: current_user.id).empty? ? true : false
         @hypothesis.user_has_downvoted = !Downvote.where(hypothesis_id: @hypothesis.id, user_id: current_user.id).empty? ? true : false
         @hypothesis.user_has_liked = !Like.where(hypothesis_id: @hypothesis.id, user_id: current_user.id).empty? ? true : false
@@ -64,6 +69,11 @@ class HypothesesController < ApplicationController
   def update
     respond_to do |format|
       if @hypothesis.update(hypothesis_params)
+        if params[:tags]
+          tag_names = params[:tags].split(/,/).collect{|tag| tag.strip}.uniq
+          Tag.where(hypothesis_id: @hypothesis.id).destroy_all
+          tag_names.each{ |tag_name| Tag.create(hypothesis_id: @hypothesis.id, name: tag_name) }
+        end
         format.html { redirect_to edit_hypothesis_path(@hypothesis.id), notice: 'hypothesis was successfully updated.' }
         format.json { render :show, status: :ok, location: @hypothesis }
       else
@@ -84,7 +94,7 @@ class HypothesesController < ApplicationController
   private
     def set_hypothesis
       if params[:id] == 0 || params[:id] == "0"
-        @related_hypotheses = Hypothesis.where(hypothesis_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("hypotheses.*", "COUNT(likes.id) as like_count","COUNT(dislikes.id) as dislike_count","COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
+        @related_hypotheses = Hypothesis.where(hypothesis_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("hypotheses.*", "COUNT(DISTINCT likes.id) as like_count","COUNT(DISTINCT dislikes.id) as dislike_count","COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
       else
         @hypothesis = Hypothesis.find(params[:id])
       end

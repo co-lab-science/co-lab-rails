@@ -1,10 +1,10 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate, only: [:update, :create]
+  before_action :authenticate, only: [:update, :create, :edit]
 
   def index
     @labs = Question.all.paginate(per_page: 10, page: params["page"])
-    @tags = Tag.all
+    @tags = Tag.all.limit(10)
   end
 
   def show
@@ -35,6 +35,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+    @tags = Tag.all.limit(10)
   end
 
   def edit
@@ -43,12 +44,17 @@ class QuestionsController < ApplicationController
   def create
     if params[:question][:create_from]
       @question = Object.const_get(params[:question][:create_from]).find(params[:question][:create_from_id]).questions.new(question_params)
-    else 
+    else
       @question = current_user.questions.new(question_params)
     end
 
     respond_to do |format|
       if @question.save
+        if params[:tags]
+          tag_names = params[:tags].split(/,/).collect{|tag| tag.strip}.uniq
+          Tag.where(question_id: @question.id).destroy_all
+          tag_names.each{ |tag_name| Tag.create(question_id: @question.id, name: tag_name) }
+        end
         @question = Question.where(id: @question.id).left_outer_joins(:upvotes, :downvotes, :user).select("questions.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").first
         @question.user_has_upvoted = !Upvote.where(question_id: @question.id, user_id: current_user.id).empty? ? true : false
         @question.user_has_downvoted = !Downvote.where(question_id: @question.id, user_id: current_user.id).empty? ? true : false
@@ -65,6 +71,11 @@ class QuestionsController < ApplicationController
   def update
     respond_to do |format|
       if @question.update(question_params)
+        if params[:tags]
+          tag_names = params[:tags].split(/,/).collect{|tag| tag.strip}.uniq
+          Tag.where(question_id: @question.id).destroy_all
+          tag_names.each{ |tag_name| Tag.create(question_id: @question.id, name: tag_name) }
+        end
         format.html { redirect_to edit_question_path(@question.id), notice: 'question was successfully updated.' }
         format.json { render :show, status: :ok, location: @question }
       else

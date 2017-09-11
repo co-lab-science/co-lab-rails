@@ -4,6 +4,7 @@ class Hypothesis < ApplicationRecord
   attr_accessor :user_has_liked
   attr_accessor :user_has_disliked
   belongs_to :user
+  has_many :reviews
   has_many :comments
   has_many :labs
   has_many :questions

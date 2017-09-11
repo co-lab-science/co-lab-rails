@@ -1,10 +1,10 @@
 class LabsController < ApplicationController
   before_action :set_lab, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate, only: [:update, :create]
+  before_action :authenticate, only: [:update, :create, :edit]
 
   def index
     @labs = Lab.all.paginate(per_page: 10, page: params["page"])
-    @tags = Tag.all
+    @tags = Tag.all.limit(10)
   end
 
   def show
@@ -35,7 +35,7 @@ class LabsController < ApplicationController
 
   def new
     @lab = Lab.new
-    @tags = Tag.all
+    @tags = Tag.all.limit(10)
   end
 
   def edit
@@ -50,6 +50,12 @@ class LabsController < ApplicationController
 
     respond_to do |format|
       if @lab.save
+        if params[:tags]
+          tag_names = params[:tags].split(/,/).collect{|tag| tag.strip}.uniq
+          Tag.where(lab_id: @lab.id).destroy_all
+          tag_names.each{ |tag_name| Tag.create(lab_id: @lab.id, name: tag_name) }
+        end
+
         @lab = Lab.where(id: @lab.id).left_outer_joins(:upvotes, :downvotes, :user).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").first
         @lab.user_has_upvoted = !Upvote.where(lab_id: @lab.id, user_id: current_user.id).empty? ? true : false
         @lab.user_has_downvoted = !Downvote.where(lab_id: @lab.id, user_id: current_user.id).empty? ? true : false
@@ -66,6 +72,11 @@ class LabsController < ApplicationController
   def update
     respond_to do |format|
       if @lab.update(lab_params)
+        if params[:tags]
+          tag_names = params[:tags].split(/,/).collect{|tag| tag.strip}.uniq
+          Tag.where(lab_id: @lab.id).destroy_all
+          tag_names.each{ |tag_name| Tag.create(lab_id: @lab.id, name: tag_name) }
+        end
         format.html { redirect_to edit_observation_path(@lab.id), notice: 'Lab was successfully updated.' }
         format.json { render :show, status: :ok, location: @lab }
       else

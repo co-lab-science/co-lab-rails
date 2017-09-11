@@ -1,7 +1,7 @@
 <main>
 <section class="general-info" id="content-meta-info" data-content-id="<%= @lab.id %>" data-userid="<%= current_user.try(:id) %>" data-content-type="<%= @lab.class%>">
   <div class="general-overview">
-    <h2 class="general-info-title"><%= link_to 'All Labs', observations_path %></h2>
+    <h2 class="general-info-title"><%= link_to 'Back to Search', '/search?utf8=✓&search_term=&commit=Search' %></h2>
   </div>
   <div class="general-comments">
     <div class="observation-tags">
@@ -63,4 +63,27 @@
   <div class="lab-graphic"></div>
 </section>
 </main>
+<div id="myModal" class="modal fade" role="dialog" >
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Hypothesis Like Submission</h4>
+      </div>
+      <div class="modal-body">
+        <p>In order to proceed with your "like" you must leave a review of this hypothesis</p>
+        <input placeholder="Review title", required="true" type="text" id="review-submission-title" style="width:100%;height:50px;"> </input>
+        <textarea id="review-submission-content" style="width:100%;height:200px;"> </textarea>
+        <br>
+        <button id="hypothesis-submit"> Submit</button>
+
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+
+  </div>
+</div>
 
