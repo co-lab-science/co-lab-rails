@@ -55,16 +55,15 @@
     background-color: rgba(237,237,237, 0.65);
 }
 /* lab voting */
-.general-lab-upvote, .general-lab-downvote{
+.general-lab-upvote, .general-lab-downvote, .general-lab-like, .general-lab-dislike{
     background-position: 0 5px;
-    padding-left: 35px;
+    padding-left: 10px;
+    display: inline;
 }
 .general-lab-upvote{
-    background: url(<%= asset_data_uri 'mbri/mbri-up.svg' %>) no-repeat;
     margin-top: 0;
 }
 .general-lab-downvote{
-    background: url(<%= asset_data_uri 'mbri/mbri-down.svg' %>) no-repeat;
     margin-top: 25px;
     margin-bottom: 40px;
 }

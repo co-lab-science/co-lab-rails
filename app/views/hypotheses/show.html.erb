@@ -1,5 +1,5 @@
 <main>
-<section class="general-info" id="content-meta-info" data-content-id="<%= @hypothesis.id %>" data-userid="<%= current_user.try(:id) %>" data-content-type="<%= @hypothesis.class%>">
+<section class="general-info" id="content-meta-info" data-content-id="<%= @hypothesis.id %>" data-userid="<%= current_user.try(:id) %>" data-content-type="<%= @hypothesis.class%>" data-content-has-upvoted-current="<%= !@hypothesis.upvotes.where(user_id: current_user.id).empty? if current_user %>" data-content-has-downvoted-current="<%= !@hypothesis.downvotes.where(user_id: current_user.id).empty? if current_user%>" >
   <div class="general-overview">
     <h2 class="general-info-title"><%= link_to 'Back to Search', '/search?utf8=✓&search_term=&commit=Search' %></h2>
   </div>
@@ -47,8 +47,11 @@
 <section class="hypothesis-editor detail-text-view">
   <div class="general-lab-modifier">
     <div>
-      <h2 class="general-lab-upvote">Upvote<span><%= @hypothesis.upvotes.count %></span></h2>
-      <h2 class="general-lab-downvote">Downvote<span><%= @hypothesis.downvotes.count %></span></h2>
+      <button class="main-action main-upvote"><span class="main-upvote-count"></span><i class="fa fa-thumbs-up"></i></button>
+      <h2 class="general-lab-upvote">Upvote<span> <%= @hypothesis.upvotes.count %></span></h2>
+      <br>
+      <button class="main-action main-downvote"><span class="main-downvote-count"></span><i class="fa fa-thumbs-down"></i></button>
+      <h2 class="general-lab-downvote">Downvote<span> <%= @hypothesis.downvotes.count %></span></h2>
     </div>
   </div>
   <div class="lab-tags">
@@ -109,7 +112,6 @@
   font-size: 12pt;
 }
 .amazing-reviews blockquote {
-  font-family: Myriad, Helvetica, 'Lucida Grande', 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, Arial, sans-serif;
   padding: 0;
   background: white;
   margin: 30px 0 0 0;
@@ -185,11 +187,8 @@
 .amazing-reviews blockquote span em {
   font-style: normal;
   font-weight: bold;
-  color: #155096;
-  text-decoration: underline;
 }
 .amazing-reviews blockquote span:last-of-type {
-  color: #e47d21;
   font-size: 10pt;
   font-weight: bold;
   display: block;
