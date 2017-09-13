@@ -9,13 +9,13 @@ class QuestionsController < ApplicationController
 
   def show
     if @question
-      @related_questions = Question.where(parent: @question.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
+      @related_questions = Question.where(parent: @question.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
     end
 
     nested_ids = @related_questions.map.collect{|question| question.id}.compact
 
     while(nested_ids.size != 0) do
-      nested_questions = Question.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").to_a
+      nested_questions = Question.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").to_a
       nested_ids = nested_questions.collect{|question| question.id}
       @related_questions += nested_questions
     end
@@ -96,7 +96,7 @@ class QuestionsController < ApplicationController
   private
     def set_question
       if params[:id] == 0 || params[:id] == "0"
-        @related_questions = Question.where(question_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
+        @related_questions = Question.where(question_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
       else
         @question = Question.find(params[:id])
       end

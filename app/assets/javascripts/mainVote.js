@@ -19,72 +19,74 @@ $(document).ready(function() {
     }
 
   } catch(e) {}
-  $('.main-upvote').on('click', function() {
+  if (userid) {
+    $('.main-upvote').on('click', function() {
 
-    var contentKey = contentType.toLowerCase() + '_id'
-    if(hasUpvotedCurrentContent) {
+      var contentKey = contentType.toLowerCase() + '_id'
+      if(hasUpvotedCurrentContent) {
 
-      var postData = { user_id: userid, vote_type: "upvote"}
-      postData[contentKey] = contentId
-      $('#content-meta-info').data('contentHasUpvotedCurrent', false)
-      $.ajax({
-        type: 'delete',
-        url: '/votes' + "/0",
-        data: postData,
-        success: function(data) {
-          location.reload();
-        }
-      });
-    } else {
+        var postData = { user_id: userid, vote_type: "upvote"}
+        postData[contentKey] = contentId
+        $('#content-meta-info').data('contentHasUpvotedCurrent', false)
+        $.ajax({
+          type: 'delete',
+          url: '/votes' + "/0",
+          data: postData,
+          success: function(data) {
+            location.reload();
+          }
+        });
+      } else {
 
-      $(this).css('color', '#1b79be')
-      $('#content-meta-info').data('contentHasUpvotedCurrent', true)
+        $(this).css('color', '#1b79be')
+        $('#content-meta-info').data('contentHasUpvotedCurrent', true)
 
-      var postData = { user_id: userid, vote_type: "upvote"}
-      postData[contentKey] = contentId
+        var postData = { user_id: userid, vote_type: "upvote"}
+        postData[contentKey] = contentId
 
-      $.ajax({
-        type: 'post',
-        url: '/votes',
-        data: postData,
-        success: function() {
-          location.reload();
-        }
-      });
-    }
-  })
-  $('.main-downvote').on('click', function() {
+        $.ajax({
+          type: 'post',
+          url: '/votes',
+          data: postData,
+          success: function() {
+            location.reload();
+          }
+        });
+      }
+    })
+    $('.main-downvote').on('click', function() {
 
-    var contentKey = contentType.toLowerCase() + '_id'
-    if(hasDownvotedCurrentContent) {
+      var contentKey = contentType.toLowerCase() + '_id'
+      if(hasDownvotedCurrentContent) {
 
-      var postData = { user_id: userid, vote_type: "downvote"}
-      postData[contentKey] = contentId
-      $('#content-meta-info').data('contentHasDownvotedCurrent', false)
-      $.ajax({
-        type: 'delete',
-        url: '/votes' + "/0",
-        data: postData,
-        success: function(data) {
-          location.reload();
-        }
-      });
-    } else {
+        var postData = { user_id: userid, vote_type: "downvote"}
+        postData[contentKey] = contentId
+        $('#content-meta-info').data('contentHasDownvotedCurrent', false)
+        $.ajax({
+          type: 'delete',
+          url: '/votes' + "/0",
+          data: postData,
+          success: function(data) {
+            location.reload();
+          }
+        });
+      } else {
 
-      $(this).css('color', '#1b79be')
-      $('#content-meta-info').data('contentHasDownvotedCurrent', true)
+        $(this).css('color', '#1b79be')
+        $('#content-meta-info').data('contentHasDownvotedCurrent', true)
 
-      var postData = { user_id: userid, vote_type: "downvote"}
-      postData[contentKey] = contentId
+        var postData = { user_id: userid, vote_type: "downvote"}
+        postData[contentKey] = contentId
 
-      $.ajax({
-        type: 'post',
-        url: '/votes',
-        data: postData,
-        success: function() {
-          location.reload();
-        }
-      });
-    }
-  })
+        $.ajax({
+          type: 'post',
+          url: '/votes',
+          data: postData,
+          success: function() {
+            location.reload();
+          }
+        });
+      }
+    })
+  }
 })

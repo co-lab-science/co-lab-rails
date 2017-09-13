@@ -9,13 +9,13 @@ class LabsController < ApplicationController
 
   def show
     if @lab
-      @related_observations = Lab.where(parent: @lab.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
+      @related_observations = Lab.where(parent: @lab.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
     end
 
       nested_ids = @related_observations.map.collect{|lab| lab.id}.compact
 
       while(nested_ids.size != 0) do
-        nested_observations = Lab.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").to_a
+        nested_observations = Lab.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").to_a
         nested_ids = nested_observations.collect{|lab| lab.id}
         @related_observations += nested_observations
       end
@@ -97,7 +97,7 @@ class LabsController < ApplicationController
   private
   def set_lab
     if params[:id] == 0 || params[:id] == "0"
-      @related_observations = Lab.where(lab_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
+      @related_observations = Lab.where(lab_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
     else
       @lab = Lab.find(params[:id])
     end
