@@ -101,7 +101,7 @@ class HypothesesController < ApplicationController
     end
 
     def hypothesis_params
-      params.require(:hypothesis).permit(:user_id, :lab_id, :hypothesis_id, :title, :body, :parent, comments_attributes: [:id, :title, :body])
+      params.require(:hypothesis).permit(:question_id, :user_id, :lab_id, :hypothesis_id, :title, :body, :parent, comments_attributes: [:id, :title, :body])
     end
 end
 
