@@ -106,6 +106,22 @@
                     </div>
                   </div>
                 <% end %>
+                <% if content.class.name == "Review" %>
+                  <div class="lab">
+                    <div class="lab-votes">
+                    </div>
+                    <div class="lab-info">
+                    <p class="lab-title"><%= content.title  %></p>
+                      <ul class="lab-details">
+                        <p class="lab-title"><%= content.body  %></p>
+                      </ul>
+                      <p class="lab-submitted">created at <%= content.created_at %>
+                    <time class="lab-since-submitted">
+                    </time>
+                      </p>
+                    </div>
+                  </div>
+                <% end %>
               <% end %>
             </section>
         </div>
