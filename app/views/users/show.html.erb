@@ -34,11 +34,15 @@
         <div class="profileinfo">
           <section class="general-info" style="width: 100%">
             <section class="listings" style="width: 100%">
-              <h2 class="listing-title"></h2>
               <% @content.each_with_index do |content, index| %>
+              <h2 class="listing-title"></h2>
                 <% if content.class.name == "Lab" %>
                   <div class="lab">
                     <span class="lab-rank"><%= index + 1 %></span>
+                    <div class="lab-votes">
+                      <i class="fa fa-arrow-up"></i><%= content.upvotes.count %>
+                      <i class="fa fa-arrow-down"></i><%= content.downvotes.count %>
+                    </div>
                     <div class="lab-votes">
                       <div class="lab-vote-up-button" data-lab="<%= content.id %>"></div>
                       <div class="lab-vote-up-total"><%= content.upvotes.count %></div>
@@ -55,6 +59,7 @@
                       <p class="lab-submitted">created at <%= content.created_at %>
                     <time class="lab-since-submitted">
                     </time>
+                     <p class="lab-submitted">content type <strong>Observation<strong>
                       </p>
                     </div>
                   </div>
@@ -62,6 +67,10 @@
                 <% if content.class.name == "Question" %>
                   <div class="lab">
                     <span class="lab-rank"><%= index + 1 %></span>
+                    <div class="lab-votes">
+                      <i class="fa fa-arrow-up"></i><%= content.upvotes.count %>
+                      <i class="fa fa-arrow-down"></i><%= content.downvotes.count %>
+                    </div>
                     <div class="lab-votes">
                       <div class="lab-vote-up-button" data-lab="<%= content.id %>"></div>
                       <div class="lab-vote-up-total"><%= content.upvotes.count %></div>
@@ -78,6 +87,7 @@
                       <p class="lab-submitted">created at <%= content.created_at %>
                     <time class="lab-since-submitted">
                     </time>
+                     <p class="lab-submitted">content type <strong>Question<strong>
                       </p>
                     </div>
                   </div>
@@ -85,6 +95,10 @@
                 <% if content.class.name == "Hypothesis" %>
                   <div class="lab">
                     <span class="lab-rank"><%= index + 1 %></span>
+                    <div class="lab-votes">
+                      <i class="fa fa-arrow-up"></i><%= content.upvotes.count %>
+                      <i class="fa fa-arrow-down"></i><%= content.downvotes.count %>
+                    </div>
                     <div class="lab-votes">
                       <div class="lab-vote-up-button" data-lab="<%= content.id %>"></div>
                       <div class="lab-vote-up-total"><%= content.upvotes.count %></div>
@@ -101,6 +115,7 @@
                       <p class="lab-submitted">created at <%= content.created_at %>
                     <time class="lab-since-submitted">
                     </time>
+                     <p class="lab-submitted">content type <strong>Hypothesis<strong>
                       </p>
                     </div>
                   </div>

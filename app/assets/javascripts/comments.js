@@ -19,7 +19,7 @@ $(document).ready(function() {
         content: 'title'
       },
       noCommentsText: "No Observations",
-      textareaPlaceholderText: "Add an observation",
+      textareaPlaceholderText: "Add an observation,",
       getComments: function(success, error) {
         var commentData = {}
         var observationId = contentId;
@@ -188,6 +188,18 @@ $(document).ready(function() {
         document.location.href = '/observations/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + title
       })
     }
+
+    $('body').on("keydown", ".comment .textarea", function() {
+      if ($(this).parent().find(".sub-full-submit").length == 0) {
+        $(this).parent().find(".control-row").append('<span class="save sub-full-submit highlight-background enabled ">Create with full editor </button></a>')
+        var createFromId = $(this).closest('.comment').data("id")
+
+        $('body').on("click", ".sub-full-submit", function() {
+          var title = $(this).parent().parent().find('.textarea').text()
+          document.location.href = '/observations/new?from_full_editor=true&' + 'create_from=' + "Lab" + '&create_from_id' + '=' + createFromId + "&title=" + title
+        })
+      }
+    })
 
     fullEditor()
   }
@@ -374,6 +386,18 @@ $(document).ready(function() {
       })
     }
 
+    $('body').on("keydown", ".comment .textarea", function() {
+      if ($(this).parent().find(".sub-full-submit").length == 0) {
+        $(this).parent().find(".control-row").append('<span class="save sub-full-submit highlight-background enabled ">Create with full editor </button></a>')
+        var createFromId = $(this).closest('.comment').data("id")
+
+        $('body').on("click", ".sub-full-submit", function() {
+          var title = $(this).parent().parent().find('.textarea').text()
+          document.location.href = '/questions/new?from_full_editor=true&' + 'create_from=' + "Question" + '&create_from_id' + '=' + createFromId + "&title=" + title
+        })
+      }
+    })
+
     fullEditor()
   }
 
@@ -387,7 +411,7 @@ $(document).ready(function() {
         created: 'created_at',
         content: 'title'
       },
-      textareaPlaceholderText: "Add a hypothesis",
+      textareaPlaceholderText: "Add a hypothesis, you can also review each hypothesis by clicking the check icon next to them to approve or the minus icon to disapprove",
       noCommentsText: "No Hypothesis",
       getComments: function(success, error) {
         var commentData = {}
@@ -723,6 +747,18 @@ $(document).ready(function() {
         document.location.href = '/hypotheses/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + title
       })
     }
+
+    $('body').on("keydown", ".comment .textarea", function() {
+      if ($(this).parent().find(".sub-full-submit").length == 0) {
+        $(this).parent().find(".control-row").append('<span class="save sub-full-submit highlight-background enabled ">Create with full editor </button></a>')
+        var createFromId = $(this).closest('.comment').data("id")
+
+        $('body').on("click", ".sub-full-submit", function() {
+          var title = $(this).parent().parent().find('.textarea').text()
+          document.location.href = '/hypotheses/new?from_full_editor=true&' + 'create_from=' + "Hypothesis" + '&create_from_id' + '=' + createFromId + "&title=" + title
+        })
+      }
+    })
 
     fullEditor()
   }

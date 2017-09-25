@@ -4,9 +4,6 @@ Rails.application.routes.draw do
 
   get '/search', to: 'searches#search'
 
-  post '/upload', to: "uploads#upload"
-  post '/upload-file', to: "uploads#file_upload"
-
   scope '/admin' do
     resources :tags
     resources :users do
