@@ -48,9 +48,9 @@
                     <div class="lab-info">
                       <p class="lab-title"><%= link_to content.title, observation_path(content.id), class:"lab-link"  %></p>
                       <ul class="lab-details">
-                        <li class="lab-comments"> <%= link_to Lab.where(parent: content.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
-                        <li class="lab-questions"> <%= link_to Question.where(lab_id: content.id).count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
-                        <li class="lab-hypotheses"> <%= link_to Hypothesis.where(lab_id: content.id).count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
+                        <li class="lab-comments"> <%= link_to Lab.where(parent: content.id).count.to_s + ' observations', observation_path(content.id, open_to: "observation"), class:"lab-comments-total white rounded blue-border" %></li>
+                        <li class="lab-questions"> <%= link_to Question.where(lab_id: content.id).count.to_s + ' questions', observation_path(content.id, open_to: "question"), class:"lab-questions-total white rounded blue-border" %></li>
+                        <li class="lab-hypotheses"> <%= link_to Hypothesis.where(lab_id: content.id).count.to_s + ' hypotheses', observation_path(content.id, open_to: "hypothesis"), class:"lab-hypotheses-total white rounded blue-border" %></li>
                       </ul>
                       <p class="lab-submitted">created at <%= content.created_at %>
                     <time class="lab-since-submitted">
@@ -71,9 +71,9 @@
                     <div class="lab-info">
                       <p class="lab-title"><%= link_to content.title, question_path(content.id), class:"lab-link"  %></p>
                       <ul class="lab-details">
-                        <li class="lab-comments"> <%= link_to Lab.where(question_id: content.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
-                        <li class="lab-questions"> <%= link_to Question.where(parent: content.id).count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
-                        <li class="lab-hypotheses"> <%= link_to Hypothesis.where(question_id: content.id).count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
+                        <li class="lab-comments"> <%= link_to Lab.where(question_id: content.id).count.to_s + ' observations', question_path(content.id, open_to: "observation"), class:"lab-comments-total white rounded blue-border" %></li>
+                        <li class="lab-questions"> <%= link_to Question.where(parent: content.id).count.to_s + ' questions', question_path(content.id, open_to: "question"), class:"lab-questions-total white rounded blue-border" %></li>
+                        <li class="lab-hypotheses"> <%= link_to Hypothesis.where(question_id: content.id).count.to_s + ' hypotheses', question_path(content.id, open_to: "hypothesis"), class:"lab-hypotheses-total white rounded blue-border" %></li>
                       </ul>
                       <p class="lab-submitted">created at <%= content.created_at %>
                     <time class="lab-since-submitted">
@@ -94,9 +94,9 @@
                     <div class="lab-info">
                       <p class="lab-title"><%= link_to content.title, hypothesis_path(content.id), class:"lab-link"  %></p>
                       <ul class="lab-details">
-                        <li class="lab-comments"> <%= link_to Lab.where(hypothesis_id: content.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
-                        <li class="lab-questions"> <%= link_to Question.where(hypothesis_id: content.id).count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
-                        <li class="lab-hypotheses"> <%= link_to Hypothesis.where(parent: content.id).count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
+                        <li class="lab-comments"> <%= link_to Lab.where(hypothesis_id: content.id).count.to_s + ' observations', hypothesis_path(content.id, open_to: "observation"), class:"lab-comments-total white rounded blue-border" %></li>
+                        <li class="lab-questions"> <%= link_to Question.where(hypothesis_id: content.id).count.to_s + ' questions', hypothesis_path(content.id, open_to: "question"), class:"lab-questions-total white rounded blue-border" %></li>
+                        <li class="lab-hypotheses"> <%= link_to Hypothesis.where(parent: content.id).count.to_s + ' hypotheses', hypothesis_path(content.id, open_to: "hypothesis"), class:"lab-hypotheses-total white rounded blue-border" %></li>
                       </ul>
                       <p class="lab-submitted">created at <%= content.created_at %>
                     <time class="lab-since-submitted">

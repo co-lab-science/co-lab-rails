@@ -9,7 +9,6 @@
         <div class="comment-type type-observation"> + observation</div>
         <div class="comment-type type-question"> + question</div>
         <div class="comment-type type-hypothesis"> + hypothesis</div>
-        <div class="comment-type type-citation"> + citation</div>
         <div class="comment-type type-review"> + review</div>
       </div>
       <div id="observation-container-jq" class="comments-container-jq">
@@ -17,16 +16,6 @@
       <div id="questions-container-jq" class="comments-container-jq">
       </div>
       <div id="hypothesis-container-jq" class="comments-container-jq">
-      </div>
-      <div id="citations-container-jq" class="comments-container-jq">
-        <% if current_user.try(:id) == @hypothesis.user_id %>
-          <input id="fileupload" type="file" name="files[]" data-url="/upload-file?hypothesis_id=<%= @hypothesis.id %>" multiple>
-        <% end  %>
-        <ul>
-          <% @hypothesis.lab_files.each do |file| %>
-            <li> <%= link_to file.name, file.url%> </li>
-          <% end %>
-        </ul>
       </div>
       <div id="reviews-container-jq" class="comments-container-jq">
         <% @hypothesis.reviews.each do |review|%>

@@ -9,23 +9,12 @@
         <div class="comment-type type-observation"> + observation</div>
         <div class="comment-type type-question"> + question</div>
         <div class="comment-type type-hypothesis"> + hypothesis</div>
-        <div class="comment-type type-citation"> + citation</div>
       </div>
       <div id="observation-container-jq" class="comments-container-jq">
       </div>
       <div id="questions-container-jq" class="comments-container-jq">
       </div>
       <div id="hypothesis-container-jq" class="comments-container-jq">
-      </div>
-      <div id="citations-container-jq" class="comments-container-jq">
-        <% if current_user.try(:id) == @question.user_id %>
-        <input id="fileupload" type="file" name="files[]" data-url="/upload-file?question_id=<%= @question.id %>" multiple>
-      <% end  %>
-        <ul>
-        <% @question.lab_files.each do |file| %>
-          <li> <%= link_to file.name, file.url%> </li>
-        <% end %>
-        </ul>
       </div>
     </div>
 </section>

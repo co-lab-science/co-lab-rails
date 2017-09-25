@@ -16,6 +16,7 @@
 //= require jquery-comments.js
 //= require bootstrap
 //= require summernote.js
+//= require uploadcare-summernote.js
 //= require summernote-editor.js
 //= require jquery.ui.widget.js
 //= require jquery.iframe-transport.js
