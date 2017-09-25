@@ -27,7 +27,7 @@ class LikesController < ApplicationController
     hypothesis.tags.each do |tag|
       current_user.specialities.each do |speciality|
         if tag.name == speciality.category
-          score = (speciality.rank || 1) * (ENV["RANK_MULTIPLIER"] || 5)
+          score = (speciality.rank || 1) * (ENV["RANK_MULTIPLIER"].try(:to_i) || 5)
           scores << score
         end
       end

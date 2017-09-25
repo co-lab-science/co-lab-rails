@@ -42,7 +42,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    if params[:question][:create_from]
+    if params[:question][:create_from].present?
       if params[:question][:create_from] == "Question"
         parent = question_params[:parent].present? ? question_params[:parent] : params[:question][:create_from_id]
         @question = Object.const_get(params[:question][:create_from]).new(question_params.merge(user_id: current_user.id, parent: parent))

@@ -2,6 +2,12 @@ Rails.application.routes.draw do
   resources :reviews
   root to: "static_page#home"
 
+  get '/privacy-policy', to: 'static_page#privacy'
+  get '/user-agreement', to: 'static_page#agreement'
+  get '/about', to: 'static_page#about'
+  get '/help', to: 'static_page#help'
+  get '/contact-us', to: 'static_page#contact'
+
   get '/search', to: 'searches#search'
 
   scope '/admin' do

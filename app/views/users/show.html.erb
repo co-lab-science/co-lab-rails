@@ -98,6 +98,10 @@
                     <div class="lab-votes">
                       <i class="fa fa-arrow-up"></i><%= content.upvotes.count %>
                       <i class="fa fa-arrow-down"></i><%= content.downvotes.count %>
+                      <br>
+                      <br>
+                      <i class="fa fa-check-square"></i><%= content.likes.count %>
+                      <i class="fa fa-minus-square"></i><%= content.dislikes.count %>
                     </div>
                     <div class="lab-votes">
                       <div class="lab-vote-up-button" data-lab="<%= content.id %>"></div>

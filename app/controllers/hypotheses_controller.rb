@@ -45,7 +45,7 @@ class HypothesesController < ApplicationController
   end
 
   def create
-    if params[:hypothesis][:create_from]
+    if params[:hypothesis][:create_from].present?
       parent = hypothesis_params[:parent].present? ? hypothesis_params[:parent] : params[:hypothesis][:create_from_id]
       if params[:hypothesis][:create_from] == "Hypothesis"
         @hypothesis = Object.const_get(params[:hypothesis][:create_from]).new(hypothesis_params.merge(user_id: current_user.id, parent: parent))

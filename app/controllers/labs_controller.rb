@@ -42,7 +42,7 @@ class LabsController < ApplicationController
   end
 
   def create
-    if params[:lab][:create_from]
+    if params[:lab][:create_from].present?
       parent = lab_params[:parent].present? ? lab_params[:parent] : params[:lab][:create_from_id]
       if params[:lab][:create_from] == "Lab"
         @lab = Object.const_get(params[:lab][:create_from]).new(lab_params.merge(user_id: current_user.id, parent: parent))
