@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @content = []
     if params[:content]
-      @content = Object.const_get(params[:content].capitalize).where(user_id: @user.id).paginate(per_page: 50, page: params[:page])
+      @content = Object.const_get(params[:content].capitalize).where(user_id: @user.id).order(created_at: :desc).paginate(per_page: 50, page: params[:page])
     end
   end
 

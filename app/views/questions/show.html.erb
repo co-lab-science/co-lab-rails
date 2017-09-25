@@ -1,12 +1,12 @@
 <main>
 <section class="general-info" id="content-meta-info" data-content-id="<%= @question.id %>" data-userid="<%= current_user.try(:id) %>" data-content-type="<%= @question.class%>" data-content-has-upvoted-current="<%= !@question.upvotes.where(user_id: current_user.id).empty? if current_user %>" data-content-has-downvoted-current="<%= !@question.downvotes.where(user_id: current_user.id).empty? if current_user%>" >
   <div class="general-overview">
-    <h2 class="general-info-title"><%= link_to 'Back to Search', '/search?utf8=✓&search_term=&commit=Search' %></h2>
+    <h2 class="general-info-more"><%= link_to 'Back to Search', '/search?utf8=✓&search_term=&commit=Search' %></h2>
   </div>
   <div class="general-comments">
     <div class="observation-tags">
       <div class="comment">
-        <div class="comment-type type-observation"> + obesrvation</div>
+        <div class="comment-type type-observation"> + observation</div>
         <div class="comment-type type-question"> + question</div>
         <div class="comment-type type-hypothesis"> + hypothesis</div>
         <div class="comment-type type-citation"> + citation</div>
@@ -32,10 +32,10 @@
 <section class="hypothesis-editor detail-text-view">
   <div class="general-lab-modifier">
     <div>
-      <button class="action main-upvote"><span class="main-upvote-count"></span><i class="fa fa-thumbs-up"></i></button>
+      <button class="action main-upvote"><span class="main-upvote-count"></span><i class="fa fa-arrow-up"></i></button>
       <h2 class="general-lab-upvote">Upvote<span> <%= @question.upvotes.count %></span></h2>
       <br>
-      <button class="action main-downvote"><span class="main-downvote-count"></span><i class="fa fa-thumbs-down"></i></button>
+      <button class="action main-downvote"><span class="main-downvote-count"></span><i class="fa fa-arrow-down"></i></button>
       <h2 class="general-lab-downvote">Downvote<span> <%= @question.downvotes.count %></span></h2>
 
     </div>

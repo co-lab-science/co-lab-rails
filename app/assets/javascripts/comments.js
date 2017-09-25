@@ -9,9 +9,11 @@ $(document).ready(function() {
 
   function initObservations() {
     $('#observation-container-jq').comments({
+      profilePictureURL: "#",
       textareaRows: 2,
       maxRepliesVisible: 2,
-      profilePictureURL: 'https://app.viima.com/static/media/user_profiles/user-icon.png',
+      replyText: 'observation',
+      profilePictureURL: '#',
       fieldMappings: {
         created: 'created_at',
         content: 'title'
@@ -36,6 +38,7 @@ $(document).ready(function() {
             success(sanitizedCommentsArray);
             renderDownvotes()
             sanitizedCommentsArray.forEach(function(comment) {
+              $('.comment*[data-id="' + comment.id + '"]').data("user_id", comment.user_id)
               $('.comment*[data-id="' + comment.id + '"]').find('.downvote-count').html(comment.downvote_count)
               $('.comment*[data-id="' + comment.id + '"]').data("user_has_downvoted", comment.user_has_downvoted)
               if (comment.user_has_downvoted) {
@@ -74,6 +77,8 @@ $(document).ready(function() {
               delete comment.observation["parent"]
             }
             success(comment.observation)
+
+            $('.comment*[data-id="' + comment.observation.id + '"]').data("user_id", comment.observation.user_id)
 
             handleNewComment(comment.observation.id)
             handleNewComment(commentJSON.parent)
@@ -115,13 +120,13 @@ $(document).ready(function() {
     });
 
     function renderDownvotes() {
-      var markup = '<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-thumbs-down"></i></button>';
+      var markup = '<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-arrow-down"></i></button>';
       $('.actions').append(markup)
       attachDownvoteEvents()
     }
 
     function handleNewComment(commentId) {
-      var newCommentNode = $('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).append('<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-thumbs-down"></i></button>')
+      var newCommentNode = $('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).append('<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-arrow-down"></i></button>')
       attachDownvoteEvents($('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).find('.downvote'))
     }
 
@@ -133,11 +138,13 @@ $(document).ready(function() {
         var userHasDownvoted = $(this).closest('.comment').data().user_has_downvoted
 
         if(!userHasDownvoted) {
+          $self = $(this)
           $.ajax({
             type: 'post',
             url: upvotesURL,
             data: { vote_type: "downvote", lab_id: commentId, user_id: userid },
             success: function() {
+              $self.closest('.comment').data("user_has_downvoted", true)
             },
           });
         } else {
@@ -146,6 +153,7 @@ $(document).ready(function() {
             url: upvotesURL + "/0",
             data: { user_id: userid, vote_type: "downvote", lab_id: commentId},
             success: function() {
+              $self.closest('.comment').data("user_has_downvoted", false)
             },
           });
         }
@@ -169,6 +177,19 @@ $(document).ready(function() {
         return commentsArrayCopy.map(function(comment) { if (comment.parent == contentId) delete comment["parent"]; return comment })
       }
     }
+
+    function fullEditor() {
+      $('.commenting-field').find('.textarea').one("click", function() {
+        $(this).siblings().eq(1).append('<span class="save full-submit highlight-background enabled ">Create with full editor </button></a>')
+      })
+
+      $('body').on("click", ".full-submit", function() {
+        var title = $(this).parent().parent().find('.textarea').text()
+        document.location.href = '/observations/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + title
+      })
+    }
+
+    fullEditor()
   }
 
   function initQuestions() {
@@ -177,6 +198,7 @@ $(document).ready(function() {
       maxRepliesVisible: 2,
       profilePictureURL: 'https://app.viima.com/static/media/user_profiles/user-icon.png',
       textareaPlaceholderText: "Add a question",
+      replyText: 'question',
       noCommentsText: "No Questions",
       fieldMappings: {
         created: 'created_at',
@@ -200,6 +222,7 @@ $(document).ready(function() {
             success(sanitizedCommentsArray);
             renderDownvotes()
             sanitizedCommentsArray.forEach(function(comment) {
+              $('.comment*[data-id="' + comment.id + '"]').data("user_id", comment.user_id)
               $('.comment*[data-id="' + comment.id + '"]').find('.downvote-count').html(comment.downvote_count)
               $('.comment*[data-id="' + comment.id + '"]').data("user_has_downvoted", comment.user_has_downvoted)
               if (comment.user_has_downvoted) {
@@ -214,6 +237,7 @@ $(document).ready(function() {
               $('.actions').remove()
               $('.commenting-field').remove()
             }
+            $('.fa-thumbs-up').removeClass('fa-thumbs-up').addClass('fa-arrow-up')
           }
         })
       },
@@ -238,6 +262,7 @@ $(document).ready(function() {
               delete comment.question["parent"]
             }
             success(comment.question)
+            $('.comment*[data-id="' + comment.question.id + '"]').data("user_id", comment.question.user_id)
 
             handleNewComment(comment.question.id)
             handleNewComment(commentJSON.parent)
@@ -245,6 +270,7 @@ $(document).ready(function() {
               var id = $(this).closest('.comment').data().id
               window.location = '/questions/' + id
             })
+            $('.fa-thumbs-up').removeClass('fa-thumbs-up').addClass('fa-arrow-up')
             if (!userid) {
               $('.actions').remove()
             }
@@ -279,13 +305,13 @@ $(document).ready(function() {
     });
 
     function renderDownvotes() {
-      var markup = '<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-thumbs-down"></i></button>';
+      var markup = '<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-arrow-down"></i></button>';
       $('.actions').append(markup)
       attachDownvoteEvents()
     }
 
     function handleNewComment(commentId) {
-      var newCommentNode = $('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).append('<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-thumbs-down"></i></button>')
+      var newCommentNode = $('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).append('<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-arrow-down"></i></button>')
       attachDownvoteEvents($('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).find('.downvote'))
     }
 
@@ -297,11 +323,13 @@ $(document).ready(function() {
         var userHasDownvoted = $(this).closest('.comment').data().user_has_downvoted
 
         if(!userHasDownvoted) {
+          $self = $(this)
           $.ajax({
             type: 'post',
             url: upvotesURL,
             data: { vote_type: "downvote", question_id: commentId, user_id: userid },
             success: function() {
+              $self.closest('.comment').data("user_has_downvoted", true)
             },
           });
         } else {
@@ -310,6 +338,7 @@ $(document).ready(function() {
             url: upvotesURL + "/0",
             data: { user_id: userid, vote_type: "downvote", question_id: commentId},
             success: function() {
+              $self.closest('.comment').data("user_has_downvoted", false)
             },
           });
         }
@@ -333,12 +362,26 @@ $(document).ready(function() {
         return commentsArrayCopy.map(function(comment) { if (comment.parent == contentId) delete comment["parent"]; return comment })
       }
     }
+
+    function fullEditor() {
+      $('.commenting-field').find('.textarea').one("click", function() {
+        $(this).siblings().eq(1).append('<span class="save full-submit highlight-background enabled ">Create with full editor </button></a>')
+      })
+
+      $('body').on("click", ".full-submit", function() {
+        var title = $(this).parent().parent().find('.textarea').text()
+        document.location.href = '/questions/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + title
+      })
+    }
+
+    fullEditor()
   }
 
   function initHypothesis() {
     $('#hypothesis-container-jq').comments({
       textareaRows: 2,
       maxRepliesVisible: 2,
+      replyText: 'hypothesis',
       profilePictureURL: 'https://app.viima.com/static/media/user_profiles/user-icon.png',
       fieldMappings: {
         created: 'created_at',
@@ -366,6 +409,7 @@ $(document).ready(function() {
             renderlikes()
             console.log(sanitizedCommentsArray)
             sanitizedCommentsArray.forEach(function(comment) {
+              $('.comment*[data-id="' + comment.id + '"]').data("user_id", comment.user_id)
               if (comment.upvote_count > 1) {
               }
               $('.comment*[data-id="' + comment.id + '"]').find('.downvote-count').html(comment.downvote_count)
@@ -422,6 +466,7 @@ $(document).ready(function() {
               delete comment.hypothesis["parent"]
             }
             success(comment.hypothesis)
+            $('.comment*[data-id="' + comment.hypothesis.id + '"]').data("user_id", comment.hypothesis.user_id)
 
             handleNewComment(comment.hypothesis.id)
             handleNewComment(commentJSON.parent)
@@ -460,15 +505,15 @@ $(document).ready(function() {
     });
 
     function renderDownvotes() {
-      var markup = '<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-thumbs-down"></i></button>';
+      var markup = '<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-arrow-down"></i></button>';
       $('.actions').append(markup)
       attachDownvoteEvents()
     }
 
     function renderlikes() {
-      var markup = '<button class="action like"><span class="like-count">0</span><i class="fa fa-arrow-up"></i></button>';
+      var markup = '<button class="action like"><span class="like-count">0</span><i class="fa fa-check-square"></i></button>';
       $('.actions').append(markup)
-      var markup = '<button class="action dislike"><span class="dislike-count">0</span><i class="fa fa-arrow-down"></i></button>';
+      var markup = '<button class="action dislike"><span class="dislike-count">0</span><i class="fa fa-minus-square"></i></button>';
       $('.actions').append(markup)
       attachLikeEvents()
       attachDislikeEvents()
@@ -509,7 +554,7 @@ $(document).ready(function() {
                   }
                 });
                 $('#hypothesis-submit')
-								$('body').off()
+                $('body').off()
                 $('body').off('#hypothesis-submit')
                 $('#myModal').modal('hide')
                 $('#review-submission-content').val("")
@@ -518,7 +563,7 @@ $(document).ready(function() {
                 $self.addClass('highlight-font')
                 $self.closest('.comment').data('user_has_like_review', true)
               } else {
-								alert("Title and content of your review cannot be empty.")
+                alert("Title and content of your review cannot be empty.")
               }
             })
           }
@@ -585,7 +630,7 @@ $(document).ready(function() {
                 $self.addClass('highlight-font')
                 $self.closest('.comment').data('user_has_dislike_review', true)
               } else {
-								alert("Title and content of your review cannot be empty.")
+                alert("Title and content of your review cannot be empty.")
               }
             })
           }
@@ -612,11 +657,11 @@ $(document).ready(function() {
     }
 
     function handleNewComment(commentId) {
-      var newCommentNode = $('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).append('<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-thumbs-down"></i></button>');
+      var newCommentNode = $('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).append('<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-arrow-down"></i></button>');
       attachDownvoteEvents($('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).find('.downvote'))
-      var newCommentNode = $('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).append('<button class="action like" ><span class="like-count">0</span><i class="fa fa-arrow-up"></i></button>');
+      var newCommentNode = $('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).append('<button class="action like" ><span class="like-count">0</span><i class="fa fa-check-square"></i></button>');
       attachLikeEvents($('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).find('.like'))
-      var newCommentNode = $('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).append('<button class="action dislike"><span class="dislike-count">0</span><i class="fa fa-arrow-down"></i></button>');
+      var newCommentNode = $('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).append('<button class="action dislike"><span class="dislike-count">0</span><i class="fa fa-minus-square"></i></button>');
       attachDislikeEvents($('.comment*[data-id="' + commentId + '"]').find('.actions').eq(0).find('.dislike'))
     }
 
@@ -627,12 +672,14 @@ $(document).ready(function() {
         var commentId = $(this).closest('.comment').data().id
         var userHasDownvoted = $(this).closest('.comment').data().user_has_downvoted
 
+        $self = $(this)
         if(!userHasDownvoted) {
           $.ajax({
             type: 'post',
             url: upvotesURL,
             data: { vote_type: "downvote", hypothesis_id: commentId, user_id: userid },
             success: function(data) {
+              $self.closest('.comment').data("user_has_downvoted", true)
             },
           });
         } else {
@@ -641,6 +688,7 @@ $(document).ready(function() {
             url: upvotesURL + "/0",
             data: { user_id: userid, vote_type: "downvote", hypothesis_id: commentId},
             success: function(data) {
+              $self.closest('.comment').data("user_has_downvoted", false)
             },
           });
         }
@@ -664,7 +712,21 @@ $(document).ready(function() {
         return commentsArrayCopy.map(function(comment) { if (comment.parent == contentId) delete comment["parent"]; return comment })
       }
     }
+
+    function fullEditor() {
+      $('.commenting-field').find('.textarea').one("click", function() {
+        $(this).siblings().eq(1).append('<span class="save full-submit highlight-background enabled ">Create with full editor </button></a>')
+      })
+
+      $('body').on("click", ".full-submit", function() {
+        var title = $(this).parent().parent().find('.textarea').text()
+        document.location.href = '/hypotheses/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + title
+      })
+    }
+
+    fullEditor()
   }
+
   $('.comment-type.type-observation').on('click', function () {
     $('.comments-container-jq').hide()
     $('.comment-type').removeClass('selected')
@@ -708,10 +770,12 @@ $(document).ready(function() {
     $('#reviews-container-jq').show()
   })
 
-	$('#myModal').on('hidden.bs.modal', function () {
-		$('body').off()
+  $('#myModal').on('hidden.bs.modal', function () {
+    $('body').off()
+  })
+
+  $("body").on("click", ".name", function() {
+    window.location.href = '/users/' + $(this).closest('.comment').data('user_id')
   })
 })
-
-
 

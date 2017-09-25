@@ -5,3 +5,21 @@
 .comments-container-jq {
   display: none;
 }
+
+.fa-check-square {
+  color: green;
+}
+
+.fa-minus-square {
+  color: red;
+}
+
+.fa-thumbs-up {
+  &:before {
+   content: "\f062" !important;
+  }
+}
+
+.profile-picture {
+  display: none !important;
+}

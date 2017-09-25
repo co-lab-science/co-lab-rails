@@ -13,13 +13,19 @@
 
   <div class="field">
     <%= f.label :title %>
-    <%= f.text_field :title, required: true %>
+    <%= f.text_field :title,value: params[:title], required: true %>
   </div>
 
   <div class="field">
     <%= f.label :body %>
    <%= f.text_area :body, id: "summernote" %>
   </div>
+
+  <%= hidden_field_tag 'question[create_from]', params[:create_from] %>
+  <%= hidden_field_tag 'question[create_from_id]', params[:create_from_id] %>
+  <%= hidden_field_tag 'question[parent]', params[:parent] %>
+
+
   <div class="field">
     <label for="lab_tags">Tags</label>
     <br>

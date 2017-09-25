@@ -1,20 +1,26 @@
 <main>
 <section class="general-info">
   <%= will_paginate @search_results %>
-  <div class="general-overview">
-    <h2 class="general-info-more"><%= link_to 'New Observation', new_observation_path %></h2>
-    <h2 class="general-info-more"><%= link_to 'New Question', new_question_path %></h2>
-  </div>
+  <% if current_user %>
+    <div class="general-overview">
+      <h2 class="general-info-more"><%= link_to 'New Observation', new_observation_path %></h2>
+      <h2 class="general-info-more"><%= link_to 'New Question', new_question_path %></h2>
+    </div>
+  <% end %>
   <div class="general-comments">
     <div class="comment">
-      <p><strong>These aren't the labs you're looking for?</strong> <span class="js-tips comments">Tips</span></p>
+      <p><strong>These aren't the labs you're looking for?</strong></p>
       <div class="tips comments show">
         Clear query, clear community.<br>
         Order your thoughts into a succinct search query.<br>
-        Reference the <strong>related</strong> tag above and the <strong>general</strong> tags below.<br>
         Rewrite your succint search below. <strong>lather, rinse, repeat.</strong>
       </div>
       <%= form_tag("search", method: "get") do %>
+        <%= label_tag 'Sort by: ' %>
+        <%= select_tag("sort", options_for_select(['popularity by upvote', 'newest',  'popularity by likes'], params[:sort])) %>
+        <%= label_tag 'Filter by: ' %>
+        <%= select_tag("filter", options_for_select(['all', 'hypothesis','question', 'observation'], params[:filter].try(:downcase))) %>
+        <br>
         <%= label_tag(:search_term, "Search for ...") %>
         <%= text_field_tag(:search_term)%>
         <br>
@@ -30,19 +36,21 @@
       <div class="lab">
         <span class="lab-rank"><%= index + 1 %></span>
         <div class="lab-votes">
-          <div class="lab-vote-up-button" data-lab="<%= lab.id %>"></div>
-          <div class="lab-vote-up-total"><%= lab.upvotes.count %></div>
-          <div class="lab-vote-down-total"><%= lab.downvotes.count %></div>
-          <div class="lab-vote-down-button" data-lab="<%= lab.id %>"></div>
+          <i class="fa fa-arrow-up"></i><%= lab.upvotes.count %>
+          <i class="fa fa-arrow-down"></i><%= lab.downvotes.count %>
         </div>
         <div class="lab-info">
-          <p class="lab-title"><%= link_to lab.title, observation_path(lab.id), class:"lab-link"  %></p>
+          <p class="lab-title"><%= link_to lab.title, observation_path(lab.id, from_search: true), class:"lab-link"  %></p>
           <ul class="lab-details">
-            <li class="lab-comments"> <%= link_to Lab.where(parent: lab.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
-            <li class="lab-questions"> <%= link_to Question.where(lab_id: lab.id).count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
-            <li class="lab-hypotheses"> <%= link_to Hypothesis.where(lab_id: lab.id).count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
+            <li class="lab-comments"> <%= link_to Lab.where(parent: lab.id).count.to_s + ' observations', observation_path(lab.id, open_to: "observation"), class:"lab-comments-total white rounded blue-border" %></li>
+            <li class="lab-questions"> <%= link_to Question.where(lab_id: lab.id).count.to_s + ' questions', observation_path(lab.id, open_to: "question"), class:"lab-questions-total white rounded blue-border" %></li>
+            <li class="lab-hypotheses"> <%= link_to Hypothesis.where(lab_id: lab.id).count.to_s + ' hypotheses', observation_path(lab.id, open_to: "hypothesis"), class:"lab-hypotheses-total white rounded blue-border" %></li>
           </ul>
           <p class="lab-submitted">created at <%= lab.created_at %>
+          <time class="lab-since-submitted">
+          </time>
+          </p>
+          <p class="lab-submitted">content type <strong>Observation<strong>
           <time class="lab-since-submitted">
           </time>
           </p>
@@ -53,19 +61,21 @@
       <div class="lab">
         <span class="lab-rank"><%= index + 1 %></span>
         <div class="lab-votes">
-          <div class="lab-vote-up-button" data-lab="<%= lab.id %>"></div>
-          <div class="lab-vote-up-total"><%= lab.upvotes.count %></div>
-          <div class="lab-vote-down-total"><%= lab.downvotes.count %></div>
-          <div class="lab-vote-down-button" data-lab="<%= lab.id %>"></div>
+          <i class="fa fa-arrow-up"></i><%= lab.upvotes.count %>
+          <i class="fa fa-arrow-down"></i><%= lab.downvotes.count %>
         </div>
         <div class="lab-info">
-          <p class="lab-title"><%= link_to lab.title, question_path(lab.id), class:"lab-link"  %></p>
+          <p class="lab-title"><%= link_to lab.title, question_path(lab.id, from_search: true), class:"lab-link"  %></p>
           <ul class="lab-details">
-            <li class="lab-comments"> <%= link_to Lab.where(question_id: lab.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
-            <li class="lab-questions"> <%= link_to Question.where(parent: lab.id).count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
-            <li class="lab-hypotheses"> <%= link_to Hypothesis.where(question_id: lab.id).count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
+            <li class="lab-comments"> <%= link_to Lab.where(question_id: lab.id).count.to_s + ' observations', question_path(lab.id, open_to: "observation"), class:"lab-comments-total white rounded blue-border" %></li>
+            <li class="lab-questions"> <%= link_to Question.where(parent: lab.id).count.to_s + ' questions', question_path(lab.id, open_to: "question"), class:"lab-questions-total white rounded blue-border" %></li>
+            <li class="lab-hypotheses"> <%= link_to Hypothesis.where(question_id: lab.id).count.to_s + ' hypotheses', question_path(lab.id, open_to: "hypothesis"), class:"lab-hypotheses-total white rounded blue-border" %></li>
           </ul>
           <p class="lab-submitted">created at <%= lab.created_at %>
+          <time class="lab-since-submitted">
+          </time>
+          </p>
+          <p class="lab-submitted">content type <strong>Question</strong>
           <time class="lab-since-submitted">
           </time>
           </p>
@@ -76,19 +86,25 @@
       <div class="lab">
         <span class="lab-rank"><%= index + 1 %></span>
         <div class="lab-votes">
-          <div class="lab-vote-up-button" data-lab="<%= lab.id %>"></div>
-          <div class="lab-vote-up-total"><%= lab.upvotes.count %></div>
-          <div class="lab-vote-down-total"><%= lab.downvotes.count %></div>
-          <div class="lab-vote-down-button" data-lab="<%= lab.id %>"></div>
+          <i class="fa fa-arrow-up"></i><%= lab.upvotes.count %>
+          <i class="fa fa-arrow-down"></i><%= lab.downvotes.count %>
+          <br>
+          <br>
+          <i class="fa fa-check-square"></i><%= lab.likes.count %>
+          <i class="fa fa-minus-square"></i><%= lab.dislikes.count %>
         </div>
         <div class="lab-info">
-          <p class="lab-title"><%= link_to lab.title, hypothesis_path(lab.id), class:"lab-link"  %></p>
+          <p class="lab-title"><%= link_to lab.title, hypothesis_path(lab.id, from_search: true), class:"lab-link"  %></p>
           <ul class="lab-details">
-            <li class="lab-comments"> <%= link_to Lab.where(hypothesis_id: lab.id).count.to_s + ' observations', "#", class:"lab-comments-total white rounded blue-border" %></li>
-            <li class="lab-questions"> <%= link_to Question.where(hypothesis_id: lab.id).count.to_s + ' questions', "#", class:"lab-questions-total white rounded blue-border" %></li>
-            <li class="lab-hypotheses"> <%= link_to Hypothesis.where(parent: lab.id).count.to_s + ' hypotheses', "#", class:"lab-hypotheses-total white rounded blue-border" %></li>
+            <li class="lab-comments"> <%= link_to Lab.where(hypothesis_id: lab.id).count.to_s + ' observations', hypothesis_path(lab.id, open_to: "observation"), class:"lab-comments-total white rounded blue-border" %></li>
+            <li class="lab-questions"> <%= link_to Question.where(hypothesis_id: lab.id).count.to_s + ' questions', hypothesis_path(lab.id, open_to: "question"), class:"lab-questions-total white rounded blue-border" %></li>
+            <li class="lab-hypotheses"> <%= link_to Hypothesis.where(parent: lab.id).count.to_s + ' hypotheses', hypothesis_path(lab.id, open_to: "hypothesis"), class:"lab-hypotheses-total white rounded blue-border" %></li>
           </ul>
           <p class="lab-submitted">created at <%= lab.created_at %>
+          <time class="lab-since-submitted">
+          </time>
+          </p>
+          <p class="lab-submitted">content type <strong>Hypothesis</strong>
           <time class="lab-since-submitted">
           </time>
           </p>

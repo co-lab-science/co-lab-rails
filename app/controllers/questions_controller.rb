@@ -9,13 +9,13 @@ class QuestionsController < ApplicationController
 
   def show
     if @question
-      @related_questions = Question.where(parent: @question.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
+      @related_questions = Question.where(parent: @question.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname", "users.id as user_id").group(:id, "users.id","fullname")
     end
 
     nested_ids = @related_questions.map.collect{|question| question.id}.compact
 
     while(nested_ids.size != 0) do
-      nested_questions = Question.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").to_a
+      nested_questions = Question.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname", "users.id as user_id").group(:id, "users.id" ,"fullname").to_a
       nested_ids = nested_questions.collect{|question| question.id}
       @related_questions += nested_questions
     end
@@ -43,7 +43,12 @@ class QuestionsController < ApplicationController
 
   def create
     if params[:question][:create_from]
-      @question = Object.const_get(params[:question][:create_from]).find(params[:question][:create_from_id]).questions.new(question_params)
+      if params[:question][:create_from] == "Question"
+        parent = question_params[:parent].present? ? question_params[:parent] : params[:question][:create_from_id]
+        @question = Object.const_get(params[:question][:create_from]).new(question_params.merge(user_id: current_user.id, parent: parent))
+      else
+        @question = Object.const_get(params[:question][:create_from]).find(params[:question][:create_from_id]).questions.new(question_params.merge(user_id: current_user.id))
+      end
     else
       @question = current_user.questions.new(question_params)
     end
@@ -55,7 +60,7 @@ class QuestionsController < ApplicationController
           Tag.where(question_id: @question.id).destroy_all
           tag_names.each{ |tag_name| Tag.create(question_id: @question.id, name: tag_name) }
         end
-        @question = Question.where(id: @question.id).left_outer_joins(:upvotes, :downvotes, :user).select("questions.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").first
+        @question = Question.where(id: @question.id).left_outer_joins(:upvotes, :downvotes, :user).select("questions.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname", "users.id as user_id").group(:id, "users.id", "fullname").first
         @question.user_has_upvoted = !Upvote.where(question_id: @question.id, user_id: current_user.id).empty? ? true : false
         @question.user_has_downvoted = !Downvote.where(question_id: @question.id, user_id: current_user.id).empty? ? true : false
 
@@ -76,7 +81,7 @@ class QuestionsController < ApplicationController
           Tag.where(question_id: @question.id).destroy_all
           tag_names.each{ |tag_name| Tag.create(question_id: @question.id, name: tag_name) }
         end
-        format.html { redirect_to edit_question_path(@question.id), notice: 'question was successfully updated.' }
+        format.html { redirect_to question_path(@question.id), notice: 'Question was successfully updated.' }
         format.json { render :show, status: :ok, location: @question }
       else
         format.html { render :edit }
@@ -96,7 +101,7 @@ class QuestionsController < ApplicationController
   private
     def set_question
       if params[:id] == 0 || params[:id] == "0"
-        @related_questions = Question.where(question_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
+        @related_questions = Question.where(question_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("questions.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname", "users.id as user_id").group(:id, "users.id" ,"fullname")
       else
         @question = Question.find(params[:id])
       end
@@ -106,5 +111,4 @@ class QuestionsController < ApplicationController
       params.require(:question).permit(:hypothesis_id, :user_id, :lab_id, :question_id, :title, :body, :parent, comments_attributes: [:id, :title, :body])
     end
 end
-
 

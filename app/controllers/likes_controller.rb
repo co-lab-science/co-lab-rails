@@ -5,15 +5,16 @@ class LikesController < ApplicationController
     like_create_count.times do
       like_type.create(hypothesis_id: like_params[:hypothesis_id], user_id: current_user.id)
     end
-    count = like_type.where(hypothesis_id: like_params[:hypothesis_id]).count
 
-    render json: { count: count  }, status: :ok
+    render json: { count: like_create_count  }, status: :ok
   end
 
   def destroy
     @likes = like_type.where(user_id: current_user.id, hypothesis_id: like_params[:hypothesis_id])
     count = @likes.count
     @likes.destroy_all
+
+    Hypothesis.find_by(id: like_params[:hypothesis_id]).reviews.where(user_id: current_user.id).destroy_all
     render json: { count: count }, status: :ok
   end
 
@@ -22,14 +23,21 @@ class LikesController < ApplicationController
   def like_create_count
     create_count = 1
     hypothesis = Hypothesis.find(like_params[:hypothesis_id])
+    scores = []
     hypothesis.tags.each do |tag|
       current_user.specialities.each do |speciality|
-        if tag.name == speciality.category && create_count
-          new_create_count = (speciality.rank || 1) * (ENV["RANK_MULTIPLIER"] || 5)
-          create_count = new_create_count if new_create_count > create_count
+        if tag.name == speciality.category
+          score = (speciality.rank || 1) * (ENV["RANK_MULTIPLIER"] || 5)
+          scores << score
         end
       end
     end
+
+    if !scores.empty?
+      average = scores.inject{ |sum, el| sum + el }.to_f / scores.size
+      create_count = average.floor
+    end
+
     create_count
   end
 

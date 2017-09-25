@@ -9,13 +9,13 @@ class LabsController < ApplicationController
 
   def show
     if @lab
-      @related_observations = Lab.where(parent: @lab.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
+      @related_observations = Lab.where(parent: @lab.id).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname", "users.id as user_id").group(:id, "users.id" ,"fullname")
     end
 
       nested_ids = @related_observations.map.collect{|lab| lab.id}.compact
 
       while(nested_ids.size != 0) do
-        nested_observations = Lab.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").to_a
+        nested_observations = Lab.where(parent: nested_ids).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname", "users.id as user_id").group(:id, "users.id", "fullname").to_a
         nested_ids = nested_observations.collect{|lab| lab.id}
         @related_observations += nested_observations
       end
@@ -43,8 +43,13 @@ class LabsController < ApplicationController
 
   def create
     if params[:lab][:create_from]
-      @lab = Object.const_get(params[:lab][:create_from]).find(params[:lab][:create_from_id]).labs.new(lab_params)
-    else 
+      parent = lab_params[:parent].present? ? lab_params[:parent] : params[:lab][:create_from_id]
+      if params[:lab][:create_from] == "Lab"
+        @lab = Object.const_get(params[:lab][:create_from]).new(lab_params.merge(user_id: current_user.id, parent: parent))
+      else
+        @lab = Object.const_get(params[:lab][:create_from].capitalize).find(params[:lab][:create_from_id]).labs.new(lab_params.merge(user_id: current_user.id))
+      end
+    else
       @lab = current_user.labs.new(lab_params)
     end
 
@@ -56,7 +61,7 @@ class LabsController < ApplicationController
           tag_names.each{ |tag_name| Tag.create(lab_id: @lab.id, name: tag_name) }
         end
 
-        @lab = Lab.where(id: @lab.id).left_outer_joins(:upvotes, :downvotes, :user).select("labs.*", "COUNT(upvotes.id) as upvote_count", "COUNT(downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname").first
+        @lab = Lab.where(id: @lab.id).left_outer_joins(:upvotes, :downvotes, :user).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname", "users.id as user_id").group(:id, "users.id", "fullname").first
         @lab.user_has_upvoted = !Upvote.where(lab_id: @lab.id, user_id: current_user.id).empty? ? true : false
         @lab.user_has_downvoted = !Downvote.where(lab_id: @lab.id, user_id: current_user.id).empty? ? true : false
 
@@ -77,7 +82,7 @@ class LabsController < ApplicationController
           Tag.where(lab_id: @lab.id).destroy_all
           tag_names.each{ |tag_name| Tag.create(lab_id: @lab.id, name: tag_name) }
         end
-        format.html { redirect_to edit_observation_path(@lab.id), notice: 'Lab was successfully updated.' }
+        format.html { redirect_to observation_path(@lab.id), notice: 'Observation was successfully updated.' }
         format.json { render :show, status: :ok, location: @lab }
       else
         format.html { render :edit }
@@ -97,7 +102,7 @@ class LabsController < ApplicationController
   private
   def set_lab
     if params[:id] == 0 || params[:id] == "0"
-      @related_observations = Lab.where(lab_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname").group(:id, "fullname")
+      @related_observations = Lab.where(lab_params).left_outer_joins(:upvotes, :downvotes, :user, :likes, :dislikes).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname", "users.id as user_id").group(:id, "users.id", "fullname")
     else
       @lab = Lab.find(params[:id])
     end
