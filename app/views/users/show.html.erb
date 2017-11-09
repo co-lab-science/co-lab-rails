@@ -21,10 +21,10 @@
         </div>
         <div class="row clearfix">
           <ul class="row2tab clearfix">
-            <li><i class="fa fa-list-alt"></i> <%= link_to 'Observations', "/users/#{@user.id}?content=lab" %> </li>
-            <li><i class="fa fa-list-alt"></i> <%= link_to 'Hypothesis', "/users/#{@user.id}?content=hypothesis" %>  </li>
-            <li><i class="fa fa-list-alt"></i> <%= link_to 'Questions', "/users/#{@user.id}?content=question" %>  </li>
-            <li><i class="fa fa-list-alt"></i> <%= link_to 'Reviews', "/users/#{@user.id}?content=review" %>  </li>
+            <li><i class="fa fa-list-alt"></i> <%= link_to "Observations (#{@user.labs.count})", "/users/#{@user.id}?content=lab" %> </li>
+            <li><i class="fa fa-list-alt"></i> <%= link_to "Hypotheses (#{@user.hypotheses.count})", "/users/#{@user.id}?content=hypothesis" %>  </li>
+            <li><i class="fa fa-list-alt"></i> <%= link_to "Questions (#{@user.questions.count})", "/users/#{@user.id}?content=question" %>  </li>
+            <li><i class="fa fa-list-alt"></i> <%= link_to "Reviews (#{Review.where(user_id: @user.id).count})", "/users/#{@user.id}?content=review" %>  </li>
           </ul>
         </div>
       </div>
@@ -59,8 +59,10 @@
                       <p class="lab-submitted">created at <%= content.created_at %>
                     <time class="lab-since-submitted">
                     </time>
-                     <p class="lab-submitted">content type <strong>Observation<strong>
-                      </p>
+                       <p class="lab-submitted">content type: <br>
+                       <div class="content-type-img">
+                        <%= image_tag "observation.jpg" %>
+                        </div>
                     </div>
                   </div>
                 <% end %>
@@ -87,8 +89,10 @@
                       <p class="lab-submitted">created at <%= content.created_at %>
                     <time class="lab-since-submitted">
                     </time>
-                     <p class="lab-submitted">content type <strong>Question<strong>
-                      </p>
+                          <p class="lab-submitted">content type: <br>
+          <div class="content-type-img">
+            <%= image_tag "question.jpg" %>
+          </div>
                     </div>
                   </div>
                 <% end %>
@@ -119,8 +123,9 @@
                       <p class="lab-submitted">created at <%= content.created_at %>
                     <time class="lab-since-submitted">
                     </time>
-                     <p class="lab-submitted">content type <strong>Hypothesis<strong>
-                      </p>
+                        <div class="content-type-img">
+            <%= image_tag "hypothesis.jpg" %>
+          </div>
                     </div>
                   </div>
                 <% end %>
@@ -219,14 +224,6 @@ input:focus, textarea:focus, keygen:focus, select:focus {
 }
 
 
-.section1 .col2.first img {
-  border-radius: 50%;
-  margin: 0 20px;
-  width: 120px;
-  border:2px solid #f1f1f1;
-  padding: 2px;
-  float: left;
-}
 .section1 .col2.first {
   line-height: 25px;
   position: relative;
@@ -327,28 +324,11 @@ section.section2 {
   border-radius: 2px;
 }
 
-.section2 .postcont img {
-
-  width: 100%;
-}
 .section2 .profileinfo {
-  text-align: center;
   padding: 0 10px 30px;
   color: #555;
   font-size: 14px;
   line-height: 25px;
-}
-.section2 .profileinfo img {
-  border-radius: 50%;
-  width: 80px;
-  padding: 2px;
-  border: 3px solid #6AAFEA;
-  margin-top: -48px;
-  margin-bottom: 18px;
-}
-.section2 .col3.center .profileinfo img {
-  border: 3px solid #FB4C22;
-
 }
 .section2 .profileinfo p {
   text-align: justify;
@@ -399,10 +379,6 @@ section.section2 {
     }
     .section1 .col2.first {
       text-align: center;
-    }
-    .section1 .col2.first img {
-      display: inline-block;
-      float: none;
     }
     .section1 .col2.first span {
       position: relative;

@@ -1,12 +1,14 @@
 <section class="intro-graphic">
       <%= image_tag 'co-lab.png', class:"intro-graphic-logo" %>
 </section>
+<section class="text centered">
+<h1>Time to Collaborate.</h1>
+</section>
 <section class="text intro-search">
     <h1>Innovation Co-Lab</h1>
     <h2>a <strong> crowd-sourced</strong> hub for <strong>scientific research</strong></h2>
 </section>
 <section class="text centered">
-<h1>Time to Collaborate.</h1>
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -20,10 +22,24 @@
     </div>
   <% end %>
 
-  Name: <%= f.text_field :name %>
-  Email: <%= f.text_field :email %>
-  Password: <%= f.password_field :password %>
-  Password Confirmation: <%= f.password_field :password_confirmation %>
+  Username: 
+   <br>
+  <%= f.text_field :name %>
+   <br>
+   Email:
+   <br>
+   <%= f.text_field :email %>
+   <br>
+   Password:
+   <br>
+   <%= f.password_field :password %>
+   <br>
+   Password Confirmation: 
+   <br>
+   <%= f.password_field :password_confirmation %>
+   <br>
   <%= f.submit "Submit" %>
 
 <% end %>
+</section>
+<%= javascript_include_tag "science-map" %>

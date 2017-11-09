@@ -18,10 +18,32 @@ a:visited{
 }
 /* listing */
 .listings{
-    background-color: #ededed;
+    border-left: solid 3px #00FFFF;
+    background-color: rgba(237,237,237, 0.65);
     width: 63%;
     padding: 0 60px 15px 60px;
 }
+
+.detail-text-view {
+  border-left: solid 3px #00FFFF;
+  background-color: rgba(237,237,237, 0.65);
+}
+
+.detail-text-view img {
+  max-width: 100%;
+}
+
+
+.listings .fa-arrow-up{
+  color: #1b79be;
+  font-size: 20px;
+}
+
+.listings .fa-arrow-down{
+  color: #1b79be;
+  font-size: 20px;
+}
+
 .listing-title{
     padding: 25px;
 }
@@ -92,10 +114,9 @@ a:visited{
     font-size: 14px;
 }
 .lab-submitted {
-    color: rgb(136, 136, 136);
+    color: rgb(103, 103, 103);
     margin: 0px;
     font-size: 10px;
-    color: #c6c6c6;
     margin-top: -3px;
 }
 .lab-since-submitted, .lab-creator, .lab-section{
@@ -114,13 +135,13 @@ a:visited{
     display: inline-block;
 }
 .lab-questions-total, .lab-hypotheses-total, .lab-comments-total{
-    color: #c6c6c6;
+    color: rgb(103, 103, 103);
     text-align: left;
     padding: 2px 18px;
     font-size: 10px;
     border-width: 2px;
     line-height: 16px;
-    border-color: #c6c6c6;
+    border-color: rgb(103, 103, 103);
     margin-left: 0;
 }
 .lab-questions-total:hover, .lab-hypotheses-total:hover, .lab-comments-total:hover{

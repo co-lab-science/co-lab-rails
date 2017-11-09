@@ -1,5 +1,5 @@
 <main>
-<section class="general-info" id="content-meta-info" data-content-id="<%= @hypothesis.id %>" data-userid="<%= current_user.try(:id) %>" data-content-type="<%= @hypothesis.class%>" data-content-has-upvoted-current="<%= !@hypothesis.upvotes.where(user_id: current_user.id).empty? if current_user %>" data-content-has-downvoted-current="<%= !@hypothesis.downvotes.where(user_id: current_user.id).empty? if current_user%>" >
+<section class="general-info" id="content-meta-info" data-content-id="<%= @hypothesis.id %>" data-userid="<%= current_user.try(:id) %>" data-content-type="<%= @hypothesis.class%>" data-content-has-upvoted-current="<%= !@hypothesis.upvotes.where(user_id: current_user.id).empty? if current_user %>" data-content-has-downvoted-current="<%= !@hypothesis.downvotes.where(user_id: current_user.id).empty? if current_user%>" data-content-has-disliked-current="<%= !@hypothesis.dislikes.where(user_id: current_user.id).empty? if current_user%>" data-content-has-liked-current="<%= !@hypothesis.likes.where(user_id: current_user.id).empty? if current_user%>" >
   <div class="general-overview">
     <h2 class="general-info-more"><%= link_to 'Try a new search', '/search?utf8=✓&search_term=&commit=Search' %></h2>
   </div>
@@ -41,6 +41,12 @@
       <br>
       <button class="main-action main-downvote"><span class="main-downvote-count"></span><i class="fa fa-arrow-down"></i></button>
       <h2 class="general-lab-downvote">Downvote<span> <%= @hypothesis.downvotes.count %></span></h2>
+      <br>
+      <button class="main-action main-like"><span class="main-like-count"></span><i class="fa fa-check-square"></i></button>
+      <h2 class="general-lab-like">Like<span> <%= @hypothesis.likes.count %></span></h2>
+      <br>
+      <button class="main-action main-dislike"><span class="main-dislike-count"></span><i class="fa fa-minus-square"></i></button>
+      <h2 class="general-lab-dislike">Dislike<span> <%= @hypothesis.dislikes.count %></span></h2>
     </div>
   </div>
   <div class="lab-tags">
@@ -51,9 +57,6 @@
   <h2><%= @hypothesis.title %></h2>
   <span class="comment">
     <span class="user">
-      <span class="lighten">submitted by </span>
-      <%= link_to User.find(@hypothesis.user_id).name, "/users/#{@hypothesis.user_id}" %><br>
-      <span class="lighten"><%= @hypothesis.created_at %></span>
       <% if (current_user && current_user.id == @hypothesis.user_id) %>
         <br>
         <span class="lighten"> <%= link_to "Edit", edit_hypothesis_path(@hypothesis.id) %> </span>
@@ -63,8 +66,13 @@
   <p id="notice"><%= notice %></p>
   <br>
   <p>
-  <%= sanitize @hypothesis.body %>
+  <%= raw @hypothesis.body %>
   </p>
+  <br>
+  <span class="lighten">submitted by </span>
+      <%= link_to User.find(@hypothesis.user_id).name, "/users/#{@hypothesis.user_id}" %>
+      <br>
+      <span class="lighten"><%= @hypothesis.created_at %></span>
 </section>
 <section class="hypothesis-editor visualization-view hidden">
   <div class="hypothesis-graphic"></div>

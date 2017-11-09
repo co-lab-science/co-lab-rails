@@ -46,9 +46,7 @@
   <h2><%= @lab.title %></h2>
   <span class="comment">
     <span class="user">
-      <span class="lighten">submitted by </span>
-      <%= link_to User.find(@lab.user_id).name, "/users/#{@lab.user_id}" %><br>
-      <span class="lighten"><%= @lab.created_at %></span>
+
       <% if (current_user && current_user.id == @lab.user_id) %>
         <br>
         <span class="lighten"> <%= link_to "Edit", edit_observation_path(@lab.id) %> </span>
@@ -58,8 +56,13 @@
   <p id="notice"><%= notice %></p>
   <br>
   <p>
-  <%= sanitize @lab.body %>
+  <%= raw @lab.body %>
   </p>
+  <br>
+  <span class="lighten">submitted by </span>
+      <%= link_to User.find(@lab.user_id).name, "/users/#{@lab.user_id}" %>
+    <br>
+    <span class="lighten"><%= @lab.created_at %></span>
 </section>
 <section class="hypothesis-editor visualization-view hidden">
   <div class="lab-graphic"></div>

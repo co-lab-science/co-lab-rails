@@ -676,7 +676,7 @@ $(document).ready(function() {
 
         if ($(this).hasClass('highlight-font')) {
           $(this).removeClass('highlight-font')
-        } 
+        }
       })
     }
 

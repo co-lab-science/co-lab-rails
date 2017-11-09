@@ -37,9 +37,6 @@
   <h2><%= @question.title %></h2>
   <span class="comment">
     <span class="user">
-      <span class="lighten">submitted by </span>
-      <%= link_to User.find(@question.user_id).name, "/users/#{@question.user_id}" %><br>
-      <span class="lighten"><%= @question.created_at %></span>
       <% if (current_user && current_user.id == @question.user_id) %>
         <br>
         <span class="lighten"> <%= link_to "Edit", edit_question_path(@question.id) %> </span>
@@ -49,8 +46,13 @@
   <p id="notice"><%= notice %></p>
   <br>
   <p>
-  <%= sanitize @question.body %>
+  <%= raw @question.body %>
   </p>
+  <br>
+   <span class="lighten">submitted by </span>
+      <%= link_to User.find(@question.user_id).name, "/users/#{@question.user_id}" %>
+     <br>
+      <span class="lighten"><%= @question.created_at %></span>
 </section>
 <section class="hypothesis-editor visualization-view hidden">
   <div class="lab-graphic"></div>

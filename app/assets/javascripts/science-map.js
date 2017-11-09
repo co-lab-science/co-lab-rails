@@ -32,7 +32,7 @@
           { name: "Co-Lab" }
         ],
         edges: [
-          
+
           { source: 0, target: 1},
           { source: 0, target: 11},
           { source: 0, target: 7},
@@ -63,7 +63,7 @@
           { source: 2, target: 5},
           { source: 2, target: 8},
           { source: 2, target: 19},
-          
+
           { source: 3, target: 0},
 
           { source: 4, target: 0},
@@ -73,16 +73,16 @@
           { source: 6, target: 0},
           { source: 6, target: 2},
           { source: 6, target: 11},
-          
+
           { source: 7, target: 0},
 
           { source: 8, target: 0},
           { source: 8, target: 2},
           { source: 8, target: 11},
-          
+
           { source: 9, target: 2},
           { source: 9, target: 12},
-          
+
           { source: 10, target: 0},
 
           { source: 11, target: 0},
@@ -91,19 +91,19 @@
           { source: 11, target: 6},
           { source: 11, target: 12},
           { source: 11, target: 24},
-          
+
           { source: 12, target: 2},
           { source: 12, target: 9},
           { source: 12, target: 11},
           { source: 12, target: 13},
           { source: 12, target: 14},
-          
+
           { source: 13, target: 12},
           { source: 13, target: 14},
-          
+
           { source: 14, target: 12},
           { source: 14, target: 13},
-          
+
           { source: 15, target: 0},
 
           { source: 16, target: 0},
@@ -124,7 +124,7 @@
           { source: 23, target: 1},
           { source: 23, target: 2},
           { source: 23, target: 11},
-          
+
           { source: 24, target: 1},
           { source: 24, target: 11}
 
@@ -137,7 +137,7 @@
         .links(dataset.edges)
         .size([w, h])
         .linkDistance([80])
-        .charge([-3000])
+        .charge([-1000])
         .start();
 
       //Create SVG element
@@ -145,11 +145,8 @@
         .append("svg")
         .attr("width", w)
         .attr("height", h)
-        .call(d3.behavior.zoom().on("zoom", function () {
-          svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
-        }))
         .append('g');
-      
+
       //Create edges as lines
       var edges = svg.selectAll("line")
         .data(dataset.edges)
@@ -171,7 +168,7 @@
         .style({"fill":"white","stroke":'#ccc'})
         .attr("r", 6)
         .call(force.drag);
-    
+
       var titles = svg.selectAll("text")
         .data(dataset.nodes)
         .enter()
@@ -180,7 +177,7 @@
         .attr("aid",function(d,i){return i;})
         .attr("font-family", "helvetica")
         .attr("font-size", "8px")
-        .attr("fill", "gray") 
+        .attr("fill", "gray")
         .call(force.drag);
 
 
@@ -191,47 +188,13 @@
            .attr("y1", function(d) { return d.source.y; })
            .attr("x2", function(d) { return d.target.x; })
            .attr("y2", function(d) { return d.target.y; });
-      
+
         nodes.attr("cx", function(d) { return d.x; })
            .attr("cy", function(d) { return d.y; });
-        
+
         titles.attr("x", function(d) { return d.x + 16;})
            .attr("y", function(d) { return d.y + 5;});
 
       });
-      
+
       // tag selection
-      $('li,circle,text').on('click',function(){
-
-        var aid = JSON.stringify(this.getAttribute('aid'));
-        var connections = $('line[source='+ aid +']').length;
-        var tagName = $('text[aid='+ aid + ']').text();
-
-        // circles: reset all styling
-        $('circle').css({'fill':'white',"stroke":'#ccc',"stroke-width": 1, "r":6})
-        // circles: set unique styling for selected element
-        $('circle[aid='+ aid +']').css({'stroke':'#1b79be',"stroke-width": 3, "r":12})
-        // circles: set styling for connected elements
-        for(var i = 0; i < connections; i++){
-          var target = connections == 1 ? $('line[source='+ aid +']').attr('target') : $('line[source='+ aid +']:eq('+ i +')').attr('target');
-          $('circle[aid='+ target +']').css({'stroke':'#1b79be'})
-        }
-        
-        // text: reset all styling
-        $('text').css({'font-size':'8px'});
-        // text: set uniqye styling for selected element
-        $('text[aid='+ aid +']').css({'font-size':'12px'});
-       
-        // lines: reset all styling
-        $('line').css({'stroke':'#ccc','stroke-width':'0.1'})
-        // lines: set unique styling for selected elements
-        $('line[source='+ aid +']').css({'stroke':'#1b79be','stroke-width':'1', 'opacity':'0.2'})
-        
-        
-        // fill form with tag name
-        $('.js-to-labs').html( "explore <strong>" + tagName + "</strong>")
-        $('.js-to-labs').click(function(){
-          window.location.href = "/labs?search=" + tagName;
-        })
-      })
-
