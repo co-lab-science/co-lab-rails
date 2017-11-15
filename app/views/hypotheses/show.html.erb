@@ -78,8 +78,13 @@
       <!-- BREADCRUMB TIME! -->
 
       <div class="breadcrumb-trail">
-        THIS IS WHERE THE BREADCRUMB TRAIL WILL GO
+        <h3>THIS IS WHERE THE BREADCRUMB TRAIL WILL GO</h3>
+        <h4>QUESTIONS</h4>
+        <p><%= @hypothesis.questions.each { |q| q } %></p>
+        <h4>USER</h4>
       </div>
+
+      <!-- END BREADCRUMB -->
 
 </section>
 <section class="hypothesis-editor visualization-view hidden">

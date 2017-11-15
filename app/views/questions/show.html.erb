@@ -53,6 +53,18 @@
       <%= link_to User.find(@question.user_id).name, "/users/#{@question.user_id}" %>
      <br>
       <span class="lighten"><%= @question.created_at %></span>
+
+      <!-- BREADCRUMB TIME! -->
+
+      <div class="breadcrumb-trail">
+        <h3>THIS IS WHERE THE BREADCRUMB TRAIL WILL GO</h3>
+        <h4>HYPOTHESES</h4>
+        <p><%= @question.hypotheses.each { |q| q } %></p>
+        <h4>USER</h4>
+      </div>
+
+      <!-- END BREADCRUMB -->
+
 </section>
 <section class="hypothesis-editor visualization-view hidden">
   <div class="lab-graphic"></div>
@@ -84,4 +96,3 @@
 
   </div>
 </div>
-
