@@ -65,13 +65,20 @@
     <span class="lighten"><%= @lab.created_at %></span>
 
     <!-- BREADCRUMB TIME! -->
-
+    <br><br>
     <div class="breadcrumb-trail">
-      <h3>THIS IS WHERE THE BREADCRUMB TRAIL WILL GO</h3>
-      <h4>HYPOTHESES</h4>
-      <p><%= @lab.hypotheses[0].title %></p>
-      <h4>QUESTIONS</h4>
-      <p><%= @lab.questions[0].title %></p>
+      <h4>Associated Hypotheses</h4>
+      <% @lab.hypotheses.map(&:title).each do |t|%>
+        <ul>
+          <li><%=t%></li>
+        </ul>
+      <%end%>
+      <h4>Associated Questions</h4>
+      <% @lab.questions.map(&:title).each do |t|%>
+        <ul>
+          <li><%=t%></li>
+        </ul>
+      <%end%>
     </div>
 
     <!-- END BREADCRUMB -->
