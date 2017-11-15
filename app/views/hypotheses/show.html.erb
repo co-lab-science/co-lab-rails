@@ -69,14 +69,23 @@
   <%= raw @hypothesis.body %>
   </p>
   <br>
+
   <span class="lighten">submitted by </span>
       <%= link_to User.find(@hypothesis.user_id).name, "/users/#{@hypothesis.user_id}" %>
       <br>
       <span class="lighten"><%= @hypothesis.created_at %></span>
+
+      <!-- BREADCRUMB TIME! -->
+
+      <div class="breadcrumb-trail">
+        THIS IS WHERE THE BREADCRUMB TRAIL WILL GO
+      </div>
+
 </section>
 <section class="hypothesis-editor visualization-view hidden">
   <div class="hypothesis-graphic"></div>
 </section>
+
 </main>
 
 
