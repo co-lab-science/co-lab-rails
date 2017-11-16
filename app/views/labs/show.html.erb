@@ -67,16 +67,17 @@
     <!-- BREADCRUMB TIME! -->
     <br><br>
     <div class="breadcrumb-trail">
-      <h4>Associated Hypotheses</h4>
-      <% @lab.hypotheses.map(&:title).each do |t|%>
+      <h3>Associated Entries</h3><br>
+      <h4>Hypotheses</h4>
+      <% @lab.hypotheses.each do |h|%>
         <ul>
-          <li><%=t%></li>
+          <li><%=link_to h.title, "/hypotheses/#{h.id}"%></li>
         </ul>
       <%end%>
-      <h4>Associated Questions</h4>
-      <% @lab.questions.map(&:title).each do |t|%>
+      <h4>Questions</h4>
+      <% @lab.questions.map do |q|%>
         <ul>
-          <li><%=t%></li>
+          <li><%=link_to q.title, "/questions/#{q.id}"%></li>
         </ul>
       <%end%>
     </div>
