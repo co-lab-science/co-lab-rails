@@ -70,19 +70,19 @@
     <div class="breadcrumb-trail">
       <h3>Associated Entries</h3><br>
       <h4>Observations</h4>
-      <% self.associated_observations.each do |o|%>
+      <% self.find_lab_observations.each do |o|%>
         <ul>
           <li><%=link_to o.title, "/observations/#{o.id}"%></li>
         </ul>
       <%end%>
       <h4>Questions</h4>
-      <% self.associated_questions.each do |q|%>
+      <% self.find_lab_questions.each do |q|%>
         <ul>
           <li><%=link_to q.title, "/questions/#{q.id}"%></li>
         </ul>
       <%end%>
       <h4>Hypotheses</h4>
-      <% self.associated_hypotheses.each do |h|%>
+      <% self.find_lab_hypotheses.each do |h|%>
         <ul>
           <li><%=link_to h.title, "/hypotheses/#{h.id}"%></li>
         </ul>

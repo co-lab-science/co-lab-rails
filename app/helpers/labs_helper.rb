@@ -1,26 +1,33 @@
 module LabsHelper
-  def associated_observations
-    # binding.pry
+  def find_lab_observations
     if @related_observations == []
-      [Lab.find(@lab.parent)]
+      if lab_parent?
+        [Lab.find(@lab.parent)]
+      else
+        []
+      end
     else
       @related_observations
     end
   end
 
-  def associated_questions
+  def find_lab_questions
     if @lab.questions == []
-      Lab.find(@lab.parent).questions
+      if lab_parent?
+        Lab.find(@lab.parent).questions
+      else
+        []
+      end
     else
       @lab.questions
     end
   end
 
-  def associated_hypotheses
-    if @lab.hypotheses == []
-      Lab.find(@lab.parent).hypotheses
-    else
+  def find_lab_hypotheses
       @lab.hypotheses
-    end
+  end
+
+  def lab_parent?
+    @lab.parent != nil
   end
 end

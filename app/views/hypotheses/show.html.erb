@@ -81,24 +81,22 @@
       <div class="breadcrumb-trail">
         <h3>Associated Entries</h3><br>
         <h4>Observations</h4>
-        <% @hypothesis.labs.each do |o| %>
+        <% self.find_hypothesis_observations.each do |o| %>
           <ul>
             <li><%=link_to o.title, "/observations/#{o.id}"%></li>
           </ul>
         <%end%>
         <h4>Questions</h4>
-        <% @hypothesis.questions.each do |q|%>
+        <% self.find_hypothesis_questions.each do |q|%>
           <ul>
             <li><%=link_to q.title, "/questions/#{q.id}"%></li>
           </ul>
         <%end%>
         <h4>Hypotheses</h4>
-        <% if @related_questions %>
-          <% @related_questions.each do |h|%>
-            <ul>
-              <li><%=link_to h.title, "/hypotheses/#{h.id}"%></li>
-            </ul>
-          <%end%>  
+        <% self.find_hypothesis_hypotheses.each do |q|%>
+          <ul>
+            <li><%=link_to q.title, "/questions/#{q.id}"%></li>
+          </ul>
         <%end%>
       </div>
 
