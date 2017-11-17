@@ -76,19 +76,29 @@
       <span class="lighten"><%= @hypothesis.created_at %></span>
 
       <!-- BREADCRUMB TIME! -->
+
       <br><br>
       <div class="breadcrumb-trail">
         <h3>Associated Entries</h3><br>
-        <h4>OBSERVATIONS</h4>
+        <h4>Observations</h4>
+        <% @hypothesis.labs.each do |o| %>
           <ul>
-            <li><%=link_to Lab.find(@hypothesis.lab_id).title, "/observations/#{@hypothesis.lab_id}"%></li>
+            <li><%=link_to o.title, "/observations/#{o.id}"%></li>
           </ul>
-        <h4>QUESTIONS</h4>
-        <% current_lab = Lab.find(@hypothesis.lab_id) %>
-        <% current_lab.questions.map do |q|%>
+        <%end%>
+        <h4>Questions</h4>
+        <% @hypothesis.questions.each do |q|%>
           <ul>
             <li><%=link_to q.title, "/questions/#{q.id}"%></li>
           </ul>
+        <%end%>
+        <h4>Hypotheses</h4>
+        <% if @related_questions %>
+          <% @related_questions.each do |h|%>
+            <ul>
+              <li><%=link_to h.title, "/hypotheses/#{h.id}"%></li>
+            </ul>
+          <%end%>  
         <%end%>
       </div>
 
