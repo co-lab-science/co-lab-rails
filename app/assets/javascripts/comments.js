@@ -814,4 +814,3 @@ $(document).ready(function() {
     window.location.href = '/users/' + $(this).closest('.comment').data('user_id')
   })
 })
-
