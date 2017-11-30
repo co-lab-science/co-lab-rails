@@ -3,9 +3,14 @@ $(document).ready(function() {
     var contentId = $('#content-meta-info').data().contentId;
     var userid = $('#content-meta-info').data().userid;
     var contentType = $('#content-meta-info').data().contentType;
-  } catch(e) {
+  } catch(e) {}
 
-  }
+// SHOW TIMELINE AT START
+
+  $('.comment-type.type-timeline').addClass('selected');
+  $("#timeline-container-jq").show()
+
+//  CHAT FUNCTIONS
 
   function initObservations() {
     $('#observation-container-jq').comments({
@@ -763,6 +768,13 @@ $(document).ready(function() {
     fullEditor()
   }
 
+  $('.comment-type.type-timeline').on('click', function () {
+    $('.comments-container-jq').hide()
+    $('.comment-type').removeClass('selected')
+    $(this).addClass('selected')
+    $("#timeline-container-jq").show()
+  })
+
   $('.comment-type.type-observation').on('click', function () {
     $('.comments-container-jq').hide()
     $('.comment-type').removeClass('selected')
@@ -785,13 +797,7 @@ $(document).ready(function() {
     initQuestions()
     $("#questions-container-jq").show()
   })
-  $('.comment-type.type-question').on('click', function () {
-    $('.comments-container-jq').hide()
-    $('.comment-type').removeClass('selected')
-    $(this).addClass('selected')
-    initQuestions()
-    $("#questions-container-jq").show()
-  })
+
   $('.comment-type.type-hypothesis').on('click', function () {
     $('.comments-container-jq').hide()
     $('.comment-type').removeClass('selected')
