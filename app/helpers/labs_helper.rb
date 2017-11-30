@@ -1,6 +1,6 @@
 module LabsHelper
   def timeline
-    [find_lab_observations, find_lab_questions, find_lab_hypotheses].flatten.sort_by(&:created_at)
+    [find_lab_observations, find_lab_questions, find_lab_hypotheses].flatten.sort_by(&:created_at).reverse
   end
 
   def find_lab_observations

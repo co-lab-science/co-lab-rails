@@ -15,28 +15,32 @@
             <% end %>
           </div>
           <time data-original='<%= post.created_at %>'><%= format_date(post.created_at) %></time>
-          <div class="name"><%= post.user.name %></div>
-          <div class="wrapper">
-            <div class="content"><%= post.title %></div>
-            <!-- <span class="actions">
-              <button class="action reply" type="button">question?</button>
-              <span class="separator">·</span>
-                <button class="action upvote">
-                <span class="upvote-count">0</span>
-                <i class="fa fa-arrow-up"></i>
-              </button>
-              <button class="action downvote">
-                <span class="downvote-count">0</span>
-                <i class="fa fa-arrow-down"></i>
-              </button>
-            </span> -->
-          </div>
+          <%= link_to(post.user) do %>
+            <div class="name post-link-text"><%= post.user.name %></div>
+            <% end %>
+          <%= link_to(post) do %>
+            <div class="wrapper post-link-text">
+              <div class="content"><%= post.title %></div>
+            </div>
+          <% end %>
         </div>
       </li>
     <% end %>
   </ul>
 </div>
 
+<!-- <span class="actions">
+<button class="action reply" type="button">question?</button>
+<span class="separator">·</span>
+<button class="action upvote">
+<span class="upvote-count">0</span>
+<i class="fa fa-arrow-up"></i>
+</button>
+<button class="action downvote">
+<span class="downvote-count">0</span>
+<i class="fa fa-arrow-down"></i>
+</button>
+</span> -->
 
   <!-- <ul id="comment-list" class="main">
     <li data-id="9" class="comment">
