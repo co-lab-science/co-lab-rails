@@ -18,4 +18,3 @@ class Lab < ApplicationRecord
     0
   end
 end
-

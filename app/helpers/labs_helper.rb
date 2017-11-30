@@ -1,4 +1,8 @@
 module LabsHelper
+  def timeline
+    [find_lab_observations, find_lab_questions, find_lab_hypotheses].flatten.sort_by(&:created_at)
+  end
+
   def find_lab_observations
     if @related_observations == []
       if lab_parent?
@@ -29,5 +33,10 @@ module LabsHelper
 
   def lab_parent?
     @lab.parent != nil
+  end
+
+  def format_date(date)
+    d = date.to_date.to_s.split("-")
+    "#{d[1]}/#{d[2]}/#{d[0]}"
   end
 end

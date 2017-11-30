@@ -11,8 +11,8 @@
         <div class="comment-type type-question"> + question</div>
         <div class="comment-type type-hypothesis"> + hypothesis</div>
       </div>
-      <div id="timeline-container-jq" class="comments-container-jq">
-        Hi! I'm the timeline!
+      <div id="timeline-container-jq" class="comments-container-jq jquery-comments">
+        <%= render "timeline" %>
       </div>
       <div id="observation-container-jq" class="comments-container-jq">
       </div>
@@ -69,7 +69,6 @@
     <span class="lighten"><%= @lab.created_at %></span>
 
     <!-- BREADCRUMB TIME! -->
-
     <br><br>
     <div class="breadcrumb-trail">
       <h3>Associated Entries</h3><br>

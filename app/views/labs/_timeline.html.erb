@@ -1,0 +1,66 @@
+<!-- THIS IS THE  TIMELINE -->
+<div class="data-container" data-container="comments">
+  <ul id="comment-list" class="main">
+    <% self.timeline.each do |post| %>
+
+      <li data-id='<%= post.id %>' class="comment">
+        <div class="comment-wrapper">
+          <div class="content-type-img img-crop">
+            <% if post.class.name == "Lab" %>
+              <%= image_tag "observation.png" %>
+            <% elsif post.class.name == "Question" %>
+              <%= image_tag "question.png" %>
+            <% elsif post.class.name == "Hypothesis" %>
+              <%= image_tag "hypothesis.png" %>
+            <% end %>
+          </div>
+          <time data-original='<%= post.created_at %>'><%= format_date(post.created_at) %></time>
+          <div class="name"><%= post.user.name %></div>
+          <div class="wrapper">
+            <div class="content"><%= post.title %></div>
+            <!-- <span class="actions">
+              <button class="action reply" type="button">question?</button>
+              <span class="separator">·</span>
+                <button class="action upvote">
+                <span class="upvote-count">0</span>
+                <i class="fa fa-arrow-up"></i>
+              </button>
+              <button class="action downvote">
+                <span class="downvote-count">0</span>
+                <i class="fa fa-arrow-down"></i>
+              </button>
+            </span> -->
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
+  <!-- <ul id="comment-list" class="main">
+    <li data-id="9" class="comment">
+      <div class="comment-wrapper">
+        <i class="fa fa-user profile-picture"></i>
+        <time data-original="2017-11-30T18:24:44.342Z">11/30/2017</time>
+        <div class="name">test</div>
+        <div class="wrapper">
+          <div class="content">This is a question?</div>
+          <span class="actions">
+            <button class="action reply" type="button">question</button>
+            <span class="separator">·</span>
+            <button class="action upvote">
+              <span class="upvote-count">0</span>
+              <i class="fa fa-arrow-up"></i>
+            </button>
+            <button class="action downvote">
+              <span class="downvote-count">0</span>
+              <i class="fa fa-arrow-down"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+      <ul class="child-comments"></ul>
+    </li>
+  </ul>
+</div> -->
