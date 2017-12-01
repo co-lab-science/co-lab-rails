@@ -18,11 +18,44 @@
           <%= link_to(post.user) do %>
             <div class="name post-link-text"><%= post.user.name %></div>
             <% end %>
-          <%= link_to(post) do %>
-            <div class="wrapper post-link-text">
-              <div class="content"><%= post.title %></div>
-            </div>
+          <% if post.class.name == "Lab" %>
+            <%=link_to "/observations/#{post.id}" do %>
+              <div class="wrapper post-link-text">
+                <div class="content"><%= post.title %></div>
+              </div>
+            <% end %>
+          <% else %>
+            <%= link_to(post) do %>
+              <div class="wrapper post-link-text">
+                <div class="content"><%= post.title %></div>
+              </div>
+            <% end %>
           <% end %>
+          <!-- LINKS -->
+          <span class="actions">
+            <button class="action upvote">
+              <span class="upvote-count">0</span>
+              <i class="fa fa-arrow-up"></i>
+            </button>
+            <button class="action downvote">
+              <span class="downvote-count">0</span>
+              <i class="fa fa-arrow-down"></i>
+            </button>
+            <div class="timeline-buttons">
+              <strong>Contribute to this timeline:</strong>
+              <ul class="lab-details">
+                <li class="lab-comments action reply">
+                  <%= link_to("Observation", "/observations/new", class:"white rounded blue-border timeline-button") %>
+                </li>
+                <li class="lab-questions action reply">
+                  <%= link_to("Question", "/questions/new", class:"white rounded blue-border timeline-button") %>
+                </li>
+                <li class="lab-hypotheses action reply">
+                  <%= link_to("Hypothesis", "/hypotheses/new", class:"white rounded blue-border timeline-button") %>
+                </li>
+              </ul>
+            </div>
+          </span>
         </div>
       </li>
     <% end %>
