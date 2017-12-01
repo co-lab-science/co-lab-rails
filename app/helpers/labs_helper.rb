@@ -39,4 +39,23 @@ module LabsHelper
     d = date.to_date.to_s.split("-")
     "#{d[1]}/#{d[2]}/#{d[0]}"
   end
+
+  def time_since_creation(date)
+    time_hash = TimeDifference.between(Time.now, date).in_general
+    if time_hash[:years] != 0
+      "#{time_hash[:years]} years(s). ago"
+    elsif time_hash[:months] != 0
+      "#{time_hash[:months]} months(s) ago"
+    elsif time_hash[:weeks] != 0
+      "#{time_hash[:weeks]} months(s) ago"
+    elsif time_hash[:days] != 0
+      "#{time_hash[:days]} weeks(s) ago"
+    elsif time_hash[:hours] != 0
+      "#{time_hash[:hours]} days(s) ago"
+    elsif time_hash[:minutes] != 0
+      "#{time_hash[:minutes]} hours(s) ago"
+    elsif time_hash[:seconds] != 0
+      "#{time_hash[:seconds]} minutes(s) ago"
+    end
+  end
 end

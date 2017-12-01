@@ -14,7 +14,14 @@
               <%= image_tag "hypothesis.png" %>
             <% end %>
           </div>
-          <time data-original='<%= post.created_at %>'><%= format_date(post.created_at) %></time>
+
+          <time data-original='<%= post.created_at %>'>
+            <span>
+              <%= time_since_creation(post.created_at) %>
+            </span>
+            <span class="separator">·</span>
+            <%= format_date(post.created_at) %>
+          </time>
           <%= link_to(post.user) do %>
             <div class="name post-link-text"><%= post.user.name %></div>
             <% end %>
