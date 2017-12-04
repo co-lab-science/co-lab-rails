@@ -1,6 +1,6 @@
 <!-- FORM BREADCRUMB  -->
 <div style="padding-top: 15px;">
-  <% if find_parent(params[:p], params[:ptype]) %>
+  <% if params[:p] %>
     <% parent = find_parent(params[:p], params[:ptype]) %>
   <h4>Parent Post</h4>
     <% if parent.class.name == "Lab" %>

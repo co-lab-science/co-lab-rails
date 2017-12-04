@@ -1,3 +1,73 @@
+/* timeline-actions */
+.jquery-comments.mobile ul.main li.comment .timeline-actions {
+	font-size: 1em;
+}
+
+.jquery-comments ul.main li.comment .timeline-actions > * {
+	color: #999;
+	font-weight: bold;
+}
+
+.jquery-comments ul.main li.comment .timeline-actions .action {
+	display: inline-block;
+	cursor: pointer;
+	margin-left: 1em;
+	margin-right: 1em;
+	line-height: 1.5em;
+	font-size: 0.9em;
+}
+
+.jquery-comments ul.main li.comment .timeline-actions .action:first-child {
+	margin-left: 0;
+}
+
+.jquery-comments ul.main li.comment .timeline-actions .action.upvote {
+	cursor: inherit;
+}
+
+.jquery-comments ul.main li.comment .timeline-actions .action.upvote .upvote-count {
+	margin-right: .5em;
+}
+
+.jquery-comments ul.main li.comment .timeline-actions .action.upvote .upvote-count:empty {
+	display: none;
+}
+
+.jquery-comments ul.main li.comment .timeline-actions .action.upvote i {
+	cursor: pointer;
+}
+
+.jquery-comments ul.main li.comment .timeline-actions .action:not(.upvote):hover,
+.jquery-comments ul.main li.comment .timeline-actions .action.upvote:not(.highlight-font) i:hover {
+	color: #666;
+}
+
+.jquery-comments ul.main li.comment .timeline-actions .action.delete {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.jquery-comments ul.main li.comment .timeline-actions .action.delete.enabled {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.jquery-comments ul#attachment-list li.comment .timeline-actions .action:not(.delete) {
+	display: none;
+}
+
+.jquery-comments ul#attachment-list li.comment .timeline-actions .action.delete {
+	margin: 0;
+}
+
+.jquery-comments ul#attachment-list li.comment .timeline-actions .separator {
+	display: none;
+}
+
+.jquery-comments.read-only .timeline-actions {
+	display: none;
+}
+
 .timeline-button {
   padding: 1px 10px;
   border: #1b79be solid 1px;

@@ -5,10 +5,31 @@ $(document).ready(function() {
     var contentType = $('#content-meta-info').data().contentType;
   } catch(e) {}
 
-// SHOW TIMELINE AT START
 
-  $('.comment-type.type-timeline').addClass('selected');
-  $("#timeline-container-jq").show()
+
+  //  TIMELINE FUNCTION
+
+  function initTimeline() {
+    // SHOW TIMELINE AT START
+      $('.comment-type.type-timeline').addClass('selected');
+      $('#timeline-container-jq').show(
+        function renderDownvotes() {
+          var markup = '<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-arrow-down"></i></button>';
+          $('.actions').append(markup)
+          // attachDownvoteEvents()
+        }
+
+        // function renderlikes() {
+        //   var markup = '<button class="action like"><span class="like-count">0</span><i class="fa fa-check-square"></i></button>';
+        //   $('.actions').append(markup)
+        //   var markup = '<button class="action dislike"><span class="dislike-count">0</span><i class="fa fa-minus-square"></i></button>';
+        //   $('.actions').append(markup)
+        //   // attachLikeEvents()
+        //   // attachDislikeEvents()
+        // }
+
+      );
+  }
 
 //  CHAT FUNCTIONS
 
@@ -41,7 +62,7 @@ $(document).ready(function() {
           success: function(data) {
             var sanitizedCommentsArray = JqueryCommentHelper.sanitizeParentId(data.related_observations, contentId)
             success(sanitizedCommentsArray);
-            // renderDownvotes()
+            renderDownvotes()
             sanitizedCommentsArray.forEach(function(comment) {
               $('.comment*[data-id="' + comment.id + '"]').data("user_id", comment.user_id)
               $('.comment*[data-id="' + comment.id + '"]').find('.downvote-count').html(comment.downvote_count)
@@ -237,7 +258,7 @@ $(document).ready(function() {
           success: function(data) {
             var sanitizedCommentsArray = JqueryCommentHelper.sanitizeParentId(data.related_questions, questionId)
             success(sanitizedCommentsArray);
-            // renderDownvotes()
+            renderDownvotes()
             sanitizedCommentsArray.forEach(function(comment) {
               $('.comment*[data-id="' + comment.id + '"]').data("user_id", comment.user_id)
               $('.comment*[data-id="' + comment.id + '"]').find('.downvote-count').html(comment.downvote_count)
@@ -434,8 +455,8 @@ $(document).ready(function() {
           success: function(data) {
             var sanitizedCommentsArray = JqueryCommentHelper.sanitizeParentId(data.related_hypotheses, hypothesisId)
             success(sanitizedCommentsArray);
-            // renderDownvotes()
-            // renderlikes()
+            renderDownvotes()
+            renderlikes()
             console.log(sanitizedCommentsArray)
             sanitizedCommentsArray.forEach(function(comment) {
               $('.comment*[data-id="' + comment.id + '"]').data("user_id", comment.user_id)
@@ -768,6 +789,10 @@ $(document).ready(function() {
     fullEditor()
   }
 
+  // call SHOW TIMELINE AT START
+
+  initTimeline()
+
   $('.comment-type.type-timeline').on('click', function () {
     $('.comments-container-jq').hide()
     $('.comment-type').removeClass('selected')
@@ -805,6 +830,7 @@ $(document).ready(function() {
     initHypothesis()
     $("#hypothesis-container-jq").show()
   })
+
   $('.comment-type.type-review').on('click', function () {
     $('.comments-container-jq').hide()
     $('.comment-type').removeClass('selected')
