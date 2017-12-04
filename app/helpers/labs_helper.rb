@@ -43,19 +43,19 @@ module LabsHelper
   def time_since_creation(date)
     time_hash = TimeDifference.between(Time.now, date).in_general
     if time_hash[:years] != 0
-      "#{time_hash[:years]} years(s). ago"
+      "#{time_hash[:years]} year(s). ago"
     elsif time_hash[:months] != 0
-      "#{time_hash[:months]} months(s) ago"
+      "#{time_hash[:months]} month(s) ago"
     elsif time_hash[:weeks] != 0
-      "#{time_hash[:weeks]} months(s) ago"
+      "#{time_hash[:weeks]} weeks(s) ago"
     elsif time_hash[:days] != 0
-      "#{time_hash[:days]} weeks(s) ago"
+      "#{time_hash[:days]} days(s) ago"
     elsif time_hash[:hours] != 0
-      "#{time_hash[:hours]} days(s) ago"
+      "#{time_hash[:hours]} hours(s) ago"
     elsif time_hash[:minutes] != 0
-      "#{time_hash[:minutes]} hours(s) ago"
+      "#{time_hash[:minutes]} minutes(s) ago"
     elsif time_hash[:seconds] != 0
-      "#{time_hash[:seconds]} minutes(s) ago"
+      "#{time_hash[:seconds]} seconds(s) ago"
     end
   end
 end

@@ -34,8 +34,21 @@ class LabsController < ApplicationController
   end
 
   def new
-    @lab = Lab.new
-    @tags = Tag.all.limit(10)
+    if params[:p].nil?
+      @lab = Lab.new
+      @tags = Tag.all.limit(10)
+    else
+      if params[:ptype] == "Lab"
+        @parent = Lab.find(params[:p])
+      elsif params[:ptype] == "Question"
+        @parent = Question.find(params[:p])
+      elsif params[:ptype] == "Hypothesis"
+        @parent = Hypothesis.find(params[:p])
+      end
+      @lab = Lab.new
+      @tags = Tag.all.limit(10)
+      @parent
+    end
   end
 
   def edit

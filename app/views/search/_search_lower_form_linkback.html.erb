@@ -1,0 +1,14 @@
+<!-- FORM BREADCRUMB  -->
+<div style="padding-top: 15px;">
+  <% if find_parent(params[:p], params[:ptype]) %>
+    <% parent = find_parent(params[:p], params[:ptype]) %>
+  <h4>Parent Post</h4>
+    <% if parent.class.name == "Lab" %>
+      <%= link_to "#{parent.title}", observation_url(parent) %>
+    <% else %>
+      <%= link_to "#{parent.title}", parent %>
+    <% end %>
+  <% else %>
+    <%= link_to 'Try a new search', '/search?utf8=✓&search_term=&commit=Search' %>
+  <% end %>
+</div>

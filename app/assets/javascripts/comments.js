@@ -41,7 +41,7 @@ $(document).ready(function() {
           success: function(data) {
             var sanitizedCommentsArray = JqueryCommentHelper.sanitizeParentId(data.related_observations, contentId)
             success(sanitizedCommentsArray);
-            renderDownvotes()
+            // renderDownvotes()
             sanitizedCommentsArray.forEach(function(comment) {
               $('.comment*[data-id="' + comment.id + '"]').data("user_id", comment.user_id)
               $('.comment*[data-id="' + comment.id + '"]').find('.downvote-count').html(comment.downvote_count)
@@ -237,7 +237,7 @@ $(document).ready(function() {
           success: function(data) {
             var sanitizedCommentsArray = JqueryCommentHelper.sanitizeParentId(data.related_questions, questionId)
             success(sanitizedCommentsArray);
-            renderDownvotes()
+            // renderDownvotes()
             sanitizedCommentsArray.forEach(function(comment) {
               $('.comment*[data-id="' + comment.id + '"]').data("user_id", comment.user_id)
               $('.comment*[data-id="' + comment.id + '"]').find('.downvote-count').html(comment.downvote_count)
@@ -434,8 +434,8 @@ $(document).ready(function() {
           success: function(data) {
             var sanitizedCommentsArray = JqueryCommentHelper.sanitizeParentId(data.related_hypotheses, hypothesisId)
             success(sanitizedCommentsArray);
-            renderDownvotes()
-            renderlikes()
+            // renderDownvotes()
+            // renderlikes()
             console.log(sanitizedCommentsArray)
             sanitizedCommentsArray.forEach(function(comment) {
               $('.comment*[data-id="' + comment.id + '"]').data("user_id", comment.user_id)

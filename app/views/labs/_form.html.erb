@@ -24,7 +24,11 @@
 
   <%= hidden_field_tag 'lab[create_from]', params[:create_from] %>
   <%= hidden_field_tag 'lab[create_from_id]', params[:create_from_id] %>
-  <%= hidden_field_tag 'lab[parent]', params[:parent] %>
+  <% if @parent %>
+    <%= hidden_field_tag 'lab[parent]', @parent.id %>
+  <% else %>
+    <%= hidden_field_tag 'lab[parent]', params[:parent] %>
+  <% end %>
 
   <div class="field">
     <label for="lab_tags">Tags</label>
@@ -37,3 +41,4 @@
   </div>
 <% end %>
 
+<%= render "/search/search_lower_form_linkback" %>

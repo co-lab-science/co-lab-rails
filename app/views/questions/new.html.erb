@@ -1,7 +1,9 @@
 <main>
   <section class="general-info">
       <div class="general-overview">
-          <h2 class="general-info-title"><%= link_to 'Try a new search', '/search?utf8=✓&search_term=&commit=Search' %></h2>
+          <h2 class="general-info-title">
+            <%= render "/search/search_upper_left_path" %>
+          </h2>
       </div>
       <div class="general-comments">
           <div class="observation-tags">
@@ -9,7 +11,7 @@
           <p><strong>Tag your post with the relevant scientific field tags</strong> <span class="js-tips comments"></span></p>
           <div class="tips comments show">
             Concise post, clear community.<br>
-            Insert scientific field <strong>tags</strong> representative of your post to: 
+            Insert scientific field <strong>tags</strong> representative of your post to:
             <br>
             1. Assign expertise
             <br>
@@ -31,4 +33,3 @@
         <%= render 'form', question: @question %>
   </section>
 </main>
-
