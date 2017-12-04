@@ -2,7 +2,6 @@
 <div class="data-container" data-container="comments">
   <ul id="comment-list" class="main">
     <% self.timeline.each do |post| %>
-
       <li data-id='<%= post.id %>' class="comment">
         <div class="comment-wrapper">
           <div class="content-type-img img-crop">
@@ -41,16 +40,16 @@
           <!-- LINKS -->
           <span class="timeline-actions">
             <button class="action upvote">
-              <span class="upvote-count">0</span>
+              <span class="upvote-count"><%= post.upvotes.count %></span>
               <i class="fa fa-arrow-up"></i>
             </button>
             <button class="action downvote">
-              <span class="downvote-count">0</span>
+              <span class="downvote-count"><%= post.downvotes.count %></span>
               <i class="fa fa-arrow-down"></i>
             </button>
             <% if post.class.name == "Hypothesis" %>
-              <button class="action like"><span class="like-count">0</span><i class="fa fa-check-square"></i></button>
-              <button class="action dislike"><span class="dislike-count">0</span><i class="fa fa-minus-square"></i></button>
+              <button class="action like"><span class="like-count"><%= post.likes.count %></span><i class="fa fa-check-square"></i></button>
+              <button class="action dislike"><span class="dislike-count"><%= post.dislikes.count %></span><i class="fa fa-minus-square"></i></button>
             <% end %>
             <div class="timeline-buttons">
               <strong>Contribute to this timeline:</strong>
