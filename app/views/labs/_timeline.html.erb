@@ -37,21 +37,22 @@
               </div>
             <% end %>
           <% end %>
-          <!-- LINKS -->
-          <span class="timeline-actions">
-            <button class="action upvote">
-              <span class="upvote-count"><%= post.upvotes.count %></span>
-              <i class="fa fa-arrow-up"></i>
-            </button>
-            <button class="action downvote">
-              <span class="downvote-count"><%= post.downvotes.count %></span>
-              <i class="fa fa-arrow-down"></i>
-            </button>
-            <% if post.class.name == "Hypothesis" %>
-              <button class="action like"><span class="like-count"><%= post.likes.count %></span><i class="fa fa-check-square"></i></button>
-              <button class="action dislike"><span class="dislike-count"><%= post.dislikes.count %></span><i class="fa fa-minus-square"></i></button>
-            <% end %>
-            <% if current_user %>
+          <% if current_user %>
+            <!-- LINKS -->
+            <span class="timeline-actions">
+              <button class="action upvote">
+                <span class="upvote-count"><%= post.upvotes.count %></span>
+                <i class="fa fa-arrow-up"></i>
+              </button>
+              <button class="action downvote">
+                <span class="downvote-count"><%= post.downvotes.count %></span>
+                <i class="fa fa-arrow-down"></i>
+              </button>
+              <% if post.class.name == "Hypothesis" %>
+                <button class="action like"><span class="like-count"><%= post.likes.count %></span><i class="fa fa-check-square"></i></button>
+                <button class="action dislike"><span class="dislike-count"><%= post.dislikes.count %></span><i class="fa fa-minus-square"></i></button>
+              <% end %>
+              <!-- BUTTONS -->
               <div class="timeline-buttons">
                 <strong>Contribute to this timeline:</strong>
                 <ul class="lab-details">
