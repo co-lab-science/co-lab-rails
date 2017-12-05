@@ -51,20 +51,22 @@
               <button class="action like"><span class="like-count"><%= post.likes.count %></span><i class="fa fa-check-square"></i></button>
               <button class="action dislike"><span class="dislike-count"><%= post.dislikes.count %></span><i class="fa fa-minus-square"></i></button>
             <% end %>
-            <div class="timeline-buttons">
-              <strong>Contribute to this timeline:</strong>
-              <ul class="lab-details">
-                <li class="lab-comments action reply">
-                  <%= link_to("Observation", new_observation_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
-                </li>
-                <li class="lab-questions action reply">
-                  <%= link_to("Question", new_question_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
-                </li>
-                <li class="lab-hypotheses action reply">
-                  <%= link_to("Hypothesis", new_hypothesis_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
-                </li>
-              </ul>
-            </div>
+            <% if current_user %>
+              <div class="timeline-buttons">
+                <strong>Contribute to this timeline:</strong>
+                <ul class="lab-details">
+                  <li class="lab-comments action reply">
+                    <%= link_to("Observation", new_observation_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
+                  </li>
+                  <li class="lab-questions action reply">
+                    <%= link_to("Question", new_question_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
+                  </li>
+                  <li class="lab-hypotheses action reply">
+                    <%= link_to("Hypothesis", new_hypothesis_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
+                  </li>
+                </ul>
+              </div>
+            <% end %>
           </span>
         </div>
       </li>
