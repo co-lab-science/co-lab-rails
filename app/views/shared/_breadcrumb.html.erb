@@ -3,19 +3,25 @@
   <h4>Observations</h4>
     <% get_breadcrumbs(self.current_post)[:observations].each do |o| %>
       <ul>
+        <% if o.title != self.current_post.title %>
         <li><%= link_to o.title, "/observations/#{o.id}" %></li>
+        <% end %>
       </ul>
     <% end %>
   <h4>Questions</h4>
     <% get_breadcrumbs(self.current_post)[:questions].each do |q| %>
       <ul>
+        <% if q.title != self.current_post.title %>
         <li><%= link_to q.title, q %></li>
+        <% end %>
       </ul>
     <% end %>
   <h4>Hypotheses</h4>
     <% get_breadcrumbs(self.current_post)[:hypotheses].each do |h| %>
       <ul>
+        <% if h.title != self.current_post.title %>
         <li><%= link_to h.title, h %></li>
+        <% end %>
       </ul>
     <% end %>
 </div>

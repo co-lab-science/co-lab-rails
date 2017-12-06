@@ -2,6 +2,7 @@
 <div class="data-container" data-container="comments">
   <ul id="comment-list" class="main">
     <% get_timeline_posts(self.current_post).each do |post| %>
+    <% if post.title != self.current_post.title %>
       <li data-id='<%= post.id %>' class="comment">
         <div class="comment-wrapper">
           <div class="content-type-img img-crop">
@@ -71,6 +72,7 @@
           </span>
         </div>
       </li>
+      <%end %>
     <% end %>
   </ul>
 </div>
