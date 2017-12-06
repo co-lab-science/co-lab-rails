@@ -19,9 +19,9 @@ class Question < ApplicationRecord
 
   def get_associated_posts
     if associated_posts_hash.values.flatten.empty?
-      if self.lab_id != nil
+      if self.lab_id != nil && Lab.find_by_id(self.lab_id) != nil
         Lab.find(self.lab_id).get_associated_posts
-      elsif self.hypothesis_id != nil
+      elsif self.hypothesis_id != nil && Hypothesis.find_by_id(self.hypothesis_id) != nil
         Hypothesis.find(self.hypothesis_id).get_associated_posts
       else
         associated_posts_hash
