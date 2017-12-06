@@ -1,22 +1,17 @@
 $(document).ready(function() {
   var likesUrl = '/likes'
   try {
-    var contentId = $('#content-meta-info').data().contentId;
-    var userid = $('#content-meta-info').data().userid;
-    var contentType = $('#content-meta-info').data().contentType;
-    var hasLikedCurrentContent =  $('#content-meta-info').data().contentHasLikedCurrent
-    var hasDislikedCurrentContent =  $('#content-meta-info').data().contentHasDislikedCurrent
+    var contentId = $('#post-meta-info').data().contentId;
+    var userid = $('#post-meta-info').data().userid;
+    var contentType = $('#post-meta-info').data().contentType;
+    var hasLikedCurrentContent =  $('#post-meta-info').data().contentHasLikedCurrent
+    var hasDislikedCurrentContent =  $('#post-meta-info').data().contentHasDislikedCurrent
   } catch(e) {
 
   }
 
   try {
-    if (hasLikedCurrentContent) {
-      $('.main-like').css('color', '#1b79be')
-    }
-    if (hasDislikedCurrentContent) {
-      $('.main-dislike').css('color', '#1b79be')
-    }
+
 
   } catch(e) {}
   if (userid) {

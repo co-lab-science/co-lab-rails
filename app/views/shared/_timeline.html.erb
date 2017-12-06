@@ -3,6 +3,8 @@
   <ul id="comment-list" class="main">
     <% get_timeline_posts(self.current_post).each do |post| %>
     <% if post.title != self.current_post.title %>
+      <section class="post-info" id="post-meta-info" data-content-id="<%= post.id %>" data-userid="<%= current_user.try(:id) %>" data-content-type="<%= post.class%>" data-content-has-upvoted-current="<%= !post.upvotes.where(user_id: current_user.id).empty? if current_user %>" data-content-has-downvoted-current="<%= !post.downvotes.where(user_id: current_user.id).empty? if current_user%>" >
+
       <li data-id='<%= post.id %>' class="comment">
         <div class="comment-wrapper">
           <div class="content-type-img img-crop">
@@ -41,11 +43,11 @@
           <% if current_user %>
             <!-- LINKS -->
             <span class="timeline-actions">
-              <button class="action upvote">
+              <button class="action upvote timeline-upvote <%= "id-#{post.id}" %>">
                 <span class="upvote-count"><%= post.upvotes.count %></span>
                 <i class="fa fa-arrow-up"></i>
               </button>
-              <button class="action downvote">
+              <button class="action downvote timeline-downvote">
                 <span class="downvote-count"><%= post.downvotes.count %></span>
                 <i class="fa fa-arrow-down"></i>
               </button>
@@ -72,6 +74,8 @@
           </span>
         </div>
       </li>
+
+      </section>
       <%end %>
     <% end %>
   </ul>
