@@ -1,7 +1,7 @@
 <!-- THIS IS THE  TIMELINE -->
 <div class="data-container" data-container="comments">
   <ul id="comment-list" class="main">
-    <% self.timeline.each do |post| %>
+    <% get_timeline_posts(self.current_post).each do |post| %>
       <li data-id='<%= post.id %>' class="comment">
         <div class="comment-wrapper">
           <div class="content-type-img img-crop">

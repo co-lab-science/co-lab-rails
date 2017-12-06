@@ -11,9 +11,13 @@
         <div class="comment-type type-question"> + question</div>
         <div class="comment-type type-hypothesis"> + hypothesis</div>
       </div>
+
+    <!-- TIMELINE TIME -->
       <div id="timeline-container-jq" class="comments-container-jq jquery-comments">
-        <%= render "timeline" %>
+        <%= render "shared/timeline" %>
       </div>
+    <!-- END TIMELINE -->
+
       <div id="observation-container-jq" class="comments-container-jq">
       </div>
       <div id="questions-container-jq" class="comments-container-jq">
@@ -68,31 +72,10 @@
     <br>
     <span class="lighten"><%= @lab.created_at %></span>
 
-    <!-- BREADCRUMB TIME! -->
+  <!-- BREADCRUMB TIME! -->
     <br><br>
-    <div class="breadcrumb-trail">
-      <h3>Associated Entries</h3><br>
-      <h4>Observations</h4>
-      <% self.find_lab_observations.each do |o|%>
-        <ul>
-          <li><%=link_to o.title, "/observations/#{o.id}"%></li>
-        </ul>
-      <%end%>
-      <h4>Questions</h4>
-      <% self.find_lab_questions.each do |q|%>
-        <ul>
-          <li><%=link_to q.title, "/questions/#{q.id}"%></li>
-        </ul>
-      <%end%>
-      <h4>Hypotheses</h4>
-      <% self.find_lab_hypotheses.each do |h|%>
-        <ul>
-          <li><%=link_to h.title, "/hypotheses/#{h.id}"%></li>
-        </ul>
-      <%end%>
-    </div>
-
-    <!-- END BREADCRUMB -->
+    <%= render "shared/breadcrumb" %>
+  <!-- END BREADCRUMB -->
 
 </section>
 <section class="hypothesis-editor visualization-view hidden">

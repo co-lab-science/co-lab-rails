@@ -6,11 +6,20 @@
   <div class="general-comments">
     <div class="observation-tags">
       <div class="comment">
+        <div class="comment-type type-timeline"> Timeline</div>
         <div class="comment-type type-observation"> + observation</div>
         <div class="comment-type type-question"> + question</div>
         <div class="comment-type type-hypothesis"> + hypothesis</div>
         <div class="comment-type type-review"> + review</div>
       </div>
+
+
+      <!-- TIMELINE TIME -->
+        <div id="timeline-container-jq" class="comments-container-jq jquery-comments">
+          <%= render "shared/timeline" %>
+        </div>
+      <!-- END TIMELINE -->
+
       <div id="observation-container-jq" class="comments-container-jq">
       </div>
       <div id="questions-container-jq" class="comments-container-jq">
@@ -76,30 +85,8 @@
       <span class="lighten"><%= @hypothesis.created_at %></span>
 
       <!-- BREADCRUMB TIME! -->
-
-      <br><br>
-      <div class="breadcrumb-trail">
-        <h3>Associated Entries</h3><br>
-        <h4>Observations</h4>
-        <% self.find_hypothesis_observations.each do |o| %>
-          <ul>
-            <li><%=link_to o.title, "/observations/#{o.id}"%></li>
-          </ul>
-        <%end%>
-        <h4>Questions</h4>
-        <% self.find_hypothesis_questions.each do |q|%>
-          <ul>
-            <li><%=link_to q.title, "/questions/#{q.id}"%></li>
-          </ul>
-        <%end%>
-        <h4>Hypotheses</h4>
-        <% self.find_hypothesis_hypotheses.each do |q|%>
-          <ul>
-            <li><%=link_to q.title, "/questions/#{q.id}"%></li>
-          </ul>
-        <%end%>
-      </div>
-
+        <br><br>
+        <%= render "shared/breadcrumb" %>
       <!-- END BREADCRUMB -->
 
 </section>

@@ -1,0 +1,21 @@
+<div class="breadcrumb-trail">
+  <h3>Associated Entries</h3><br>
+  <h4>Observations</h4>
+    <% get_breadcrumbs(self.current_post)[:observations].each do |o| %>
+      <ul>
+        <li><%= link_to o.title, "/observations/#{o.id}" %></li>
+      </ul>
+    <% end %>
+  <h4>Questions</h4>
+    <% get_breadcrumbs(self.current_post)[:questions].each do |q| %>
+      <ul>
+        <li><%= link_to q.title, q %></li>
+      </ul>
+    <% end %>
+  <h4>Hypotheses</h4>
+    <% get_breadcrumbs(self.current_post)[:hypotheses].each do |h| %>
+      <ul>
+        <li><%= link_to h.title, h %></li>
+      </ul>
+    <% end %>
+</div>
