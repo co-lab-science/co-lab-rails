@@ -1,5 +1,5 @@
 module SearchHelper
-  def find_parent(id = nil, type = nil)
+  def find_previous_post(id = nil, type = nil)
     if type == nil
       false
     else

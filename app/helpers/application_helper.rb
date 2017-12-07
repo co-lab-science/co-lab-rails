@@ -18,14 +18,6 @@ module ApplicationHelper
     end
   end
 
-  def find_parent_form(parent_params)
-    if parent_params = nil
-      binding.pry
-    else
-      parent_params
-    end
-  end
-
   def format_date(date)
     d = date.to_date.to_s.split("-")
     "#{d[1]}/#{d[2]}/#{d[0]}"

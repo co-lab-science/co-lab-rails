@@ -37,9 +37,10 @@ $(document).ready(function() {
     $('#observation-container-jq').comments({
       profilePictureURL: "#",
       textareaRows: 2,
-      maxRepliesVisible: 2,
+      maxRepliesVisible: 0,
       replyText: 'observation',
       profilePictureURL: '#',
+      enableReplying: false,
       fieldMappings: {
         created: 'created_at',
         content: 'title'
@@ -147,7 +148,9 @@ $(document).ready(function() {
 
     function renderDownvotes() {
       var markup = '<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-arrow-down"></i></button>';
+      var postType = '<span style="font-weight: bold;">Observation</span>';
       $('.actions').append(markup)
+      $('.actions').prepend(postType)
       attachDownvoteEvents()
     }
 
@@ -205,7 +208,7 @@ $(document).ready(function() {
     }
 
     function fullEditor() {
-      $('.commenting-field').find('.textarea').one("click", function() {
+      $('.commenting-field').find('.textarea').on("click", function() {
         $(this).siblings().eq(1).append('<span class="save full-submit highlight-background enabled ">Create with full editor </button></a>')
       })
 
@@ -233,10 +236,11 @@ $(document).ready(function() {
   function initQuestions() {
     $('#questions-container-jq').comments({
       textareaRows: 2,
-      maxRepliesVisible: 2,
+      maxRepliesVisible: 0,
       profilePictureURL: 'https://app.viima.com/static/media/user_profiles/user-icon.png',
       textareaPlaceholderText: "Add a question",
       replyText: 'question',
+      enableReplying: false,
       noCommentsText: "No Questions",
       fieldMappings: {
         created: 'created_at',
@@ -344,7 +348,9 @@ $(document).ready(function() {
 
     function renderDownvotes() {
       var markup = '<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-arrow-down"></i></button>';
+      var postType = '<span style="font-weight: bold;">Question</span>';
       $('.actions').append(markup)
+      $('.actions').prepend(postType)
       attachDownvoteEvents()
     }
 
@@ -430,8 +436,9 @@ $(document).ready(function() {
   function initHypothesis() {
     $('#hypothesis-container-jq').comments({
       textareaRows: 2,
-      maxRepliesVisible: 2,
+      maxRepliesVisible: 0,
       replyText: 'hypothesis',
+      enableReplying: false,
       profilePictureURL: 'https://app.viima.com/static/media/user_profiles/user-icon.png',
       fieldMappings: {
         created: 'created_at',
@@ -556,7 +563,9 @@ $(document).ready(function() {
 
     function renderDownvotes() {
       var markup = '<button class="action downvote"><span class="downvote-count">0</span><i class="fa fa-arrow-down"></i></button>';
+      var postType = '<span style="font-weight: bold;">Hypothesis</span>';
       $('.actions').append(markup)
+      $('.actions').prepend(postType)
       attachDownvoteEvents()
     }
 

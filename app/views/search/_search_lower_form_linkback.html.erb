@@ -1,12 +1,12 @@
 <!-- FORM BREADCRUMB  -->
 <div style="padding-top: 15px;">
   <% if params[:p] %>
-    <% parent = find_parent(params[:p], params[:ptype]) %>
+    <% previous = find_previous_post(params[:p], params[:ptype]) %>
   <h4>Parent Post</h4>
-    <% if parent.class.name == "Lab" %>
-      <%= link_to "#{parent.title}", observation_url(parent) %>
+    <% if previous.class.name == "Lab" %>
+      <%= link_to "#{previous.title}", observation_url(previous) %>
     <% else %>
-      <%= link_to "#{parent.title}", parent %>
+      <%= link_to "#{previous.title}", previous %>
     <% end %>
   <% else %>
     <%= link_to 'Try a new search', '/search?utf8=✓&search_term=&commit=Search' %>

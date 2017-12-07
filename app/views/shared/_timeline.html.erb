@@ -60,13 +60,13 @@
                 <strong>Contribute to this timeline:</strong>
                 <ul class="lab-details">
                   <li class="lab-comments action reply">
-                    <%= link_to("Observation", new_observation_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
+                    <%= link_to("Observation", new_observation_url(p: post, ptype: post.class.name, parent: self.current_post, parent_type: self.current_post.class.name), class:"white rounded blue-border timeline-button") %>
                   </li>
                   <li class="lab-questions action reply">
-                    <%= link_to("Question", new_question_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
+                    <%= link_to("Question", new_question_url(p: post, ptype: post.class.name, parent: self.current_post, parent_type: self.current_post.class.name), class:"white rounded blue-border timeline-button") %>
                   </li>
                   <li class="lab-hypotheses action reply">
-                    <%= link_to("Hypothesis", new_hypothesis_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
+                    <%= link_to("Hypothesis", new_hypothesis_url(p: post, ptype: post.class.name, parent: self.current_post, parent_type: self.current_post.class.name), class:"white rounded blue-border timeline-button") %>
                   </li>
                 </ul>
               </div>

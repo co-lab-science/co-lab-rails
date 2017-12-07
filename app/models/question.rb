@@ -40,19 +40,25 @@ class Question < ApplicationRecord
   end
 
   def find_parent
-    Question.find(self.parent) unless self.parent == nil
+    Lab.find(self.parent) unless self.parent == nil
   end
 
   def get_observations
-    self.labs.empty? ? [self.find_parent.nil? ? nil : self.find_parent.labs] : [self.labs]
+    self.labs.empty? ? [self.find_parent.nil? ? nil : self.find_parent] : [self.labs]
   end
 
   def get_questions
-    [self.related_questions, self.find_parent].flatten
+    [self.related_questions, parent_questions].flatten
   end
 
   def get_hypotheses
     self.hypotheses.empty? ? [self.find_parent.nil? ? nil : self.find_parent.hypotheses] : [self.hypotheses]
+  end
+
+  def parent_questions
+    unless self.find_parent.nil?
+      questions.nil? ? nil : self.find_parent.questions.limit(3)
+    end
   end
 
   def related_questions

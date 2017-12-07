@@ -43,7 +43,7 @@ class Hypothesis < ApplicationRecord
     end
 
     def get_observations
-      self.labs.empty? ? [self.find_parent.nil? ? nil : self.find_parent.labs] : [self.labs]
+      self.labs.empty? ? [self.find_parent.nil? ? nil : self.find_parent] : [self.labs]
     end
 
     def get_questions

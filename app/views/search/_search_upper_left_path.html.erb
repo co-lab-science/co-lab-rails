@@ -1,10 +1,10 @@
-<% if params[:p] %>
-  <% if params[:ptype] =="Lab" %>
-    <%= link_to "Return to Parent", "/observations/#{params[:p]}" %>
-  <% elsif params[:ptype] =="Question" %>
-    <%= link_to "Return to Parent", "/questions/#{params[:p]}" %>
-  <% elsif params[:ptype] =="Hypothesis" %>
-    <%= link_to "Return to Parent", "/hypothesis/#{params[:p]}" %>
+<% if params[:parent] %>
+  <% if params[:parent_type] =="Lab" %>
+    <%= link_to "Back to Previous Post", "/observations/#{params[:parent]}" %>
+  <% elsif params[:parent_type] =="Question" %>
+    <%= link_to "Back to Previous Post", "/questions/#{params[:parent]}" %>
+  <% elsif params[:parent_type] =="Hypothesis" %>
+    <%= link_to "Back to Previous Post", "/hypothesis/#{params[:parent]}" %>
   <% end %>
 <% else %>
   <%= link_to 'Try a new search', '/search?utf8=✓&search_term=&commit=Search' %>
