@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'docs/about'
+
+  get 'docs/privacy-policy'
+
+  get 'docs/user-agreement'
+
   resources :reviews
   root to: "static_page#home"
 
