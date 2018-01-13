@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170911134408) do
+ActiveRecord::Schema.define(version: 20180113192601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,13 @@ ActiveRecord::Schema.define(version: 20170911134408) do
     t.integer  "lab_id"
   end
 
+  create_table "groups", force: :cascade do |t|
+    t.string   "admin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+  end
+
   create_table "hypotheses", force: :cascade do |t|
     t.string   "title"
     t.string   "body"
@@ -62,6 +69,7 @@ ActiveRecord::Schema.define(version: 20170911134408) do
     t.integer  "question_id"
     t.integer  "review_id"
     t.integer  "tag_id"
+    t.integer  "group_id"
   end
 
   create_table "lab_files", force: :cascade do |t|
@@ -85,6 +93,7 @@ ActiveRecord::Schema.define(version: 20170911134408) do
     t.integer  "question_id"
     t.integer  "hypothesis_id"
     t.integer  "tag_id"
+    t.integer  "group_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -106,6 +115,7 @@ ActiveRecord::Schema.define(version: 20170911134408) do
     t.integer  "parent"
     t.integer  "hypothesis_id"
     t.integer  "tag_id"
+    t.integer  "group_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -151,6 +161,7 @@ ActiveRecord::Schema.define(version: 20170911134408) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.boolean  "admin"
+    t.integer  "group_id"
   end
 
 end

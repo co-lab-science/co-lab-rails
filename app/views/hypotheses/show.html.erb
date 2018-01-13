@@ -82,6 +82,8 @@
   <span class="lighten">submitted by </span>
       <%= link_to User.find(@hypothesis.user_id).name, "/users/#{@hypothesis.user_id}" %>
       <br>
+      <span class="lighten">group </span><%= link_to @hypothesis.group.name, @hypothesis.group %>
+       <br>
       <span class="lighten"><%= @hypothesis.created_at %></span>
 
       <!-- BREADCRUMB TIME! -->

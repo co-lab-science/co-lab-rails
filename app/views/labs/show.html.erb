@@ -70,6 +70,8 @@
   <span class="lighten">submitted by </span>
       <%= link_to User.find(@lab.user_id).name, "/users/#{@lab.user_id}" %>
     <br>
+    <span class="lighten">group </span><%= link_to @lab.group.name, @lab.group %>
+     <br>
     <span class="lighten"><%= @lab.created_at %></span>
 
   <!-- BREADCRUMB TIME! -->

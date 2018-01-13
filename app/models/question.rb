@@ -12,6 +12,7 @@ class Question < ApplicationRecord
   has_many :downvotes
   has_many :dislikes
   has_many :lab_files
+  belongs_to :group
 
   def like_count
     0

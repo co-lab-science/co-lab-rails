@@ -14,6 +14,7 @@ class Hypothesis < ApplicationRecord
   has_many :upvotes
   has_many :downvotes
   has_many :lab_files
+  belongs_to :group
 
 
     def get_associated_posts

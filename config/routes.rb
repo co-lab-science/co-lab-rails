@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :groups
   get 'docs/about'
 
   get 'docs/privacy-policy'

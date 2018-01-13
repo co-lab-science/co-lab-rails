@@ -59,6 +59,8 @@
   <br>
    <span class="lighten">submitted by </span>
       <%= link_to User.find(@question.user_id).name, "/users/#{@question.user_id}" %>
+    <br>
+    <span class="lighten">group </span><%= link_to @question.group.name, @question.group %>
      <br>
       <span class="lighten"><%= @question.created_at %></span>
 
