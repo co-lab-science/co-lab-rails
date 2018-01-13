@@ -1,0 +1,11 @@
+<% if params[:p] %>
+  <% if params[:ptype] =="Lab" %>
+    <%= link_to "Return to Parent", "/observations/#{params[:p]}" %>
+  <% elsif params[:ptype] =="Question" %>
+    <%= link_to "Return to Parent", "/questions/#{params[:p]}" %>
+  <% elsif params[:ptype] =="Hypothesis" %>
+    <%= link_to "Return to Parent", "/hypothesis/#{params[:p]}" %>
+  <% end %>
+<% else %>
+  <%= link_to 'Try a new search', '/search?utf8=✓&search_term=&commit=Search' %>
+<% end %>

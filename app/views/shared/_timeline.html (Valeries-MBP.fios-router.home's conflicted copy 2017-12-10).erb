@@ -1,0 +1,78 @@
+<!-- THIS IS THE  TIMELINE -->
+<div class="data-container" data-container="comments">
+  <ul id="comment-list" class="main">
+    <% get_timeline_posts(self.current_post).each do |post| %>
+    <% if post.title != self.current_post.title %>
+      <li data-id='<%= post.id %>' class="comment">
+        <div class="comment-wrapper">
+          <div class="content-type-img img-crop">
+            <% if post.class.name == "Lab" %>
+              <%= image_tag "observation.png" %>
+            <% elsif post.class.name == "Question" %>
+              <%= image_tag "question.png" %>
+            <% elsif post.class.name == "Hypothesis" %>
+              <%= image_tag "hypothesis.png" %>
+            <% end %>
+          </div>
+
+          <time data-original='<%= post.created_at %>'>
+            <span>
+              <%= time_since_creation(post.created_at) %>
+            </span>
+            <span class="separator">·</span>
+            <%= format_date(post.created_at) %>
+          </time>
+          <%= link_to(post.user) do %>
+            <div class="name post-link-text"><%= post.user.name %></div>
+            <% end %>
+          <% if post.class.name == "Lab" %>
+            <%=link_to "/observations/#{post.id}" do %>
+              <div class="wrapper post-link-text">
+                <div class="content"><%= post.title %></div>
+              </div>
+            <% end %>
+          <% else %>
+            <%= link_to(post) do %>
+              <div class="wrapper post-link-text">
+                <div class="content"><%= post.title %></div>
+              </div>
+            <% end %>
+          <% end %>
+          <% if current_user %>
+            <!-- LINKS -->
+            <span class="timeline-actions">
+              <button class="action upvote">
+                <span class="upvote-count"><%= post.upvotes.count %></span>
+                <i class="fa fa-arrow-up"></i>
+              </button>
+              <button class="action downvote">
+                <span class="downvote-count"><%= post.downvotes.count %></span>
+                <i class="fa fa-arrow-down"></i>
+              </button>
+              <% if post.class.name == "Hypothesis" %>
+                <button class="action like"><span class="like-count"><%= post.likes.count %></span><i class="fa fa-check-square"></i></button>
+                <button class="action dislike"><span class="dislike-count"><%= post.dislikes.count %></span><i class="fa fa-minus-square"></i></button>
+              <% end %>
+              <!-- BUTTONS -->
+              <div class="timeline-buttons">
+                <strong>Contribute to this timeline:</strong>
+                <ul class="lab-details">
+                  <li class="lab-comments action reply">
+                    <%= link_to("Observation", new_observation_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
+                  </li>
+                  <li class="lab-questions action reply">
+                    <%= link_to("Question", new_question_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
+                  </li>
+                  <li class="lab-hypotheses action reply">
+                    <%= link_to("Hypothesis", new_hypothesis_url(p: @lab, ptype: @lab.class.name), class:"white rounded blue-border timeline-button") %>
+                  </li>
+                </ul>
+              </div>
+            <% end %>
+          </span>
+        </div>
+      </li>
+      <%end %>
+    <% end %>
+  </ul>
+</div>
