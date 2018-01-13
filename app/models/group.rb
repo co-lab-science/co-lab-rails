@@ -7,4 +7,18 @@ class Group < ApplicationRecord
   def members
     self.users
   end
+
+  def admin
+    if self.admin_id
+      User.find(self.admin_id)
+    else
+      nil
+    end
+  end
+
+  def admin=(user)
+    self.admin_id = user.id
+    self.save
+  end
+
 end
