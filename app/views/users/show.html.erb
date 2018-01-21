@@ -5,7 +5,29 @@
         <div class="row grid clearfix">
           <div class="col2 first">
             <h1><%= @user.name%></h1>
-            <h4>Group: <%= @user.group.name %></h4>
+            <% if @user.group %>
+              <h4>Group: <%= link_to @user.group.name, @user.group %></h4>
+              <% if @user.requested_group %>
+                <h5>Requested Group: <%= @user.requested_group_obj.name %> </h5>
+                <h5>Requested Group Status: </h5>
+              <% end %>
+              Join a different group:
+              <%= form_for(@user) do |f| %>
+                <% if @user.errors.any? %>
+                  <div id="error_explanation">
+                    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this question from being saved:</h2>
+                    <ul>
+                    <% @user.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                    </ul>
+                  </div>
+                <% end %>
+                <%= f.collection_select :group, Group.order(:name), :id, :name_with_access, selected: @user.group%>
+               <%= f.submit "Submit", style:"margin-top:0; padding:5px; border: 1px; border-radius:3px;"%>
+             <% end %>
+             <%= link_to "Create new group", new_group_path, class:"lab-comments-total white rounded blue-border", style:"font-size:14px;"%>
+           <%end%>
           </div>
           <div class="col2 last">
             <div class="grid clearfix">

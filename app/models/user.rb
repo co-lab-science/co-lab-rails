@@ -24,12 +24,15 @@ class User < ApplicationRecord
 
   def group=(id)
     if id != "1"
-      #request access
       Group.find(id.to_i).user_requesting_access(self.id)
       self.requested_group = id.to_i
     end
       self.group_id = 1
       self.save
+  end
+
+  def requested_group_obj
+    Group.find(self.requested_group) if self.requested_group
   end
 
 end

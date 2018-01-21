@@ -38,9 +38,11 @@
    <br>
    <%= f.password_field :password_confirmation %>
    <br>
-   Group
+   Group:
    <br>
    <%= f.collection_select :group, Group.order(:name), :id, :name_with_access, selected: Group.first%>
+   <br>
+   <em>To create a new group, join 'Public' and select "create new group" on your user page.</em>
    <br>
   <%= f.submit "Submit" %>
 
