@@ -22,7 +22,7 @@
     </div>
   <% end %>
 
-  Username: 
+  Username:
    <br>
   <%= f.text_field :name %>
    <br>
@@ -34,9 +34,13 @@
    <br>
    <%= f.password_field :password %>
    <br>
-   Password Confirmation: 
+   Password Confirmation:
    <br>
    <%= f.password_field :password_confirmation %>
+   <br>
+   Group
+   <br>
+   <%= f.collection_select :group, Group.order(:name), :id, :name_with_access, selected: Group.first%>
    <br>
   <%= f.submit "Submit" %>
 

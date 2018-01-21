@@ -21,4 +21,17 @@ class Group < ApplicationRecord
     self.save
   end
 
+  def name_with_access
+    if self.id == 1
+      self.name
+    else
+      "#{self.name} - REQUIRES APPROVAL"
+    end
+  end
+
+  def user_requesting_access(user_id)
+    #add to list of potential members
+  end
+
+
 end

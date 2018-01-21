@@ -47,6 +47,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :specialities_attributes => [:id, :category, :rank])
+    defaults = { group: '1', group_id: 1 }
+    params.require(:user).permit(:name, :email, :password, :group, :group_id, :specialities_attributes => [:id, :category, :rank])
   end
 end
