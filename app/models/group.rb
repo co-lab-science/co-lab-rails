@@ -33,5 +33,4 @@ class Group < ApplicationRecord
     #add to list of potential members
   end
 
-
 end

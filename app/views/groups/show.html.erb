@@ -1,9 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Name:</strong>
+  <%= @group.name %>
   <strong>Admin:</strong>
-  <%= @group.admin %>
+  <%= @group.admin.name %>
 </p>
 
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+<% if @group.members.include?(current_user) %>
+<p>You are a member of this group</p>
+<% else %>
+  <p>
+  <%= link_to "Request Access", "#" %>
+  </p>
+<% end %>
