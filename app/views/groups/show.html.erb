@@ -8,7 +8,7 @@
           <div class="col2 first">
             <h1><%= @group.name%></h1>
             <% if @group.members.include?(current_user) || @group.id == 1 %>
-              <% if current_user == @group.admin %>
+              <% if @group.admin != nil && current_user == @group.admin %>
                 <p>You are the admin of this group</p>
               <% else %>
                 <p>You are a member of this group</p>
@@ -23,10 +23,12 @@
             <div class="grid clearfix" style="padding-left: 15px;">
               <h3>Group Members</h3>
               <ul>
+                <% if @group.admin != nil %>
                 <li><%= link_to @group.admin.name, @group.admin %> <strong>- Admin</strong></li>
-                <% @group.members.each do |user| %>
-                  <% unless @group.admin == user %>
-                  <li><%= link_to user.name, user %></li>
+                  <% @group.members.each do |user| %>
+                    <% unless @group.admin == user %>
+                    <li><%= link_to user.name, user %></li>
+                    <% end %>
                   <% end %>
                 <% end %>
               </ul>
@@ -34,7 +36,7 @@
           </div>
 
           <!-- ADMIN VIEW -->
-          <% if current_user == @group.admin %>
+          <% if @group.admin != nil && current_user == @group.admin %>
             <h3>Member requests</h3>
             <p>approve - disapprove</p>
             <!-- FINISH THIS -->
@@ -47,12 +49,15 @@
         </div>
       </div>
     </section>
+
+    <% if @group.members.include?(current_user) || @group.id == 1 %>
     <section class="section2 clearfix">
       <div class="grid">
         <div class="profileinfo">
           <section class="general-info" style="width: 100%">
             <section class="listings" style="width: 100%">
               <h3 style="padding: 40px 0 30px 0;">Group Posts</h3>
+
               <!-- TIMELINE TIME -->
                 <div id="timeline-container-jq" class="comments-container-jq jquery-comments">
                   <%= render "shared/groupposts" %>
@@ -60,9 +65,11 @@
               <!-- END TIMELINE -->
 
             </section>
-        </div>
-      </div>
           </section>
+          </div>
+        </div>
+      </section>
+      <% end %>
   </div>
 </div>
 
