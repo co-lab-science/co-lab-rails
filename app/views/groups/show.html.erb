@@ -8,7 +8,11 @@
           <div class="col2 first">
             <h1><%= @group.name%></h1>
             <% if @group.members.include?(current_user) || @group.id == 1 %>
-            <p>You are a member of this group</p>
+              <% if current_user == @group.admin %>
+                <p>You are the admin of this group</p>
+              <% else %>
+                <p>You are a member of this group</p>
+              <% end %>
             <% else %>
               <p>
               <%= link_to "Request Access", "#" %>
@@ -22,7 +26,7 @@
                 <li><%= link_to @group.admin.name, @group.admin %> <strong>- Admin</strong></li>
                 <% @group.members.each do |user| %>
                   <% unless @group.admin == user %>
-                  <li><%= link_to  user.name, user %></li>
+                  <li><%= link_to user.name, user %></li>
                   <% end %>
                 <% end %>
               </ul>
