@@ -26,6 +26,7 @@ class User < ApplicationRecord
     if id != "1"
       Group.find(id.to_i).user_requesting_access(self.id)
       self.requested_group = id.to_i
+      self.save
     end
       self.group_id = 1
       self.save

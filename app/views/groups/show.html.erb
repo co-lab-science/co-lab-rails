@@ -36,11 +36,24 @@
           </div>
 
           <!-- ADMIN VIEW -->
-          <% if @group.admin != nil && current_user == @group.admin %>
+          <%# if @group.admin != nil && current_user == @group.admin %>
             <h3>Member requests</h3>
-            <p>approve - disapprove</p>
+            <ul>
+              <% @group.users_requesting_access.each do |u| %>
+                <li>
+                  <p>name: <%= u.name %>
+                    <br>
+                    email: <%= u.email %>
+                    <br>
+                    <strong>Approve Request?</strong>
+                    <br>
+                    <em>yes, no</em>
+                  </p>
+                <li>
+              <% end %>
+          </ul>
             <!-- FINISH THIS -->
-          <% end %>
+          <%# end %>
           <!-- END ADMIN VIEW -->
 
         </div>

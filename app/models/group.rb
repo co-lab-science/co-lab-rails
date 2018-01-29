@@ -29,8 +29,8 @@ class Group < ApplicationRecord
     end
   end
 
-  def user_requesting_access(user_id)
-    #add to list of potential members
+  def users_requesting_access
+    User.where(requested_group: self.id)
   end
 
 end
