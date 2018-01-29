@@ -25,6 +25,21 @@ module ApplicationHelper
     end
   end
 
+  def user_in_post_group?(post)
+    if current_user == nil
+      return false
+    elsif current_user.group == post.group
+      return true
+    end
+    false
+  end
+
+  def redirect_from_post(post)
+    unless post.group.id == 1 || user_in_post_group?(post)
+      controller.redirect_to root_path
+    end
+  end
+
   def format_date(date)
     d = date.to_date.to_s.split("-")
     "#{d[1]}/#{d[2]}/#{d[0]}"

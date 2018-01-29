@@ -28,8 +28,15 @@
               </ul>
             </div>
           </div>
-          <!-- <h3>Member requests</h3>
-          <p>approve - disapprove</p> -->
+
+          <!-- ADMIN VIEW -->
+          <% if current_user == @group.admin %>
+            <h3>Member requests</h3>
+            <p>approve - disapprove</p>
+            <!-- FINISH THIS -->
+          <% end %>
+          <!-- END ADMIN VIEW -->
+
         </div>
         <div class="row clearfix">
 
