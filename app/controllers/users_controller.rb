@@ -25,8 +25,10 @@ class UsersController < ApplicationController
   end
 
   def update
+    # binding.pry
     @user = User.find(params[:id])
     @user.update(user_params)
+    @user.save
     redirect_to edit_user_path(params[:id])
   end
 
@@ -48,6 +50,6 @@ class UsersController < ApplicationController
 
   def user_params
     defaults = { group: '1', group_id: 1 }
-    params.require(:user).permit(:name, :email, :password, :group, :group_id, :specialities_attributes => [:id, :category, :rank])
+    params.require(:user).permit(:name, :email, :password, :group, :group_id, :requested_group, :specialities_attributes => [:id, :category, :rank])
   end
 end

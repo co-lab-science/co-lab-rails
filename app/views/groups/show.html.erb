@@ -47,7 +47,11 @@
                     <br>
                     <strong>Approve Request?</strong>
                     <br>
-                    <em>yes, no</em>
+                    <em>
+                      <%= link_to "yes", "/users/#{u.id}?" + {id: u.id, group_id: @group.id, requested_group: nil}.to_param, method: :put %>
+                      ,
+                      no
+                    </em>
                   </p>
                 <li>
               <% end %>
