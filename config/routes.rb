@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   get '/about', to: 'static_page#about'
   get '/help', to: 'static_page#help'
   get '/contact-us', to: 'static_page#contact'
-
   get '/search', to: 'searches#search'
+
 
   scope '/admin' do
     resources :tags
@@ -36,4 +36,5 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/signup', to: 'users#new'
   get '/logout', to: 'sessions#destroy'
+  post '/join-new-group', to: 'users#join_new_group'
 end

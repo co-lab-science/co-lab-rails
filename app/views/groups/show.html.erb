@@ -48,7 +48,7 @@
                     <strong>Approve Request?</strong>
                     <br>
                     <em>
-                      <%= link_to "yes", "/users/#{u.id}?" + {id: u.id, group_id: @group.id, requested_group: nil}.to_param, method: :put %>
+                      <%= link_to "yes", join_new_group_path(u, id: u.id, group_id: @group.id, requested_group: nil), method: :post %>
                       ,
                       no
                     </em>

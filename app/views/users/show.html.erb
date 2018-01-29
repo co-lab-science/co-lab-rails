@@ -8,8 +8,7 @@
             <% if @user.group %>
               <h4>Group: <%= link_to @user.group.name, @user.group %></h4>
               <% if @user.requested_group %>
-                <h5>Requested Group: <%= @user.requested_group_obj.name %> </h5>
-                <h5>Requested Group Status: </h5>
+                <h5>Requested Group: <%= link_to @user.requested_group_obj.name, @user.requested_group_obj %> </h5>
               <% end %>
               Join a different group:
               <%= form_for(@user) do |f| %>

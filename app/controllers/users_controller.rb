@@ -25,7 +25,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    # binding.pry
     @user = User.find(params[:id])
     @user.update(user_params)
     @user.save
@@ -40,6 +39,14 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def join_new_group
+    @user = User.find(params[:id])
+    @user.group_id = params[:group_id]
+    @user.requested_group = nil
+    @user.save
+    redirect_to "/groups/#{@user.group_id}"
   end
 
   private
