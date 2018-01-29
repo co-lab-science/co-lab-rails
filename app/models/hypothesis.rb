@@ -40,7 +40,7 @@ class Hypothesis < ApplicationRecord
     end
 
     def find_parent
-      Lab.find(self.parent) unless self.parent == nil
+      self.class.find(self.parent) unless self.parent == nil
     end
 
     def get_observations

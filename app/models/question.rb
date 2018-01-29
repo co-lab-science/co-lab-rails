@@ -44,7 +44,7 @@ class Question < ApplicationRecord
     if self.parent == nil
       return nil
     else
-      Lab.find(self.parent) unless Lab.exists?(self.parent)
+      self.class.find(self.parent) unless Lab.exists?(self.parent)
     end
   end
 

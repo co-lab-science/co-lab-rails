@@ -24,11 +24,11 @@
               <h3>Group Members</h3>
               <ul>
                 <% if @group.admin != nil %>
-                <li><%= link_to @group.admin.name, @group.admin %> <strong>- Admin</strong></li>
-                  <% @group.members.each do |user| %>
-                    <% unless @group.admin == user %>
-                    <li><%= link_to user.name, user %></li>
-                    <% end %>
+                  <li><%= link_to @group.admin.name, @group.admin %> <strong>- Admin</strong></li>
+                <% end %>
+                <% @group.members.each do |user| %>
+                  <% unless @group.admin == user %>
+                  <li><%= link_to user.name, user %></li>
                   <% end %>
                 <% end %>
               </ul>
