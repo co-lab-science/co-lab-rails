@@ -1,16 +1,319 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @group.name %>
-  <strong>Admin:</strong>
-  <%= @group.admin.name %>
-</p>
+<div class="container">
+  <div class="innerwrap">
+    <section class="section1 clearfix">
+      <div>
+        <div class="row grid clearfix">
+          <div class="col2 first">
+            <h1><%= @group.name%></h1>
+            <% if @group.members.include?(current_user) || @group.id == 1 %>
+            <p>You are a member of this group</p>
+            <% else %>
+              <p>
+              <%= link_to "Request Access", "#" %>
+              </p>
+            <% end %>
+          </div>
+          <div class="col2 last">
+            <div class="grid clearfix" style="padding-left: 15px;">
+              <h3>Group Members</h3>
+              <ul>
+                <li><%= link_to @group.admin.name, @group.admin %> <strong>- Admin</strong></li>
+                <% @group.members.each do |user| %>
+                  <% unless @group.admin == user %>
+                  <li><%= link_to  user.name, user %></li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+          <!-- <h3>Member requests</h3>
+          <p>approve - disapprove</p> -->
+        </div>
+        <div class="row clearfix">
 
-<% if @group.members.include?(current_user) %>
-<p>You are a member of this group</p>
-<% else %>
-  <p>
-  <%= link_to "Request Access", "#" %>
-  </p>
-<% end %>
+        </div>
+      </div>
+    </section>
+    <section class="section2 clearfix">
+      <div class="grid">
+        <div class="profileinfo">
+          <section class="general-info" style="width: 100%">
+            <section class="listings" style="width: 100%">
+              <h3 style="padding: 40px 0 30px 0;">Group Posts</h3>
+              <!-- TIMELINE TIME -->
+                <div id="timeline-container-jq" class="comments-container-jq jquery-comments">
+                  <%= render "shared/groupposts" %>
+                </div>
+              <!-- END TIMELINE -->
+
+            </section>
+        </div>
+      </div>
+          </section>
+  </div>
+</div>
+
+<style>
+* {
+  margin:0px;
+  padding:0px;
+}
+*, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing:border-box; -o-box-sizing:border-box; box-sizing: border-box; }
+
+.clearfix:before, .clearfix:after { display: table; content: ''; }
+.clearfix:after { clear: both; }
+
+
+body {
+  background: #E2e2e2;
+}
+
+input:focus, textarea:focus, keygen:focus, select:focus {
+  outline: none;
+}
+::-moz-placeholder {
+  font-weight: 300;
+  opacity: 1;
+}
+
+::-webkit-input-placeholder {
+  font-weight: 300;
+}
+
+.grid .col2 {
+  width: 50%;
+  padding: 0 10px 0 0;
+}
+.grid .col2.first {
+  float: left;
+}
+.grid .col2.last {
+  float: right;
+}
+
+.grid .col3 {
+  width: 32%;
+  float: left;
+  margin-right: 11px;
+}
+.grid .col3.first {
+  margin-left: 0;
+  float: left;
+}
+.grid .col3.last {
+  margin-right: 0;
+  float: right;
+}
+
+/* profile page */
+.container {
+  padding: 60px 50px 70px;
+}
+
+.innerwrap {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.section1 {
+  background: #fff;
+  position: relative;
+  border-radius: 2px;
+}
+.section1 div .row:first-child {
+  padding: 25px;
+}
+
+
+.section1 .col2.first {
+  line-height: 25px;
+  position: relative;
+  border-right:1px solid #a2a2a2;
+}
+.section1 .col2.first h1 {
+  font-weight: normal;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  text-transform: capitalize;
+}
+.section1 .col2.first p {
+  font-size: 14px;
+}
+.section1 .col2.first span {
+  position: absolute;
+  right: 15px;
+  top: 16px;
+  background: #6AAFEA;
+  padding: 5px 11px;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 2px;
+  color: #fff;
+  cursor:pointer;
+}
+
+.section1 .col2.last {
+  padding: 8px 0;
+}
+.section1 .col2.last .col3 span {
+  color: #a2a2a2;
+  font-size: 14px;
+}
+.section1 .col2.last .col3 h1 {
+}
+
+.section1 .col2.last .col3 {
+  text-align: center;
+  line-height: 30px;
+  border-right: 1px solid #ccc;
+}
+.section1 .col2.last .col3.last {
+  border-right: 0;
+}
+
+.row2tab li {
+  list-style: none;
+  float: left;
+  width: 25%;
+  padding: 15px;
+  font-size: 14px;
+  text-align: center;
+  cursor:pointer;
+  background: #f1f1f1;
+  color: #555;
+  border-bottom: 2px solid #f1f1f1;
+}
+.row2tab li:first-child {
+  border-radius: 0 0 2px 2px;
+}
+.row2tab li:first-child {
+}
+.row2tab li i {
+  margin-right: 3px;
+  font-size: 14px;
+}
+
+.smalltri {
+  border-right: 40px solid #6AAFEA;
+  height: 0;
+  width: 0;
+  border-left: 20px solid transparent;
+  border-top: 10px solid #6AAFEA;
+  border-bottom: 20px solid transparent;
+  padding: 0px;
+  top: 0;
+  right: 0;
+  position: absolute;
+}
+.smalltri i {
+  position: absolute;
+  top: -5px;
+  right: -33px;
+  color: #fff;
+  border: 0px;
+  font-size: 12px;
+}
+
+section.section2 {
+  margin: 50px 0;
+}
+
+.section2 .col3 {
+  width: 30%;
+  margin-right: 60px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.section2 .profileinfo {
+  padding: 0 10px 30px;
+  color: #555;
+  font-size: 14px;
+  line-height: 25px;
+}
+.section2 .profileinfo p {
+  text-align: justify;
+}
+.section2 .profileinfo span {
+  margin-top: 15px;
+  display: block;
+  text-align: left;
+  color: #6AAFEA;
+  cursor: pointer;
+}
+.section2 .profileinfo span i {
+  margin-left: 10px;
+}
+
+  @media only screen and (max-width: 1300px) {
+    .innerwrap {
+      width: 90%;
+    }
+    .section2 .col3 {
+      margin-right: 5%;
+    }
+    .section1 .grid .col3 {
+      margin-right: 2%;
+    }
+    .section1 .col2.last .col3.last {
+      margin-right: 0;
+    }
+  }
+
+  @media only screen and (max-width: 1060px) {
+    .section1 .col2 {
+      width: 100%;
+      border-right:0 !important;
+      padding: 0;
+    }
+  }
+
+  @media only screen and (max-width: 660px) {
+    .section2 .col3 {
+      width: 100%;
+      float: none !important;
+      margin-bottom: 10px;
+    }
+    .row2tab li {
+      width: 50%;
+      text-align: left;
+    }
+    .section1 .col2.first {
+      text-align: center;
+    }
+    .section1 .col2.first span {
+      position: relative;
+      right: 0;
+    }
+    .section1 .col2.last {
+      margin-top:25px;
+    }
+  }
+  @media only screen and (max-width: 450px) {
+    .container {
+      padding: 60px 5px 70px;
+    }
+    .row2tab li {
+      width: 100%;
+      text-align: left;
+    }
+    .section1 .col2.last .col3 span {
+      font-size: 10px;
+    }
+    .section1 .col2.last .col3 h1 {
+      font-size: 18px;
+    }
+
+  }
+  @media (min-width: 1200px) {
+
+    .container {
+      width: 100% !important;
+    }
+
+
+  }
+
+</style>

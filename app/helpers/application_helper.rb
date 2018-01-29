@@ -8,6 +8,13 @@ module ApplicationHelper
     current_post.get_associated_posts.values.flatten.sort_by(&:created_at).reverse
   end
 
+  def get_group_posts(group)
+    questions = Question.where(group_id: group.id)
+    hypotheses = Hypothesis.where(group_id: group.id)
+    labs = Lab.where(group_id: group.id)
+    [questions, hypotheses, labs].flatten.sort_by(&:created_at)
+  end
+
   def current_post
     if self.params["controller"] == "labs"
       Lab.find(self.params["id"])
