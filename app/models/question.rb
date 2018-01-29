@@ -41,7 +41,11 @@ class Question < ApplicationRecord
   end
 
   def find_parent
-    Lab.find(self.parent) unless self.parent == nil
+    if self.parent == nil
+      return nil
+    else
+      Lab.find(self.parent) unless Lab.exists?(self.parent)
+    end
   end
 
   def get_observations
@@ -58,7 +62,7 @@ class Question < ApplicationRecord
 
   def parent_questions
     unless self.find_parent.nil?
-      questions.nil? ? nil : self.find_parent.questions.limit(3)
+      self.find_parent.questions.nil? ? nil : self.find_parent.questions.limit(3)
     end
   end
 

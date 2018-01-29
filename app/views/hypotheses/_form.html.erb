@@ -32,6 +32,12 @@
     <%= text_area_tag :tags, hypothesis.tags.map{|tag| tag.name }.join(', ') ,placeholder: 'Insert tags seperated by commas, for example "Biochemistry, Cell Biology"' %>
   </div>
 
+  <div class="field">
+    <%= f.label :group_id %>
+    <br>
+    <%= f.collection_select :group_id, current_user.all_groups, :id, :name, selected: current_user.all_groups.first%>
+  </div>
+
   <div class="actions">
     <%= f.button :submit, class:'btn btn-default' %>
   </div>

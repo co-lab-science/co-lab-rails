@@ -122,6 +122,6 @@ class LabsController < ApplicationController
   end
 
   def lab_params
-    params.require(:lab).permit(:hypothesis_id, :user_id, :lab_id, :question_id, :title, :body, :parent, comments_attributes: [:id, :title, :body])
+    params.require(:lab).permit(:hypothesis_id, :user_id, :lab_id, :group, :group_id, :question_id, :title, :body, :parent, comments_attributes: [:id, :title, :body])
   end
 end

@@ -35,4 +35,12 @@ class User < ApplicationRecord
     Group.find(self.requested_group) if self.requested_group
   end
 
+  def all_groups
+    if self.group == nil
+      [Group.first]
+    else
+      [self.group, Group.first].compact.uniq
+    end
+  end
+
 end

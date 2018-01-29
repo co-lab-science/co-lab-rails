@@ -108,6 +108,6 @@ class QuestionsController < ApplicationController
     end
 
     def question_params
-      params.require(:question).permit(:hypothesis_id, :user_id, :lab_id, :question_id, :title, :body, :parent, comments_attributes: [:id, :title, :body])
+      params.require(:question).permit(:hypothesis_id, :user_id, :lab_id, :question_id, :group, :group_id, :title, :body, :parent, comments_attributes: [:id, :title, :body])
     end
 end

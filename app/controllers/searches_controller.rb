@@ -6,7 +6,7 @@ class SearchesController < ApplicationController
 
     search_results = Searchable.search(params[:search_term]).sort_by!{|x| x.send(sort_map(sort)) }.reverse!
 
-    # FILTER for USER GROUPS 
+    # FILTER for USER GROUPS
     search_results = search_results.map do |x|
       if x.group_id == 1
         x
