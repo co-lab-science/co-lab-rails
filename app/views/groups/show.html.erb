@@ -48,9 +48,9 @@
                     <strong>Approve Request?</strong>
                     <br>
                     <em>
-                      <%= link_to "yes", join_new_group_path(u, id: u.id, group_id: @group.id, requested_group: nil, approved: "yes"), method: :post %>
+                      <%= link_to "yes", join_new_group_path(u, user: {id: u.id, group_id: @group.id, requested_group: nil, approved: "yes"}), method: :post %>
                       ,
-                      <%= link_to "no", join_new_group_path(u, id: u.id, group_id: @group.id, requested_group: nil, approved: "no"), method: :post %>
+                      <%= link_to "no", join_new_group_path(u, user: {id: u.id, group_id: u.group_id, requested_group: nil, approved: "no"}), method: :post %>
                     </em>
                   </p>
                 <li>

@@ -42,13 +42,18 @@ class UsersController < ApplicationController
   end
 
   def join_new_group
-    @user = User.find(params[:id])
-    if params[:approved] = "yes"
-      @user.group_id = params[:group_id]
+    @user = User.find(params[:user][:id])
+    if params[:user][:group_id] == 1
+      @user.group_id = params[:user][:group_id]
+      @user.requested_group = nil
+    elsif params[:user][:approved] == "yes"
+      @user.group_id = params[:user][:group_id]
+      @user.requested_group = nil
+    else
+      @user.requested_group = params[:user][:group_id]
     end
-    @user.requested_group = nil
     @user.save
-    redirect_to "/groups/#{@user.group_id}"
+    redirect_to "/users/#{@user.id}"
   end
 
   private
@@ -59,6 +64,6 @@ class UsersController < ApplicationController
 
   def user_params
     defaults = { group: '1', group_id: 1 }
-    params.require(:user).permit(:name, :email, :password, :group, :group_id, :requested_group, :approved, :specialities_attributes => [:id, :category, :rank])
+    params.require(:user).permit(:name, :email, :password, :group, :group_id, :requested_group, :specialities_attributes => [:id, :category, :rank])
   end
 end

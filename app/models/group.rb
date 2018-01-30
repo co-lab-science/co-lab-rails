@@ -30,7 +30,7 @@ class Group < ApplicationRecord
   end
 
   def users_requesting_access
-    User.where(requested_group: self.id)
+    User.where(requested_group: self.id).where.not(group_id: self.id)
   end
 
 end

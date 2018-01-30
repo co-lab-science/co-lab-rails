@@ -11,7 +11,9 @@
                 <h5>Requested Group: <%= link_to @user.requested_group_obj.name, @user.requested_group_obj %> </h5>
               <% end %>
               Join a different group:
-              <%= form_for(@user) do |f| %>
+              <%= form_for(@user, url: join_new_group_path, method: "post") do |f| %>
+              <%= f.hidden_field :id %>
+              <%= f.hidden_field :approved, value: "no" %>
                 <% if @user.errors.any? %>
                   <div id="error_explanation">
                     <h2><%= pluralize(@user.errors.count, "error") %> prohibited this question from being saved:</h2>
@@ -22,7 +24,7 @@
                     </ul>
                   </div>
                 <% end %>
-                <%= f.collection_select :group, Group.order(:name), :id, :name_with_access, selected: @user.group%>
+                <%= f.select :group_id, Group.all.collect { |g| [ g.name_with_access, g.id]}, selected: @user.group_id%>
                <%= f.submit "Submit", style:"margin-top:0; padding:5px; border: 1px; border-radius:3px;"%>
              <% end %>
              <%= link_to "Create new group", new_group_path, class:"lab-comments-total white rounded blue-border", style:"font-size:14px;"%>
