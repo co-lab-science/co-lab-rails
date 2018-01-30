@@ -15,7 +15,13 @@
               <% end %>
             <% else %>
               <p>
-              <%= link_to "Request Access", "#" %>
+                <% if current_user != nil %>
+                  <% if current_user.requested_group == @group.id%>
+                    <h4>You have requested access to this group.</h4>
+                  <% else %>
+                    <%= link_to "Request Access", join_new_group_path(current_user, user: {id: current_user.id, group_id: @group.id, requested_group: @group_id, approved: "no"}), method: :post %>
+                  <% end%>
+                <% end %>
               </p>
             <% end %>
           </div>
@@ -36,7 +42,7 @@
           </div>
 
           <!-- ADMIN VIEW -->
-          <%# if @group.admin != nil && current_user == @group.admin %>
+          <% if @group.admin != nil && current_user == @group.admin %>
             <h3>Member requests</h3>
             <ul>
               <% @group.users_requesting_access.each do |u| %>
@@ -57,7 +63,7 @@
               <% end %>
           </ul>
             <!-- FINISH THIS -->
-          <%# end %>
+          <% end %>
           <!-- END ADMIN VIEW -->
 
         </div>

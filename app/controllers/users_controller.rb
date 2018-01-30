@@ -43,10 +43,7 @@ class UsersController < ApplicationController
 
   def join_new_group
     @user = User.find(params[:user][:id])
-    if params[:user][:group_id] == 1
-      @user.group_id = params[:user][:group_id]
-      @user.requested_group = nil
-    elsif params[:user][:approved] == "yes"
+    if params[:user][:approved] == "yes" || params[:user][:group_id] == "1"
       @user.group_id = params[:user][:group_id]
       @user.requested_group = nil
     else
