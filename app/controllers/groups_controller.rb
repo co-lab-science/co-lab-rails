@@ -25,7 +25,10 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
+    @group.save
+    admin = User.find(@group.admin_id)
+    admin.group_id = @group.admin_id
+    admin.save
     respond_to do |format|
       if @group.save
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
@@ -69,6 +72,6 @@ class GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:admin, :name)
+      params.require(:group).permit(:admin, :admin_id, :name)
     end
 end
