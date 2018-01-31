@@ -7,7 +7,7 @@
         <div class="row grid clearfix">
           <div class="col2 first">
             <h1><%= @group.name%></h1>
-            <% if @group.members.include?(current_user) || @group.id == 1 %>
+            <% if (current_user != nil && @group.members.include?(current_user)) || (current_user != nil && @group.id == 1) %>
               <% if @group.admin != nil && current_user == @group.admin %>
                 <p>You are the admin of this group</p>
               <% else %>
