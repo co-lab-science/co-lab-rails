@@ -9,6 +9,7 @@
               <h4>Group: <%= link_to @user.group.name, @user.group %></h4>
               <% if @user.requested_group %>
               <% if current_user.id == @user.id %>
+              <%= current_user.id %>
                 <h5>Requested Group: <%= link_to @user.requested_group_obj.name, @user.requested_group_obj %> </h5>
               <% end %>
               Join a different group:
