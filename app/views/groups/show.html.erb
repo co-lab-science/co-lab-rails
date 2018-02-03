@@ -10,6 +10,7 @@
             <% if (current_user != nil && @group.members.include?(current_user)) || (current_user != nil && @group.id == 1) %>
               <% if @group.admin != nil && current_user == @group.admin %>
                 <p>You are the admin of this group</p>
+                <%= link_to "Delete This Group (CANNOT BE UNDONE)", group_path(@group), method: :delete %>
               <% else %>
                 <p>You are a member of this group</p>
               <% end %>
@@ -62,7 +63,6 @@
                 <li>
               <% end %>
           </ul>
-            <%= link_to "Delete This Group (CANNOT BE UNDONE)", group_path(@group), method: :delete %>
           <% end %>
           <!-- END ADMIN VIEW -->
 
