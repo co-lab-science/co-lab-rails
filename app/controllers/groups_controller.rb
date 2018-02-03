@@ -27,7 +27,7 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.save
     admin = User.find(@group.admin_id)
-    admin.group_id = @group.admin_id
+    admin.group_id = @group.id
     admin.save
     respond_to do |format|
       if @group.save
