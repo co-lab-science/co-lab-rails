@@ -26,7 +26,7 @@
                     </ul>
                   </div>
                 <% end %>
-                <%= f.select :group_id, Group.all.collect { |g| [ g.name_with_access, g.id]}, selected: @user.group_id%>
+                <%= f.select :group_id, Group.all.collect { |g| [ g.name_with_access(current_user), g.id] }, selected: @user.group_id%>
                <%= f.submit "Submit", style:"margin-top:0; padding:5px; border: 1px; border-radius:3px;"%>
              <% end %>
              <%= link_to "Create new group", new_group_path, class:"lab-comments-total white rounded blue-border", style:"font-size:14px;"%>

@@ -40,7 +40,7 @@
    <br>
    Group:
    <br>
-   <%= f.collection_select :group, Group.order(:name), :id, :name_with_access, selected: Group.first%>
+   <%= f.collection_select :group, Group.order(:id), :id, :name_with_access, selected: Group.first%>
    <br>
    <em>To create a new group, join 'Public' and select "create new group" on your user page.</em>
    <br>

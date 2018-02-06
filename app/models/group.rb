@@ -21,8 +21,10 @@ class Group < ApplicationRecord
     self.save
   end
 
-  def name_with_access
+  def name_with_access(user = nil)
     if self.id == 1
+      self.name
+    elsif user != nil && self.id == user.group_id
       self.name
     else
       "#{self.name} - REQUIRES APPROVAL"
