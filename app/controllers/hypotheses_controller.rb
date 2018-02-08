@@ -52,6 +52,8 @@ class HypothesesController < ApplicationController
       else
         @hypothesis = Object.const_get(params[:hypothesis][:create_from]).find(params[:hypothesis][:create_from_id]).hypotheses.new(hypothesis_params.merge(user_id: current_user.id))
       end
+      group_id = Lab.find(@hypothesis.lab_id).group_id
+      @hypothesis.group_id = group_id
     else
       @hypothesis = current_user.hypotheses.new(hypothesis_params)
     end

@@ -66,6 +66,10 @@ class LabsController < ApplicationController
       @lab = current_user.labs.new(lab_params)
     end
 
+    group_id = Lab.find(@lab.parent).group_id
+    @lab.group_id = group_id
+    @lab.save
+
     respond_to do |format|
       if @lab.save
         if params[:tags]
@@ -73,6 +77,7 @@ class LabsController < ApplicationController
           Tag.where(lab_id: @lab.id).destroy_all
           tag_names.each{ |tag_name| Tag.create(lab_id: @lab.id, name: tag_name) }
         end
+
 
         @lab = Lab.where(id: @lab.id).left_outer_joins(:upvotes, :downvotes, :user).select("labs.*", "COUNT(DISTINCT upvotes.id) as upvote_count", "COUNT(DISTINCT downvotes.id) as downvote_count", "users.name as fullname", "users.id as user_id").group(:id, "users.id", "fullname").first
         @lab.user_has_upvoted = !Upvote.where(lab_id: @lab.id, user_id: current_user.id).empty? ? true : false
@@ -84,6 +89,7 @@ class LabsController < ApplicationController
         format.html { render :new }
         format.json { render json: @lab.errors, status: :unprocessable_entity }
       end
+
     end
   end
 

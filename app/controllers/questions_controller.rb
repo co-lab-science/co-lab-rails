@@ -49,6 +49,8 @@ class QuestionsController < ApplicationController
       else
         @question = Object.const_get(params[:question][:create_from]).find(params[:question][:create_from_id]).questions.new(question_params.merge(user_id: current_user.id))
       end
+      group_id = Lab.find(@question.lab_id).group_id
+      @question.group_id = group_id
     else
       @question = current_user.questions.new(question_params)
     end
