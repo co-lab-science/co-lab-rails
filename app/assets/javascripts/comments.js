@@ -208,7 +208,7 @@ $(document).ready(function() {
     }
 
     function fullEditor() {
-      $('.commenting-field').find('.textarea').on("click", function() {
+      $('.commenting-field').find('.textarea').one("click", function() {
         $(this).siblings().eq(1).append('<span class="save full-submit highlight-background enabled ">Create with full editor </button></a>')
       })
 
