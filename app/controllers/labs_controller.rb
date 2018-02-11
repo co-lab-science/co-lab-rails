@@ -65,8 +65,10 @@ class LabsController < ApplicationController
     else
       @lab = current_user.labs.new(lab_params)
     end
-
-    group_id = Lab.find(@lab.parent).group_id
+    group_id = 1
+    unless @lab.lab_id.nil?
+      group_id = Lab.find(@lab.parent).group_id
+    end
     @lab.group_id = group_id
     @lab.save
 
