@@ -6,6 +6,8 @@ $(document).ready(function() {
   } catch(e) {}
 
 
+// SANITIZE Title
+
 
   //  TIMELINE FUNCTION
 
@@ -214,7 +216,7 @@ $(document).ready(function() {
 
       $('body').on("click", ".full-submit", function() {
         var title = $(this).parent().parent().find('.textarea').text()
-        document.location.href = '/observations/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + title
+        document.location.href = '/observations/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + encodeURI(title);
       })
     }
 
@@ -225,7 +227,7 @@ $(document).ready(function() {
 
         $('body').on("click", ".sub-full-submit", function() {
           var title = $(this).parent().parent().find('.textarea').text()
-          document.location.href = '/observations/new?from_full_editor=true&' + 'create_from=' + "Lab" + '&create_from_id' + '=' + createFromId + "&title=" + title
+          document.location.href = '/observations/new?from_full_editor=true&' + 'create_from=' + "Lab" + '&create_from_id' + '=' + createFromId + "&title=" + encodeURI(title);
         })
       }
     })
@@ -414,7 +416,7 @@ $(document).ready(function() {
 
       $('body').on("click", ".full-submit", function() {
         var title = $(this).parent().parent().find('.textarea').text()
-        document.location.href = '/questions/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + title
+        document.location.href = '/questions/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + encodeURI(title);
       })
     }
 
@@ -425,7 +427,7 @@ $(document).ready(function() {
 
         $('body').on("click", ".sub-full-submit", function() {
           var title = $(this).parent().parent().find('.textarea').text()
-          document.location.href = '/questions/new?from_full_editor=true&' + 'create_from=' + "Question" + '&create_from_id' + '=' + createFromId + "&title=" + title
+          document.location.href = '/questions/new?from_full_editor=true&' + 'create_from=' + "Question" + '&create_from_id' + '=' + createFromId + "&title=" + encodeURI(title);
         })
       }
     })
@@ -779,7 +781,7 @@ $(document).ready(function() {
 
       $('body').on("click", ".full-submit", function() {
         var title = $(this).parent().parent().find('.textarea').text()
-        document.location.href = '/hypotheses/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + title
+        document.location.href = '/hypotheses/new?from_full_editor=true&' + 'create_from=' + contentType + '&create_from_id' + '=' + contentId + "&title=" + encodeURI(title);
       })
     }
 
@@ -790,7 +792,7 @@ $(document).ready(function() {
 
         $('body').on("click", ".sub-full-submit", function() {
           var title = $(this).parent().parent().find('.textarea').text()
-          document.location.href = '/hypotheses/new?from_full_editor=true&' + 'create_from=' + "Hypothesis" + '&create_from_id' + '=' + createFromId + "&title=" + title
+          document.location.href = '/hypotheses/new?from_full_editor=true&' + 'create_from=' + "Hypothesis" + '&create_from_id' + '=' + createFromId + "&title=" + encodeURI(title);
         })
       }
     })
