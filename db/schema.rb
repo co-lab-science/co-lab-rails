@@ -10,12 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180121203818) do
+ActiveRecord::Schema.define(version: 20180414142107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "base_contents", force: :cascade do |t|
+  create_table "authorizations", force: :cascade do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -163,6 +166,8 @@ ActiveRecord::Schema.define(version: 20180121203818) do
     t.boolean  "admin"
     t.integer  "group_id"
     t.integer  "requested_group"
+    t.string   "provider"
+    t.string   "uid"
   end
 
 end

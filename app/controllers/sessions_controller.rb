@@ -4,13 +4,6 @@ class SessionsController < ApplicationController
   def new
   end
 
-  # test method for omniauth
-  def create
-    auth_hash = request.env['omniauth.auth']
-
-    render :text, auth_hash.inspect
-  end
-
   # def create
   #   user = User.find_by(email: params[:email])
   #   if user && user.authenticate(params[:password])
@@ -26,9 +19,16 @@ class SessionsController < ApplicationController
     # logic to show a failure on social auth
   end
 
+  # test method for omniauth
   def githubAuth
-    user = User.find_by()
+    auth_hash = request.env['omniauth.auth']
+
+    render :text, auth_hash.inspect
   end
+
+  # def githubAuth
+  #   user = User.find_by()
+  # end
 
   def destroy
     session[:user_id] = nil

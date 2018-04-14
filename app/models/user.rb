@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :questions
   has_many :specialities
   has_many :votes
+  has_many :authorizations
   belongs_to :group
 
   accepts_nested_attributes_for :specialities
@@ -28,8 +29,8 @@ class User < ApplicationRecord
       self.requested_group = id.to_i
       self.save
     end
-      self.group_id = 1
-      self.save
+    self.group_id = 1
+    self.save
   end
 
   def requested_group_obj
@@ -43,5 +44,4 @@ class User < ApplicationRecord
       [self.group, Group.first].compact.uniq
     end
   end
-
 end
