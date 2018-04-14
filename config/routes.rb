@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   get '/contact-us', to: 'static_page#contact'
   get '/search', to: 'searches#search'
 
-
   scope '/admin' do
     resources :tags
     resources :users do
@@ -33,6 +32,8 @@ Rails.application.routes.draw do
   resources :questions
 
   get '/login', to: 'sessions#new', as: 'login'
+  get '/auth/:github/callback', to: 'sessions#githubAuth'
+  # get '/auth/failure', to: 'sessions#failure'
   post '/login', to: 'sessions#create'
   get '/signup', to: 'users#new'
   get '/logout', to: 'sessions#destroy'
