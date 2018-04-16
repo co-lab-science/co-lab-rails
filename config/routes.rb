@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   resources :questions
 
   get '/login', to: 'sessions#new', as: 'login'
-  get '/auth/:github/callback', to: 'sessions#githubAuth'
+  get '/auth/:github/callback', to: 'sessions#createOmni'
   # get '/auth/failure', to: 'sessions#failure'
   post '/login', to: 'sessions#create'
   get '/signup', to: 'users#new'
