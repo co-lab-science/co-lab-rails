@@ -23,6 +23,8 @@
   <body>
     <%= render partial: "shared/nav" %>
     <%= yield %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= render partial: "shared/footer" %>
   </body>
 </html>

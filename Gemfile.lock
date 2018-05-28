@@ -609,6 +609,12 @@ GEM
     colorize (0.8.1)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
+    devise (4.4.3)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 6.0)
+      responders
+      warden (~> 1.2.3)
     erubis (2.7.0)
     eslint-rails (1.3.0)
       colorize
@@ -669,6 +675,7 @@ GEM
     omniauth-oauth2 (1.5.0)
       oauth2 (~> 1.1)
       omniauth (~> 1.2)
+    orm_adapter (0.5.0)
     pg (1.0.0)
     pry (0.11.3)
       coderay (~> 1.1.0)
@@ -704,6 +711,9 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    responders (2.4.0)
+      actionpack (>= 4.2.0, < 5.3)
+      railties (>= 4.2.0, < 5.3)
     sass (3.5.6)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -744,6 +754,8 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.9)
       execjs (>= 0.3.0, < 3)
+    warden (1.2.7)
+      rack (>= 1.0)
     web-console (3.6.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -762,6 +774,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap-sass
   coffee-rails (~> 4.2)
+  devise
   eslint-rails
   figaro
   font-awesome-rails

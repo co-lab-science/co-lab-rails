@@ -9,6 +9,7 @@ class HypothesesController < ApplicationController
 
 
   def new
+    before_action :authenticate_user!
     @hypothesis = Hypothesis.new
     @tags = Tag.all.limit(10)
   end
@@ -45,6 +46,7 @@ class HypothesesController < ApplicationController
   end
 
   def create
+    before_action :authenticate_user!
     if params[:hypothesis][:create_from].present?
       parent = hypothesis_params[:parent].present? ? hypothesis_params[:parent] : params[:hypothesis][:create_from_id]
       if params[:hypothesis][:create_from] == "Hypothesis"
@@ -83,6 +85,7 @@ class HypothesesController < ApplicationController
   end
 
   def update
+    before_action :authenticate_user!
     respond_to do |format|
       if @hypothesis.update(hypothesis_params)
         if params[:tags]
